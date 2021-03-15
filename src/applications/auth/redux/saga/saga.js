@@ -8,15 +8,9 @@ import authClass from "./auth.class";
 function* authSignIn ({payload}) 
 {
     try {
-        const {data} = yield call(authClass.authSignIn, payload);
-        yield put({ type: types.SIGN_IN_USER_SUCCESS, payload: data });
-        localStorage.setItem('token', JSON.stringify(data.accessToken));
-        localStorage.setItem('user', JSON.stringify(data));
-        yield put({ type: types.REDIRECT_REQUEST, payload: payload.redirect });
     } 
     catch (error)
     {
-        yield put({ type: types.SIGN_IN_USER_FAILURE, payload: error.response.data });
     }
 }
 
@@ -26,13 +20,10 @@ function* authSignIn ({payload})
 function* authRegister ({payload}) 
 {
     try {
-        const {data} = yield call(authClass.authRegister, payload);
-        yield put({ type: types.SIGN_IN_USER_SUCCESS, payload: data });
-        yield authSignIn({payload: {username: payload.username, password: payload.password, redirect: payload.redirect}})
     } 
     catch (error)
     {
-        yield put({ type: types.SIGN_IN_USER_FAILURE, payload: error.response.data });
+        
     }
 }
 
@@ -43,15 +34,11 @@ function* authRegister ({payload})
 function* authCurrentAuthenticatedUser () 
 {
     try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        yield put({ type: types.CURRENT_AUTHENTICATED_USER_SUCCESS, payload: user });
+        
     } 
     catch (error)
     { 
-        yield put({ type: types.CURRENT_AUTHENTICATED_USER_FAILURE, payload: error });
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        localStorage.clear();
+        
     }
 }
 
@@ -63,14 +50,11 @@ function* authCurrentAuthenticatedUser ()
 function* authLogout ({payload}) 
 {
     try {
-        yield call(authClass.authLogout, payload);
-        yield put({type: types.LOGOUT_USER_SUCCESS});
-        localStorage.clear();
+        
     } 
     catch (error)
     {
-        const {message} = error;
-        yield put({ type: types.LOGOUT_USER_FAILURE, payload: error });
+        
     }
 }
 
@@ -81,18 +65,10 @@ function* authProfileInfo () {
     try {
         const {data} = yield call(authClass.profileInfo);
         
-        if(!localStorage.getItem('orgId')) localStorage.setItem('orgId', JSON.stringify(data.data.userInfo.orgId))
-        localStorage.setItem('user', JSON.stringify(data.data.userInfo));
-    
-        yield put({ type: types.PROFILE_INFO_SUCCESS, payload: data });
-
-        yield put({ type: types.REDIRECT_REQUEST, payload: "/time-tracker" });
-
     } 
     catch (error)
     { 
-        const err = error.response ? error.response.data : error;
-        yield put({ type: types.PROFILE_INFO_FAILURE, payload: err });
+        
     }
 }
 
