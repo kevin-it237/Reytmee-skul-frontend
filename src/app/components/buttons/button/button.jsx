@@ -21,7 +21,7 @@ const Button = ({
     className,
     disabled, 
     onClick, 
-    rounded = true,
+    rounded = false,
     ...rest}) =>
 {
     return (
