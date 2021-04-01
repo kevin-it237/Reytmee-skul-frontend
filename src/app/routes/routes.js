@@ -4,7 +4,9 @@ import {connect} from 'react-redux'
 import PrivateRoute from './private.route';
 import NormalRoute from './normal.route';
 
-import AuthScreen from '../../applications/auth/pages/auth.screen/auth_login'
+import AuthScreen from '../../applications/auth/pages/auth.screen/auth_login';
+//import AuthRegister from '../../applications/auth/pages/auth.screen/auth_register';
+import Dashboard from '../../applications/auth/pages/dashboard.screen/dashboard';
 
 /**
  * @description this is the main routes for the main application src/app. 
@@ -27,6 +29,13 @@ const Routes = () => {
                     exact
                     component={AuthScreen}
                     path={'/'} />
+
+                <Route 
+                    exact
+                    component={Dashboard}
+                    path={'/dashboard'} />
+
+                
             </NormalRoute>
 
         </Switch>)

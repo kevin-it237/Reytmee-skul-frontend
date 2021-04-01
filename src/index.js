@@ -5,6 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
 import reportWebVitals from './reportWebVitals';
 import './assets/styles/index.styles.scss'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 import store from './redux/store';
 

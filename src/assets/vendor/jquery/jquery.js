@@ -11,6 +11,9 @@
  *
  * Date: 2020-05-04T22:49Z
  */
+
+import define from 'popper.js';
+
 ( function( global, factory ) {
 
 	"use strict";
