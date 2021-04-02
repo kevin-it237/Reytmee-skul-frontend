@@ -12,6 +12,17 @@ import {Redirect, useHistory} from 'react-router-dom'
 
 
 const Dashboard = ({props}) => {
+    const history = useHistory()
+    const [isStudent, setIsStudent] = useState(false); 
+    const [isTeacher, setIsTeacher] = useState(false);
+    const [isHome, setIsHome] = useState(true);
+
+    const [modalInfo, setModalInfo] = useState([]);
+    
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+   
+
 
             const studentColumns = [
                 {dataField: "id",  text: "Id"},
@@ -22,70 +33,66 @@ const Dashboard = ({props}) => {
                 {dataField: "sex",  text: "Sex"},
                 {dataField: "matricule",  text: "Matricule"},
                 {dataField: "datenaiss",  text: "Date Naissance"},
-                {dataField: "edit",  text: "Edit"},
                 
                 ];
 
             const studentData = [
-                    {"id": 1, "username" : 'pirate', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',"edit": <i onClick={()=>setShow(!show, console.log(modalInfo))} class="fas fa-edit text-primary" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 2, "username" : 'pirate', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',"edit": <i onClick={()=>setShow(!show)} class="fas fa-edit text-primary" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 3, "username" : 'pirate', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',"edit": <i onClick={()=>setShow(!show)} class="fas fa-edit text-primary" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 4, "username" : 'pirate', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',"edit": <i onClick={()=>setShow(!show)} class="fas fa-edit text-primary" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 5, "username" : 'pirate', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',"edit": <i onClick={()=>setShow(!show)} class="fas fa-edit text-primary" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
+                    {"id": 1, "username" : 'pirate1', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994'},
+                    
+                    
+                    {"id": 2, "username" : 'pirate2', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    },
+
+                    {"id": 3, "username" : 'pirate3', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    },
+
+                    {"id": 4, "username" : 'pirate4', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    },
+
+                    {"id": 5, "username" : 'pirate5', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    },
                 
             ];
+           
 
             const teacherColumns = [
                     {dataField: "id",  text: "Id"},
-                    {dataField: "username",  text: "surname"},
+                    {dataField: "surname",  text: "Surname"},
                     {dataField: "email",  text: "Email"},
                     {dataField: "adress",  text: "Adress"},
                     {dataField: "phonenumber",  text: "Phone Number"},
                     {dataField: "sex",  text: "Sex"},
                     {dataField: "code",  text: "Code"},
                     {dataField: "datenaiss",  text: "Date Naissance"},
-                    {dataField: "edit",  text: "Edit"},
                     
                 ];
 
             const teacherData = [
-                    {"id": 1, "surname" : 'retymee', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',"edit": <i class="fas fa-edit text-warning" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 2, "surname" : 'retymee', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',"edit": <i class="fas fa-edit text-warning" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 3, "surname" : 'retymee', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',"edit": <i class="fas fa-edit text-warning" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 4, "surname" : 'retymee', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',"edit": <i class="fas fa-edit text-warning" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
-                    {"id": 5, "surname" : 'retymee', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',"edit": <i class="fas fa-edit text-warning" style={{fontSize:15+'px', cursor:'pointer'}}></i>},
+                    {"id": 1, "surname" : 'retymee1', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
+                    {"id": 2, "surname" : 'retymee2', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
+                    {"id": 3, "surname" : 'retymee3', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
+                    {"id": 4, "surname" : 'retymee4', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
+                    {"id": 5, "surname" : 'retymee5', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
                 
                 ];
-                    const history = useHistory()
-                    const [isStudent, setIsStudent] = useState(false); 
-                    const [isTeacher, setIsTeacher] = useState(false);
-                    const [isHome, setIsHome] = useState(true);
-
-
-
-                    const [modalInfo, setModalInfo] = useState(studentData);
-                    const [isShowModal, setIsShowModal] = useState(false);
-
-                    const [show, setShow] = useState(false);
-                    const handleClose = () => setShow(false);
-                    const handleShow = () => setShow(true);
-
-                    const toggleTrueFalse=()=>{
-                        setIsShowModal(handleShow);
-                    }
+                
                     const ModalContent=()=>{
                         return(
-                            <Modal show={show} onHide={handleClose}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>{modalInfo.username}</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
+                         
+                                <Modal  show={show} onHide={handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>{modalInfo.username}{modalInfo.surname}</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
 
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>Close</Button>
-                                    </Modal.Footer>
-                            </Modal>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose}>Close</Button>
+                                        </Modal.Footer>
+                                </Modal>
+                              
+                           
+                            
                         )
                     }
 
@@ -93,13 +100,29 @@ const Dashboard = ({props}) => {
                         history.push('/');
                     }           
 
-                const rowEvents =  {
-                        onclick: (e,row) => {
-                            console.log(row);
+                    const selectStudentRow = {
+                        mode: 'radio',
+                        clickToSelect: true,
+                        selectColumnPosition: 'right',
+                        headerColumnStyle:{backgroundColor: 'blue'},
+                        onSelect: (row,isSelect,rowIndex,e) =>{
+                            setShow(!show);
                             setModalInfo(row);
-                            toggleTrueFalse();
-                              },
-                          };
+                            console.log(row);
+                        }
+                    }
+
+                    const selectTeacherRow = {
+                        mode: 'radio',
+                        clickToSelect: true,
+                        selectColumnPosition: 'right',
+                        headerColumnStyle:{backgroundColor: 'yellow'},
+                        onSelect: (row,isSelect,rowIndex,e) =>{
+                            setShow(!show);
+                            setModalInfo(row);
+                            console.log(row);
+                        }
+                    }
     
         return(
     <div id="wrapper">
@@ -313,11 +336,13 @@ const Dashboard = ({props}) => {
                             <div>
                                 <span className="font-weight-bold text-primary" style={{fontSize: 15+'px'}}>Student</span>
                                 <BootStrapTable 
+                                        
                                         keyField="id"
                                         data={studentData}
                                         columns={studentColumns}
-                                        pagination={paginationFactory()}
-                                        rowEvents={rowEvents}
+                                        pagination={paginationFactory()}  
+                                        selectRow={selectStudentRow}
+                                        
                                 />
                                  <div class="topbar-divider d-none d-sm-block mb-5"></div>
                                  
@@ -326,8 +351,8 @@ const Dashboard = ({props}) => {
                                         keyField="id"
                                         data={teacherData}
                                         columns={teacherColumns}
-                                        pagination={paginationFactory()}
-                                        rowEvents={rowEvents}
+                                        pagination={paginationFactory()} 
+                                        selectRow={selectTeacherRow} 
                                 />
                                 {show? <ModalContent /> : null}
                             </div>  : ''
