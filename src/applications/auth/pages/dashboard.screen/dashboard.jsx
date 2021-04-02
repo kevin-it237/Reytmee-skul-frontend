@@ -8,25 +8,52 @@ import RegisterStudent from '../auth.screen/auth_register_student';
 import RegisterTeacher from '../auth.screen/auth_register_teacher';
 import BootStrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import {Redirect, useHistory} from 'react-router-dom'
+import {Redirect, useHistory} from 'react-router-dom';
+import {MDBContainer,MDBRow,MDBCol,MDBInput,MDBBtn} from 'mdbreact';
 
 
-const Dashboard = ({props}) => {
+const Dashboard = ({props})  => {
     const history = useHistory()
     const [isStudent, setIsStudent] = useState(false); 
     const [isTeacher, setIsTeacher] = useState(false);
     const [isHome, setIsHome] = useState(true);
-
     const [modalInfo, setModalInfo] = useState([]);
-    
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-   
 
+    const [showStudentModal, setShowStudentModal] = useState(false);
+    const [showTeacherModal, setShowTeacherModal] = useState(false);
+
+    const [updateFormStudent, setUpdateFormStudent] = useState({name: "", surname: "", email: "", address: "", PhoneNumber: "",  matricule: "",dateNaiss: ""});
+    const [updateFormTeacher, setUpdateFormTeacher] = useState({name: "", surname: "", email: "", address: "", PhoneNumber: "",  code: "", });
+
+    const [isUpdate,setIsUpdate] = useState(false);
+    const [isDelete,setIsDelete] = useState(false);
+    
+    const handleClose = () =>{setShow(false)}
+    const handleShow = () =>{setShow(true)}
+
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+            if(isUpdate) {
+                console.log("updating user");
+            } else if(isDelete) {
+                console.log("Updating user");
+                
+            }
+    }
+    const handleDelete=()=>{
+
+    }
+
+    const handleUpdate=()=>{
+
+    }
 
             const studentColumns = [
                 {dataField: "id",  text: "Id"},
-                {dataField: "username",  text: "username"},
+                {dataField: "name",  text: "Name"},
+                {dataField: "surname",  text: "surname"},
                 {dataField: "email",  text: "Email"},
                 {dataField: "adress",  text: "Adress"},
                 {dataField: "phonenumber",  text: "Phone Number"},
@@ -37,19 +64,19 @@ const Dashboard = ({props}) => {
                 ];
 
             const studentData = [
-                    {"id": 1, "username" : 'pirate1', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994'},
+                    {"id": 1, "name": 'Aris1', "surname" : 'pirate1', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994'},
                     
                     
-                    {"id": 2, "username" : 'pirate2', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 2, "name": 'Aris2', "surname" : 'pirate2', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
 
-                    {"id": 3, "username" : 'pirate3', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 3, "name": 'Aris3', "surname" : 'pirate3', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
 
-                    {"id": 4, "username" : 'pirate4', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 4, "name": 'Aris4', "surname" : 'pirate4', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
 
-                    {"id": 5, "username" : 'pirate5', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 5, "name": 'Aris5', "surname" : 'pirate5', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
                 
             ];
@@ -57,6 +84,7 @@ const Dashboard = ({props}) => {
 
             const teacherColumns = [
                     {dataField: "id",  text: "Id"},
+                    {dataField: "name",  text: "Name"},
                     {dataField: "surname",  text: "Surname"},
                     {dataField: "email",  text: "Email"},
                     {dataField: "adress",  text: "Adress"},
@@ -68,31 +96,74 @@ const Dashboard = ({props}) => {
                 ];
 
             const teacherData = [
-                    {"id": 1, "surname" : 'retymee1', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
-                    {"id": 2, "surname" : 'retymee2', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
-                    {"id": 3, "surname" : 'retymee3', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
-                    {"id": 4, "surname" : 'retymee4', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
-                    {"id": 5, "surname" : 'retymee5', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'M', "code": 'T47A8', "datenaiss": '10/11/1994',},
+                    {"id": 1, "name": 'Dereck1', "surname" : 'retymee1', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": '5261DFGG', "datenaiss": '10/11/1994',
+                    },
+
+                    {"id": 2, "name": 'Dereck2', "surname" : 'retymee2', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "code": 'FD2545DF', "datenaiss": '10/11/1994',
+                    },
+
+                    {"id": 3, "name": 'Dereck3', "surname" : 'retymee3', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "code": 'SDF525DF', "datenaiss": '10/11/1994',
+                    },
+
+                    {"id": 4, "name": 'Dereck4', "surname" : 'retymee4', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": 'DSF225FF', "datenaiss": '10/11/1994'
+                    ,},
+
+                    {"id": 5, "name": 'Dereck5', "surname" : 'retymee5', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": 'FDSG5254', "datenaiss": '10/11/1994',
+                    },
                 
                 ];
+                const onChangeUpdateStudent = (e) => {
+                    setUpdateFormStudent({...updateFormStudent,  [e.target.name]: e.target.value })
+                    
+                }
+
+                const onChangeUpdateTeacher = (e) => {
+                    setUpdateFormTeacher({...updateFormTeacher,  [e.target.name]: e.target.value })
+
+                }
                 
                     const ModalContent=()=>{
                         return(
-                         
                                 <Modal  show={show} onHide={handleClose}>
                                         <Modal.Header closeButton>
-                                            <Modal.Title>{modalInfo.username}{modalInfo.surname}</Modal.Title>
+                                            <Modal.Title>Update or Delete user Information</Modal.Title>
                                         </Modal.Header>
-                                        <Modal.Body>
-
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={handleClose}>Close</Button>
-                                        </Modal.Footer>
-                                </Modal>
-                              
-                           
-                            
+                                         <form onSubmit={onSubmit}>
+                                             <Modal.Body>
+                                            <>
+                                                { Object.keys(modalInfo).map((value,index)=>{
+                                                    console.log(value);
+                                                    return(
+                                                        
+                                                        <div key={index} className="form-group" style={{fontSize:15+'px'}}>
+                                                            {(value==='id' || value==='sex') ? '' :
+                                                            <div> 
+                                                                <label htmlFor={value} className="font-weight-bold mr-5">{value} : </label>
+                                                                {modalInfo[value]}
+                                                                <input 
+                                                                    type="text"
+                                                                    onChange={!showTeacherModal? onChangeUpdateTeacher: !showStudentModal? onChangeUpdateTeacher: '' }
+                                                                    className="form-control"
+                                                                    id={value}
+                                                                    value={!showStudentModal? updateFormStudent[value]: !showTeacherModal? updateFormTeacher[value] : ''}
+                                                                    onChange={e =>{console.log(e.target.value)}}
+                                                                />
+                                                            </div>}
+                                                            
+                                                        </div>
+                                                    )  
+                                                })
+                                                    
+                                                }
+                                            </>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button type="submit" variant="warning" >Update</Button>
+                                                <Button type="submit" variant="danger" >Delete</Button>
+                                                <Button variant="light" onClick={()=>setShow(!show)}>Close</Button>
+                                            </Modal.Footer>
+                                        </form>
+                                </Modal>    
                         )
                     }
 
@@ -106,7 +177,7 @@ const Dashboard = ({props}) => {
                         selectColumnPosition: 'right',
                         headerColumnStyle:{backgroundColor: 'blue'},
                         onSelect: (row,isSelect,rowIndex,e) =>{
-                            setShow(!show);
+                            setShow(!show,setShowStudentModal(!showStudentModal));
                             setModalInfo(row);
                             console.log(row);
                         }
@@ -118,7 +189,7 @@ const Dashboard = ({props}) => {
                         selectColumnPosition: 'right',
                         headerColumnStyle:{backgroundColor: 'yellow'},
                         onSelect: (row,isSelect,rowIndex,e) =>{
-                            setShow(!show);
+                            setShow(!show,setShowTeacherModal(!showTeacherModal)); 
                             setModalInfo(row);
                             console.log(row);
                         }
