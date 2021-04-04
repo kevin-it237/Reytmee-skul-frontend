@@ -6,7 +6,7 @@ import NormalRoute from './normal.route';
 
 import AuthScreen from '../../applications/auth/pages/auth.screen/auth_login';
 //import AuthRegister from '../../applications/auth/pages/auth.screen/auth_register';
-import Dashboard from '../../applications/auth/pages/dashboard.screen/dashboard';
+import Dashboard from '../../applications/admin/pages/dashboard.screen/dashboard';
 
 /**
  * @description this is the main routes for the main application src/app. 

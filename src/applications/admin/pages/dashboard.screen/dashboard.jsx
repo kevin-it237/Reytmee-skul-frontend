@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './dashboard.scss';
+import Button from '../../../../app/components/buttons/button/button';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import { Dropdown, Button, Modal } from 'react-bootstrap';
+import { Dropdown, Modal } from 'react-bootstrap';
 import SideNav, {Toggle, Nav, NavItem, NavIcon,NavText} from '@trendmicro/react-sidenav'; 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import RegisterStudent from '../auth.screen/auth_register_student';
-import RegisterTeacher from '../auth.screen/auth_register_teacher';
+import RegisterStudent from '../.././../auth/pages/auth.screen/auth_register_student';
+import RegisterTeacher from '../../../auth/pages/auth.screen/auth_register_teacher';
 import BootStrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import {Redirect, useHistory} from 'react-router-dom';
-import {MDBContainer,MDBRow,MDBCol,MDBInput,MDBBtn} from 'mdbreact';
+import Footer from '../../../../app/components/footer/footer';
+import './dashboard.scss';
 
 
 const Dashboard = ({props})  => {
@@ -23,8 +25,8 @@ const Dashboard = ({props})  => {
     const [showStudentModal, setShowStudentModal] = useState(false);
     const [showTeacherModal, setShowTeacherModal] = useState(false);
 
-    const [updateFormStudent, setUpdateFormStudent] = useState({name: "", surname: "", email: "", address: "", PhoneNumber: "",  matricule: "",dateNaiss: ""});
-    const [updateFormTeacher, setUpdateFormTeacher] = useState({name: "", surname: "", email: "", address: "", PhoneNumber: "",  code: "", });
+    const [updateFormStudent, setUpdateFormStudent] = useState({name: "", surname: "", email: "", address: "", phonenumber: "",  matricule: "",datenaiss: "" });
+    const [updateFormTeacher, setUpdateFormTeacher] = useState({name: "", surname: "", email: "", address: "", phoneNumber: "",  code: "" });
 
     const [isUpdate,setIsUpdate] = useState(false);
     const [isDelete,setIsDelete] = useState(false);
@@ -35,12 +37,7 @@ const Dashboard = ({props})  => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-            if(isUpdate) {
-                console.log("updating user");
-            } else if(isDelete) {
-                console.log("Updating user");
-                
-            }
+            console.log(e);
     }
     const handleDelete=()=>{
 
@@ -55,28 +52,29 @@ const Dashboard = ({props})  => {
                 {dataField: "name",  text: "Name"},
                 {dataField: "surname",  text: "surname"},
                 {dataField: "email",  text: "Email"},
-                {dataField: "adress",  text: "Adress"},
+                {dataField: "address",  text: "Address"},
                 {dataField: "phonenumber",  text: "Phone Number"},
                 {dataField: "sex",  text: "Sex"},
                 {dataField: "matricule",  text: "Matricule"},
                 {dataField: "datenaiss",  text: "Date Naissance"},
                 
+                
                 ];
 
             const studentData = [
-                    {"id": 1, "name": 'Aris1', "surname" : 'pirate1', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994'},
+                    {"id": 1, "name": 'Aris1', "surname" : 'pirate1', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    },
                     
-                    
-                    {"id": 2, "name": 'Aris2', "surname" : 'pirate2', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 2, "name": 'Aris2', "surname" : 'pirate2', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
 
-                    {"id": 3, "name": 'Aris3', "surname" : 'pirate3', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 3, "name": 'Aris3', "surname" : 'pirate3', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
 
-                    {"id": 4, "name": 'Aris4', "surname" : 'pirate4', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 4, "name": 'Aris4', "surname" : 'pirate4', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
 
-                    {"id": 5, "name": 'Aris5', "surname" : 'pirate5', "email" : 'pirate@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 5, "name": 'Aris5', "surname" : 'pirate5', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
                     },
                 
             ];
@@ -87,40 +85,30 @@ const Dashboard = ({props})  => {
                     {dataField: "name",  text: "Name"},
                     {dataField: "surname",  text: "Surname"},
                     {dataField: "email",  text: "Email"},
-                    {dataField: "adress",  text: "Adress"},
+                    {dataField: "address",  text: "Address"},
                     {dataField: "phonenumber",  text: "Phone Number"},
                     {dataField: "sex",  text: "Sex"},
                     {dataField: "code",  text: "Code"},
-                    {dataField: "datenaiss",  text: "Date Naissance"},
                     
                 ];
 
             const teacherData = [
-                    {"id": 1, "name": 'Dereck1', "surname" : 'retymee1', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": '5261DFGG', "datenaiss": '10/11/1994',
+                    {"id": 1, "name": 'Dereck1', "surname" : 'retymee1', "email" : 'retymee@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": '5261DFGG',
                     },
 
-                    {"id": 2, "name": 'Dereck2', "surname" : 'retymee2', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "code": 'FD2545DF', "datenaiss": '10/11/1994',
+                    {"id": 2, "name": 'Dereck2', "surname" : 'retymee2', "email" : 'retymee@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "code": 'FD2545DF', 
                     },
 
-                    {"id": 3, "name": 'Dereck3', "surname" : 'retymee3', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "code": 'SDF525DF', "datenaiss": '10/11/1994',
+                    {"id": 3, "name": 'Dereck3', "surname" : 'retymee3', "email" : 'retymee@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "code": 'SDF525DF', 
                     },
 
-                    {"id": 4, "name": 'Dereck4', "surname" : 'retymee4', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": 'DSF225FF', "datenaiss": '10/11/1994'
-                    ,},
+                    {"id": 4, "name": 'Dereck4', "surname" : 'retymee4', "email" : 'retymee@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": 'DSF225FF', 
+                    },
 
-                    {"id": 5, "name": 'Dereck5', "surname" : 'retymee5', "email" : 'retymee@gmail.com', "adress": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": 'FDSG5254', "datenaiss": '10/11/1994',
+                    {"id": 5, "name": 'Dereck5', "surname" : 'retymee5', "email" : 'retymee@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "code": 'FDSG5254', 
                     },
                 
                 ];
-                const onChangeUpdateStudent = (e) => {
-                    setUpdateFormStudent({...updateFormStudent,  [e.target.name]: e.target.value })
-                    
-                }
-
-                const onChangeUpdateTeacher = (e) => {
-                    setUpdateFormTeacher({...updateFormTeacher,  [e.target.name]: e.target.value })
-
-                }
                 
                     const ModalContent=()=>{
                         return(
@@ -136,20 +124,20 @@ const Dashboard = ({props})  => {
                                                     return(
                                                         
                                                         <div key={index} className="form-group" style={{fontSize:15+'px'}}>
-                                                            {(value==='id' || value==='sex') ? '' :
-                                                            <div> 
-                                                                <label htmlFor={value} className="font-weight-bold mr-5">{value} : </label>
-                                                                {modalInfo[value]}
-                                                                <input 
-                                                                    type="text"
-                                                                    onChange={!showTeacherModal? onChangeUpdateTeacher: !showStudentModal? onChangeUpdateTeacher: '' }
-                                                                    className="form-control"
-                                                                    id={value}
-                                                                    value={!showStudentModal? updateFormStudent[value]: !showTeacherModal? updateFormTeacher[value] : ''}
-                                                                    onChange={e =>{console.log(e.target.value)}}
-                                                                />
-                                                            </div>}
-                                                            
+                                                            {(value === 'sex') ? '' :
+                                                                <div> 
+                                                                    <label htmlFor={value} className="font-weight-bold mr-5">{value} : </label>
+                                                                    {modalInfo[value]}
+                                                                    <input 
+                                                                        name={value}
+                                                                        type="text"
+                                                                        onChange={(e)=>e.target.value}
+                                                                        className="form-control"
+                                                                        id={value}
+                                                                        
+                                                                    />
+                                                                </div>
+                                                            }
                                                         </div>
                                                     )  
                                                 })
@@ -158,11 +146,29 @@ const Dashboard = ({props})  => {
                                             </>
                                             </Modal.Body>
                                             <Modal.Footer>
-                                                <Button type="submit" variant="warning" >Update</Button>
-                                                <Button type="submit" variant="danger" >Delete</Button>
-                                                <Button variant="light" onClick={()=>setShow(!show)}>Close</Button>
+                                                <Button 
+                                                    variant="warning" 
+                                                    type="submit" 
+                                                    value="update"
+                                                    size="xl"
+                                                    className='dashboard-container__button'
+                                                    >
+                                                    Update
+                                                </Button>
+
+                                                <Button  
+                                                    type="submit" 
+                                                    variant="danger"  
+                                                    value="delete"
+                                                    size="xl"
+                                                    className='dashboard-container__button'
+                                                    >
+                                                    Delete
+                                                </Button>
                                             </Modal.Footer>
                                         </form>
+                                       
+                                        
                                 </Modal>    
                         )
                     }
@@ -605,13 +611,7 @@ const Dashboard = ({props})  => {
 
 
            {/*<!-- Footer --> */} 
-           <footer class="sticky-footer bg-white" style={{height: 45+'px'}}>
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span style={{fontSize: 2+'vh'}}>Copyright &copy; Retymee School 2021</span>
-                    </div>
-                </div>
-            </footer>
+                <Footer />
            {/*<!-- End of Footer --> */} 
 
         </div>

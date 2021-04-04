@@ -13,7 +13,7 @@ import '../../../../assets/vendor/fontawesome-free/css/all.min.css';
 import '../../../../assets/css/sb-admin-2.scss';
 import skulImg from '../../../../assets/images/imskul.png';
 import {Tooltip} from 'reactstrap';
-import Dashboard from '../dashboard.screen/dashboard';
+import Dashboard from '../../../admin/pages/dashboard.screen/dashboard';
 
 
 
