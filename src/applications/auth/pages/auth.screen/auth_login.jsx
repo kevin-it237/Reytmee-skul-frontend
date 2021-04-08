@@ -41,7 +41,14 @@ const Login = ({ error, redirect, user }) => {
         e.preventDefault();
         if (submited) { return }
         if(isLoginForm) {
-               history.push('/dashboard');
+            if(loginForm.username.trim()=='admin'&&loginForm.password.trim()=='admin'){
+                history.push('/admin/dashboard');
+            }else if(loginForm.username.trim()=='student'&&loginForm.password.trim()=='student'){
+                history.push('/student/dashboard');
+            }else if(loginForm.username.trim()=='prof'&&loginForm.password.trim()=='prof'){
+                history.push('/teacher/dashboard');
+            }
+               
              //dispatch(authSignIn({...loginForm, redirect: history.location.state?.pathname || 'dashboard'}));
         } 
         setSubmited(true);

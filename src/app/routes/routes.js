@@ -6,7 +6,10 @@ import NormalRoute from './normal.route';
 
 import AuthScreen from '../../applications/auth/pages/auth.screen/auth_login';
 //import AuthRegister from '../../applications/auth/pages/auth.screen/auth_register';
-import Dashboard from '../../applications/admin/pages/dashboard.screen/dashboard';
+import DashboardAdmin from '../../applications/admin/pages/dashboard.screen/dashboard';
+import DashboardStudent from '../../applications/student/pages/dashboard.screen/dashboard';
+import DashboardTeacher from '../../applications/teacher/pages/dashboard.screen/dashboard';
+import ManageCourse from '../../applications/course/pages/course.screen/manage_course';
 
 /**
  * @description this is the main routes for the main application src/app. 
@@ -32,11 +35,29 @@ const Routes = () => {
 
                 <Route 
                     exact
-                    component={Dashboard}
-                    path={'/dashboard'} />
+                    component={DashboardAdmin}
+                    path={'/admin/dashboard'} />
+
+                <Route 
+                    exact
+                    component={DashboardStudent}
+                    path={'/student/dashboard'} />   
+
+                <Route 
+                    exact
+                    component={DashboardTeacher}
+                    path={'/teacher/dashboard'} />
+
+                <Route 
+                    exact
+                    component={ManageCourse}
+                    path={'/teacher/manage/course'} />
 
                 
             </NormalRoute>
+            
+
+            
 
         </Switch>)
 }

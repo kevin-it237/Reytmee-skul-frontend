@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './dashboard.scss';
 import Button from '../../../../app/components/buttons/button/button';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import { Dropdown, Modal } from 'react-bootstrap';
-import SideNav, {Toggle, Nav, NavItem, NavIcon,NavText} from '@trendmicro/react-sidenav'; 
+import { Dropdown} from 'react-bootstrap';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import RegisterStudent from '../.././../auth/pages/auth.screen/auth_register_student';
 import RegisterTeacher from '../../../auth/pages/auth.screen/auth_register_teacher';
@@ -12,9 +11,12 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import {Redirect, useHistory} from 'react-router-dom';
 import Footer from '../../../../app/components/footer/footer';
 import './dashboard.scss';
+import '../../../../app/components/sidebar/sidebar'
+import Sidebar from '../../../../app/components/sidebar/sidebar';
+import Modals from '../../../../app/components/modals/modal';
 
 
-const Dashboard = ({props})  => {
+const DashboardAdmin = ({props})  => {
     const history = useHistory()
     const [isStudent, setIsStudent] = useState(false); 
     const [isTeacher, setIsTeacher] = useState(false);
@@ -25,7 +27,7 @@ const Dashboard = ({props})  => {
     const [showStudentModal, setShowStudentModal] = useState(false);
     const [showTeacherModal, setShowTeacherModal] = useState(false);
 
-    const [updateFormStudent, setUpdateFormStudent] = useState({name: "", surname: "", email: "", address: "", phonenumber: "",  matricule: "",datenaiss: "" });
+    const [updateFormStudent, setUpdateFormStudent] = useState({name: "", surname: "", email: "", address: "", phonenumber: "",  matricule: "",datenaissance: "" });
     const [updateFormTeacher, setUpdateFormTeacher] = useState({name: "", surname: "", email: "", address: "", phoneNumber: "",  code: "" });
 
     const [isUpdate,setIsUpdate] = useState(false);
@@ -34,6 +36,10 @@ const Dashboard = ({props})  => {
     const handleClose = () =>{setShow(false)}
     const handleShow = () =>{setShow(true)}
 
+
+
+    const [displaySide,setDisplaySide] = useState('none');
+ 
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -47,6 +53,16 @@ const Dashboard = ({props})  => {
 
     }
 
+   
+    
+    const handleSideNav = () => {
+        if(displaySide == 'none'){
+            setDisplaySide('block');
+        }else{
+            setDisplaySide('none');
+        }
+    }
+
             const studentColumns = [
                 {dataField: "id",  text: "Id"},
                 {dataField: "name",  text: "Name"},
@@ -56,25 +72,25 @@ const Dashboard = ({props})  => {
                 {dataField: "phonenumber",  text: "Phone Number"},
                 {dataField: "sex",  text: "Sex"},
                 {dataField: "matricule",  text: "Matricule"},
-                {dataField: "datenaiss",  text: "Date Naissance"},
+                {dataField: "datenaissance",  text: "Date Naissance"},
                 
                 
                 ];
 
             const studentData = [
-                    {"id": 1, "name": 'Aris1', "surname" : 'pirate1', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 1, "name": 'Aris1', "surname" : 'pirate1', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaissance": '10/11/1994',
                     },
                     
-                    {"id": 2, "name": 'Aris2', "surname" : 'pirate2', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 2, "name": 'Aris2', "surname" : 'pirate2', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaissance": '10/11/1994',
                     },
 
-                    {"id": 3, "name": 'Aris3', "surname" : 'pirate3', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 3, "name": 'Aris3', "surname" : 'pirate3', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaissance": '10/11/1994',
                     },
 
-                    {"id": 4, "name": 'Aris4', "surname" : 'pirate4', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 4, "name": 'Aris4', "surname" : 'pirate4', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Feminin', "matricule": 'T47A8', "datenaissance": '10/11/1994',
                     },
 
-                    {"id": 5, "name": 'Aris5', "surname" : 'pirate5', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaiss": '10/11/1994',
+                    {"id": 5, "name": 'Aris5', "surname" : 'pirate5', "email" : 'pirate@gmail.com', "address": 'yaounde', "phonenumber": '695892368', "sex": 'Masculin', "matricule": 'T47A8', "datenaissance": '10/11/1994',
                     },
                 
             ];
@@ -109,67 +125,98 @@ const Dashboard = ({props})  => {
                     },
                 
                 ];
+
+                    const ModalContentStudent=()=>{
+                       console.log("dfdsfd");
+                        return(
+                            
+                            <Modals  
+                                show={show} 
+                                onhide={handleClose}
+                                titlecontent="kjdsfjd"
+                                bodycontent={<div>fcd</div>}
+                                footercontent="dsjnhfjnhdsj"
+                            />     
+                    )
+                    }
+                    const ModalContentTeacher=()=>{
+                       
+                        return(
+                            <Modals  
+                                show={show} 
+                                onhide={handleClose}
+                                titlecontent="kjdsfjd"
+                                bodycontent={<div>fcd</div>}
+                                footercontent="dsjnhfjnhdsj"
+                                
+                            />     
+                    )
+                    }
                 
                     const ModalContent=()=>{
-                        return(
-                                <Modal  show={show} onHide={handleClose}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Update or Delete user Information</Modal.Title>
-                                        </Modal.Header>
-                                         <form onSubmit={onSubmit}>
-                                             <Modal.Body>
-                                            <>
-                                                { Object.keys(modalInfo).map((value,index)=>{
-                                                    console.log(value);
-                                                    return(
-                                                        
-                                                        <div key={index} className="form-group" style={{fontSize:15+'px'}}>
-                                                            {(value === 'sex') ? '' :
-                                                                <div> 
-                                                                    <label htmlFor={value} className="font-weight-bold mr-5">{value} : </label>
-                                                                    {modalInfo[value]}
-                                                                    <input 
-                                                                        name={value}
-                                                                        type="text"
-                                                                        onChange={(e)=>e.target.value}
-                                                                        className="form-control"
-                                                                        id={value}
-                                                                        
-                                                                    />
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    )  
-                                                })
-                                                    
-                                                }
-                                            </>
-                                            </Modal.Body>
-                                            <Modal.Footer>
-                                                <Button 
-                                                    variant="warning" 
-                                                    type="submit" 
-                                                    value="update"
-                                                    size="xl"
-                                                    className='dashboard-container__button'
-                                                    >
-                                                    Update
-                                                </Button>
 
-                                                <Button  
-                                                    type="submit" 
-                                                    variant="danger"  
-                                                    value="delete"
-                                                    size="xl"
-                                                    className='dashboard-container__button'
-                                                    >
-                                                    Delete
-                                                </Button>
-                                            </Modal.Footer>
-                                        </form>
-                                       
+                        const modalcont = {
+                            title : "Update or Delete user Information",
+                            bodycontent : <form onSubmit={onSubmit}>
+                                             
+                            <>
+                                { Object.keys(modalInfo).map((value,index)=>{
+                                    console.log(value);
+                                    return(
                                         
-                                </Modal>    
+                                        <div key={index} className="form-group" style={{fontSize:15+'px'}}>
+                                            {(value === 'sex') ? '' :
+                                                <div> 
+                                                    <label htmlFor={value} className="font-weight-bold mr-5">{value} : </label>
+                                                    {modalInfo[value]}
+                                                    <input 
+                                                        name={value}
+                                                        type="text"
+                                                        onChange={(e)=>e.target.value}
+                                                        className="form-control"
+                                                        id={value}
+                                                        
+                                                    />
+                                                </div>
+                                            }
+                                        </div>
+                                    )  
+                                })
+                                    
+                                }
+                            </>
+                                <Button 
+                                    variant="warning" 
+                                    type="submit" 
+                                    value="update"
+                                    size="xl"
+                                    className='dashboard-container__button'
+                                    >
+                                    Update
+                                </Button>
+
+                                <Button  
+                                    type="submit" 
+                                    variant="danger"  
+                                    value="delete"
+                                    size="xl"
+                                    className='dashboard-container__button'
+                                    >
+                                    Delete
+                                </Button>
+                            
+                        </form> 
+                        }
+                        return( 
+                        
+                            <Modals  
+                                show={show} 
+                                onhide={handleClose}
+                                titlecontent={modalcont.title}
+                                bodycontent={modalcont.bodycontent}
+                                footercontent={modalcont.footercontent}
+                            />
+                                   
                         )
                     }
 
@@ -200,85 +247,44 @@ const Dashboard = ({props})  => {
                             console.log(row);
                         }
                     }
+
+                    
     
         return(
     <div id="wrapper">
 
-       {/*  <!-- Sidebar -->*/}
-         
-       <SideNav
-            onSelect={(selected) => {
-                // Add your code here
-                if(selected == "home"){
-                    setIsTeacher(false);
-                    setIsStudent(false);
-                }
-                if(selected == "account/student"){
-                    setIsStudent(!isStudent, setIsTeacher(false));
-                }else{if(selected == "account/teacher")
-                    setIsTeacher(!isTeacher, setIsStudent(false));
-                    }
-                
-                    }}
-                >
-                   {/* <SideNav.Toggle />*/}
-                   
-                   <div class="" style={{marginBottom: 65+'px'}}></div>
-                    <SideNav.Nav defaultSelected="home">
+        {/*  <!-- Sidebar -->*/}
+            <Sidebar width={200} height={"100%"} display={displaySide}>
+                <div style={{marginTop:25+'%'}}>
 
-                        <NavItem eventKey="home">
-                            <NavIcon>
-                                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                                Dashboard
-                            </NavText>
-                        </NavItem>
-
-                        <NavItem eventKey="account">
-                            <NavIcon>
-                                <i className="fa fa-fw fa-user" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                            Add User
-                            </NavText>
-                            <NavItem eventKey="account/student">
-                                <NavText>
-                                    Add Student 
-                                </NavText>
-                            </NavItem>
-                            <NavItem eventKey="account/teacher">
-                                <NavText>
-                                   Add Teacher 
-                                </NavText>
-                            </NavItem>
-                        </NavItem>
-
-
-                        <NavItem eventKey="list">
-                            <NavIcon>
-                                <i className="fa fa-fw fa-list" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                            Users 
-                            </NavText>
-                            <NavItem eventKey="list/student">
-                                <NavText>
-                                    Student 
-                                </NavText>
-                            </NavItem>
-                            <NavItem eventKey="list/teacher">
-                                <NavText>
-                                    Teacher 
-                                </NavText>
-                            </NavItem>
-                        </NavItem>
-
-                    
-
-                    </SideNav.Nav>
-                </SideNav>
-       {/* <!-- End of Sidebar -->*/} 
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>setIsHome(true,setIsTeacher(false),setIsStudent(false))}>
+                        <div className='col-md-2'><i className="fa fa-fw fa-home text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                        <div className='col-md-8 text-white'>Home</div>
+                    </div>
+                    <hr/>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setIsStudent(true,setIsTeacher(false),setIsHome(false))}>
+                        <div className='col-md-2'><i className="fa fa-fw fa-users text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                        <div className='col-md-8 text-white'>Add Student</div>
+                        
+                    </div>
+                    <hr/>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setIsTeacher(true,setIsStudent(false),setIsHome(false))}>
+                         <div className='col-md-2'><i className="fas fa-chalkboard-teacher text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                         <div className='col-md-8 text-white'>Add Teacher</div>
+                    </div>
+                    <hr/>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>console.log("")}>
+                         <div className='col-md-2'><i className="fa fa-user text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                         <div className='col-md-8 text-white'>Profile</div>
+                    </div>
+                    <hr/>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>console.log("")}>
+                         <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                         <div className='col-md-8 text-white'>Logout</div>
+                    </div>
+                </div> 
+            </Sidebar>
+        {/* <!-- End of Sidebar -->*/} 
 
 
 
@@ -287,18 +293,22 @@ const Dashboard = ({props})  => {
 
 
        {/*<!-- Content Wrapper --> */} 
-        <div id="content-wrapper" class="d-flex flex-column" style={{marginLeft: 5+'%'}}>
+        <div id="content-wrapper" class="d-flex flex-column">
            {/* <!-- Main Content -->*/} 
             <div id="content">
 
-
+            
 
                {/*<!-- Topbar --> */} 
                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                    
 
-                    <div style={{fontSize: 2+'em'}} className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                    <div style={{fontSize: 2+'em'}} className="sidebar-brand d-flex align-items-center justify-content-center">
+                        <div className="sidebar-brand-icon  mr-5" style={{cursor:'pointer'}} onClick={handleSideNav}>
+                            {displaySide == 'none'? <i class="fas fa-bars text-primary"></i>: displaySide == 'block'? <i class="far fa-window-close text-primary"></i>: ''}
+                        </div>
+
                         <div className="sidebar-brand-icon rotate-n-15">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
@@ -346,60 +356,56 @@ const Dashboard = ({props})  => {
                 <div className="container-fluid">
 
                   {/*<!-- Page Heading --> */}  
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                   {isHome? 
+                      <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard Administrator</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div> : ''}   
 
                    {/*<!-- Content Row --> */} 
-                    <div class="row" style={{fontSize: 2+'em'}}>
+                    {isHome? 
+                            <div class="row" style={{fontSize: 2+'em'}}>
 
-                       {/* <!-- Earnings (Monthly) Card Example --> */}
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary  mb-1" style={{fontSize: 1+'em'}}>
-                                                Student</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa fa-users fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        
-
-                      {/* <!-- Pending Requests Card Example -->*/}  
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning  mb-1" style={{fontSize: 1+'em'}}>
-                                                Teacher</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            {/* <!-- Earnings (Monthly) Card Example --> */}
+                             <div class="col-xl-3 col-md-6 mb-4">
+                                 <div class="card border-left-primary shadow h-100 py-2">
+                                     <div class="card-body">
+                                         <div class="row no-gutters align-items-center">
+                                             <div class="col mr-2">
+                                                 <div class="text-xs font-weight-bold text-primary  mb-1" style={{fontSize: 1+'em'}}>
+                                                     Student</div>
+                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                                             </div>
+                                             <div class="col-auto">
+                                                 <i class="fa fa-users fa-2x text-gray-300"></i>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+     
+                             
+     
+                           {/* <!-- Pending Requests Card Example -->*/}  
+                             <div class="col-xl-3 col-md-6 mb-4">
+                                 <div class="card border-left-warning shadow h-100 py-2">
+                                     <div class="card-body">
+                                         <div class="row no-gutters align-items-center">
+                                             <div class="col mr-2">
+                                                 <div class="text-xs font-weight-bold text-warning  mb-1" style={{fontSize: 1+'em'}}>
+                                                     Teacher</div>
+                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                             </div>
+                                             <div class="col-auto">
+                                                 <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>: ''}
 
                   {/*<!-- Content Row --> */}  
-
-
-
-
-
 
                     <div class="row">
 
@@ -407,8 +413,7 @@ const Dashboard = ({props})  => {
                         <div className="col-xl-12 col-lg-10">
                             
 
-                            {
-                            
+                            { 
                             isStudent ? <RegisterStudent /> : isTeacher? <RegisterTeacher /> : isHome?
                             <div>
                                 <span className="font-weight-bold text-primary" style={{fontSize: 15+'px'}}>Student</span>
@@ -431,18 +436,11 @@ const Dashboard = ({props})  => {
                                         pagination={paginationFactory()} 
                                         selectRow={selectTeacherRow} 
                                 />
-                                {show? <ModalContent /> : null}
-                            </div>  : ''
-                            
+                                {show? <ModalContent /> : 'null' }
+                            </div>  : 'Noting to show'
                             } 
-                            
-                            
-                            
+            
                         </div>
-
-
-
-
 
                        {/* <!-- Pie Chart -->*/} 
                         
@@ -491,7 +489,7 @@ const Dashboard = ({props})  => {
                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
-                            </div>*/} 
+                            </div>
 
                            {/* <!-- Color System -->
                             <div class="row">
@@ -620,4 +618,4 @@ const Dashboard = ({props})  => {
     </div>
         )
 }
-export default Dashboard;
+export default DashboardAdmin;
