@@ -227,6 +227,23 @@ const DashboardTeacher = ({props})  => {
                                      </div>
                                  </div>
                              </div>
+
+
+                             <div class="col-xl-3 col-md-3 mb-3">
+                                        <div class="card  shadow "style={{backgroundColor:'#17879C'}}>
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col">
+                                                            <div onClick={()=>console.log("download course")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:10+'px',cursor:'pointer'}}>
+                                                            <i className="fa fa-upload"/>  Import Course
+                                                            </div>
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
      
                              
      

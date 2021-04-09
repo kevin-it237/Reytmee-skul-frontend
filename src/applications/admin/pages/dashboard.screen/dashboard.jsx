@@ -10,7 +10,6 @@ import BootStrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import {Redirect, useHistory} from 'react-router-dom';
 import Footer from '../../../../app/components/footer/footer';
-import './dashboard.scss';
 import '../../../../app/components/sidebar/sidebar'
 import Sidebar from '../../../../app/components/sidebar/sidebar';
 import Modals from '../../../../app/components/modals/modal';
@@ -321,7 +320,7 @@ const DashboardAdmin = ({props})  => {
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
-                    <Dropdown class="nav-item dropdown no-arrow" style={{zIndex: 10000}}>
+                    <Dropdown class="nav-item dropdown no-arrow">
                         <Dropdown.Toggle style={{border:'none'}} variant="none" class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{fontSize:20+'px'}}>
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin User</span>

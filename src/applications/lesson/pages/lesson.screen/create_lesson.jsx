@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Modals from '../../../../app/components/modals/modal';
 import Button from '../../../../app/components/buttons/button/button';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { Dropdown} from 'react-bootstrap';
@@ -10,7 +11,9 @@ import {Redirect, useHistory} from 'react-router-dom';
 import Footer from '../../../../app/components/footer/footer';
 import '../../../../app/components/sidebar/sidebar'
 import Sidebar from '../../../../app/components/sidebar/sidebar';
-import Modals from '../../../../app/components/modals/modal';
+import { EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Avatar   from 'react-avatar';
 import profileImg from '../../../../assets/images/profile_icon.png';
 import NotificationBadge from 'react-notification-badge';
@@ -19,12 +22,26 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
 
-const ManageCourse = () => {
-    const history = useHistory()
-    const [displaySide,setDisplaySide] = useState('none');
-    const [showCreateCourse,setShowCreateCourse] = useState(false);
-    const [showCourse,setShowCourse] = useState(true);
+const  CreateLesson = () => {
+    const history = useHistory();
+
+    const [editorState, setEditorState] = useState(()=>EditorState.createEmpty());
+
     const [showModal,setShowModal] = useState(false);
+    const [createLessonForm,setCreateLessonForm] = useState({name: "", description: ""});
+    const [displaySide,setDisplaySide] = useState('none');
+    const onChangeCreateLesson = (e) => {
+        setCreateLessonForm({...createLessonForm,  [e.target.name]: e.target.value })
+        
+    }
+    const handleClose = () =>{setShowModal(false)}
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+          history.push('/teacher/manage/course');
+            console.log(e);
+    }
+
 
     const handleLogout=()=>{
         history.push('/');
@@ -37,9 +54,6 @@ const ManageCourse = () => {
             setDisplaySide('none');
         }
     }
-     
-
-    const handleClose = () =>{setShowModal(false)}
   
     
     const createNotification = (type) =>{
@@ -83,8 +97,8 @@ const ManageCourse = () => {
             />
         )
     }
-
     return(
+        
         <div id="wrapper">
 
         {/*  <!-- Sidebar -->*/}
@@ -267,101 +281,110 @@ const ManageCourse = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-xl-3 col-md-3 mb-3"></div>
+                                    <div class="col-xl-3 col-md-3 mb-3">
+                                        <div class="card  shadow bg-secondary">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col">
+                                                            <div onClick={()=>console.log("course setting")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:10+'px',cursor:'pointer'}}>
+                                                            <i className="fas fa-save"/>  Save Lesson
+                                                            </div>
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                          </div>
 
                          <div className='row justify-content-center'>  
-                            <div class="card  shadow mb-5"style={{backgroundColor:'#57CA1C'}}>
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
+                            
+                                    
+                                        <div class="row no-gutters align-items-center" >
                                             <div class="col">
-                                                <div onClick={()=>console.log("course setting")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:10+'px',cursor:'pointer'}}>
-                                                    <span className='mr-2'>0</span>  Students
+                                                <div onClick={()=>console.log("create lesson")} class="text-xs font-weight-bold text-center">
+                                                    <span className='mr-2' style={{fontSize:2.5+'em'}}>Create Lesson</span> 
                                                 </div>
                                                             
                                             </div>
                                                         
                                         </div>
-                                    </div>
-                            </div>
                          </div>
+
+                         
 
                   {/*<!-- Content Row --> */}  
 
-                    <div class="row" style={{backgroundColor: '#EFEFEF'}}>
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
                        {/*<!-- Area Chart --> */} 
                         <div 
-                           className="col-xl-12 col-lg-12 text-center" 
-                           style={{height:45+'vh',border:'2px dashed black',cursor:'pointer'}} onClick={handleClickFileInput}>
-                          <i class="fas fa-image text-white" style={{fontSize:7+'em'}}></i><p>Cliquez pour Ajouter une Image de couverture</p>
-                          <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
+                           className="col-xl-12 col-lg-12 text-center container-editor " 
+                        ><div style={{fontSize:2+'em'}}>Lesson Objective</div>
+                         <Editor editorState={editorState} />
+                          
                         </div>
                        
                     </div>
 
- 
-                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
                        {/*<!-- Area Chart --> */} 
                         <div 
-                           className="col-xl-6 col-lg-8 text-center" 
-                           style={{cursor:'pointer',fontSize:1.2+'em'}}>
-                            <p className='font-weight-bold'>Course Name:</p> 
-                            <p>Arithmétique</p>
+                           className="col-xl-12 col-lg-12 text-center container-editor " 
+                        ><div style={{fontSize:2+'em'}}>Lesson Outline</div>
+                         <Editor editorState={editorState} />
+                          
                         </div>
-
-                        <div 
-                           className="col-xl-6 col-lg-8 text-center" 
-                           style={{cursor:'pointer',fontSize:1.2+'em'}}>
-                            <p className='font-weight-bold'>Course Author:</p>
-                            <p>Pierre mvogo</p>
-                        </div>
+                       
                     </div>
 
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
+                       {/*<!-- Area Chart --> */} 
+                        <div 
+                           className="col-xl-12 col-lg-12 text-center container-editor " 
+                        ><div style={{fontSize:2+'em'}}>Lesson Resources</div>
+                         <Editor editorState={editorState} />
+                          
+                        </div>
+                       
+                    </div>
 
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
+                       {/*<!-- Area Chart --> */} 
+                        <div 
+                           className="col-xl-12 col-lg-12 text-center container-editor " 
+                        ><div style={{fontSize:2+'em'}}>Homework</div>
+                         <Editor editorState={editorState} />
+                          
+                        </div>
+                       
+                    </div>
 
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
+
+                       {/*<!-- Area Chart --> */} 
+                        <div 
+                           className="col-xl-12 col-lg-12 text-center container-editor " 
+                        ><div style={{fontSize:2+'em'}}>Lesson Evaluation</div>
+                         <Editor editorState={editorState} />
+                          
+                        </div>
+                       
+                    </div>
 
                    {/* <!-- Content Row -->*/} 
 
 
                    
                      <div class="row mt-5">
-                    
-                     <div class="col-lg-6 mb-4">
-                         <div class="shadow mb-4 border-none">
-                           
-                             <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>history.push('/teacher/course/create/lesson')}>
-                                 <i class="fa fa-plus text-primary" style={{fontSize:10+'em'}}></i>
-                                 <p className='font-weight-bold'>Add a Lesson</p>
-                                 <p className='font-weight-bold'>Create Lesson for your Course</p>
-                                 
-                             </div>
-                         </div> 
+
                      </div>
-
-
-
-                      
-                     <div class="col-lg-6 mb-4">
-                     <div class="shadow mb-4 border-none">
-                            <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>setShowModal(!showModal)}>
-                                 <i class="fa fa-user-friends text-warning" style={{fontSize:10+'em'}}></i>
-                                 <p className='font-weight-bold'>Invite Student</p>
-                                 <p className='font-weight-bold'>Invite Student to enrol in the course</p>
-                                 {showModal? <ContentModal /> : ''}
-                            </div>
-                    </div>  
-                </div>
-                
-
-            </div>
-                  
-                  
-
-
-
+              
 
                 </div>
                {/* <!-- /.container-fluid -->*/} 
@@ -379,6 +402,7 @@ const ManageCourse = () => {
       {/*<!-- End of Content Wrapper --> */}  
 
     </div>
+       
     )
 }
-export default ManageCourse;
+export default CreateLesson;

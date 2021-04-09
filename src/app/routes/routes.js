@@ -10,6 +10,7 @@ import DashboardAdmin from '../../applications/admin/pages/dashboard.screen/dash
 import DashboardStudent from '../../applications/student/pages/dashboard.screen/dashboard';
 import DashboardTeacher from '../../applications/teacher/pages/dashboard.screen/dashboard';
 import ManageCourse from '../../applications/course/pages/course.screen/manage_course';
+import CreateLesson from '../../applications/lesson/pages/lesson.screen/create_lesson';
 
 /**
  * @description this is the main routes for the main application src/app. 
@@ -52,6 +53,11 @@ const Routes = () => {
                     exact
                     component={ManageCourse}
                     path={'/teacher/manage/course'} />
+
+                <Route 
+                    exact
+                    component={CreateLesson}
+                    path={'/teacher/course/create/lesson'} />
 
                 
             </NormalRoute>

@@ -7,9 +7,6 @@ import './course.scss';
 const CreateCourse = () => {
     const history = useHistory();
     const [createCourseForm,setCreateCourseForm] = useState({name: "", description: ""});
-    const [showManageCourse, setShowManageCourse] = useState(false);
-    const [showCreateCourse,setShowCreateCourse] = useState(true);
-    
 
     const onChangeCreateCourse = (e) => {
         setCreateCourseForm({...createCourseForm,  [e.target.name]: e.target.value })
