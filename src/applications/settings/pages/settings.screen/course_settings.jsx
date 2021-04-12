@@ -17,10 +17,9 @@ import NotificationBadge from 'react-notification-badge';
 import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import './course.scss';
 
+const CourseSettings = () => {
 
-const ManageCourse = () => {
     const history = useHistory()
     const [displaySide,setDisplaySide] = useState('none');
     const [showCreateCourse,setShowCreateCourse] = useState(false);
@@ -139,7 +138,7 @@ const ManageCourse = () => {
             setDisplaySide('none');
         }
     }
-
+    
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
@@ -159,7 +158,7 @@ const ManageCourse = () => {
                     <div className='row text-white' style={{fontSize:2+'em',marginLeft: 20+'%'}}>Pierre Mvogo</div>
                     <div className='row text-white' style={{fontSize:1.5+'em',marginLeft: 20+'%'}}>Retymee School</div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>setShowCourse(true,setShowCreateCourse(false))}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/teacher/dashboard')}>
                         <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
                         <div className='col-md-8 text-white'>Dashboard</div>
                     </div>
@@ -308,30 +307,16 @@ const ManageCourse = () => {
                                 {/* <!-- Pending Requests Card Example -->*/}  
                                     
 
-                                    <div class="col-xl-3 col-md-3 mb-3">
-                                        <div class="card  shadow "style={{backgroundColor:'#17879C'}}>
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col">
-                                                            <div onClick={()=>history.push('/teacher/course/settings')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
-                                                            <i className="fa fa-cog"/>  Course settings
-                                                            </div>
-                                                        
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                    
+                                <div class="col-xl-3 col-md-3 mb-3"></div>
                                     <div class="col-xl-3 col-md-3 mb-3"></div>
                                     <div class="col-xl-3 col-md-3 mb-3">
                                         <div class="card  shadow">
-                                            <div class="card-body bg-warning">
+                                            <div class="card-body bg-secondary">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
                                                             <div onClick={()=>console.log("student")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
-                                                            <span className='mr-2'>0</span>  Students
+                                                            <i className="fas fa-save"/>  Save
                                                             </div>
                                                         
                                                     </div>
@@ -350,21 +335,21 @@ const ManageCourse = () => {
                   {/*<!-- Content Row --> */}  
 
 
-                  <div class="row mb-5" style={{backgroundColor: '#EFEFEF'}}>
+                  <div class="row mb-5 mt-5" style={{backgroundColor: '#EFEFEF'}}>
 
                         {/*<!-- Area Chart --> */} 
                         <div 
-                            className="col-xl-6 col-lg-8 text-center" 
-                            style={{fontSize:'calc(3px + 2vmin)'}}>
-                            <p className='font-weight-bold'>Course Name:</p> 
-                            <p>PROGRAMMATION INFORMATIQUE</p>
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Course Settings</p> 
+                            <p></p>
                         </div>
 
                         <div 
                             className="col-xl-6 col-lg-8 text-center" 
                             style={{fontSize:'calc(3px + 2vmin)'}}>
-                            <p className='font-weight-bold'>Course Author:</p>
-                            <p>Pierre mvogo</p>
+                            
+                            
                         </div>
                     </div>
 
@@ -374,11 +359,52 @@ const ManageCourse = () => {
                     <div class="col-lg-6 mb-4">
                         <div class="shadow mb-4 border-none">
                           
-                            <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>history.push('/teacher/course/lesson/create')}>
-                                <i class="fa fa-plus text-primary" style={{fontSize:10+'em'}}></i>
-                                <p className='font-weight-bold'>Add a Lesson</p>
-                                <p className='font-weight-bold'>Create Lesson for your Course</p>
-                                
+                            <div class="" align="center" onClick={()=>console.log("profile settings")}>
+                                <p style={{fontSize:'calc(10px + 2vmin)'}}>General Settings</p>
+                               <div className='row mb-3'>
+                                   <label className='col-lg-3 mt-3'>Course Name: </label>
+                                   <input type='text' id='username' className='col-lg-7' value="Informatique" />
+                                </div> 
+
+                               <div className='row mb-3'>
+                                   <label className='col-lg-3 mt-3'>Course Description: </label>
+                                   <textarea 
+                                        type={"textarea"}
+                                        className="col-lg-7"
+                                        rows='5'                                                   
+                                        value="New ITC Technologie"           
+                                    />
+                                </div> 
+                               
+                                <div className='row mb-5'>
+                                   <label className='col-lg-3'>Course Creator: </label>
+                                   <div className='col-lg-2'>Paul pirate</div>
+                                </div> 
+                                <div className='row mb-5'>
+                                   <label className='col-lg-3 mt-3'>Suggested Duration: </label>
+                                   <input type='text' id='email' className='col-lg-7 mb-5' placeholder='E.g. 15 hours'/>
+                                </div> 
+
+                                <div className='row mb-5'>
+                                   <label className='col-lg-3 mt-3'>Resources Required: </label>
+                                   <textarea 
+                                        type={"textarea"}
+                                        className="col-lg-7"
+                                        rows='5'                                                   
+                                        placeholder='software Lab'          
+                                    />
+                                </div> 
+
+                                <div className='row mb-5'>
+                                   <label className='col-lg-3 mt-3'>Cover Art: </label>
+                                   <div 
+                                    className="col-xl-7 col-lg-7 text-center" 
+                                    style={{height:40+'vh',border:'2px dashed black',cursor:'pointer'}} onClick={handleClickFileInput}>
+                                    <i class="fas fa-image text-black" style={{fontSize:7+'em'}}></i><p>Upload cover image</p>
+                                    <p>A jpg, gif or png file at least 1000px wide and 400px high</p>
+                                    <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
+                                </div>
+                                </div> 
                             </div>
                         </div> 
                     </div>
@@ -387,83 +413,19 @@ const ManageCourse = () => {
          
                      
                     <div class="col-lg-6 mb-4">
-                    <div class="shadow mb-4 border-none">
-                           <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>setShowInviteModal(true)}>
-                                <i class="fa fa-user-friends text-warning" style={{fontSize:10+'em'}}></i>
-                                <p className='font-weight-bold'>Invite Student</p>
-                                <p className='font-weight-bold'>Invite Student to enrol in the course</p>
+                    <div class="shadow mb-4 border-none" >
+                           <div class="" align="center" style={{cursor:'pointer'}} onClick={handleClickFileInput}>
+                                <i style={{fontSize:'calc(20px + 2vmin)',margin:'2em'}} className='fas fa-graduation-cap'></i>
+                                <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
+                               
                                 
                            </div>
-                           {showInviteModal? <ContentInviteModal />:''}
+                           
                    </div>  
                </div>
                
 
                </div>
-
-                    <div class="row" style={{backgroundColor: '#EFEFEF'}}>
-
-                       {/*<!-- Area Chart --> */} 
-                        <div 
-                           className="col-xl-12 col-lg-12 text-center" 
-                           style={{height:45+'vh',border:'2px dashed black',cursor:'pointer'}} onClick={handleClickFileInput}>
-                          <i class="fas fa-image text-white" style={{fontSize:7+'em'}}></i><p>Cliquez pour Ajouter une Image de couverture</p>
-                          <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
-                        </div>
-                       
-                    </div>
-
- 
-                  
-
-                    <div className="row mt-2 mb-2">
-                           <p style={{fontSize:'calc(5px + 2vmin)'}}>List of Lesson for this Course</p> 
-                            <table className='table'>
-                                <thead>
-                                    <tr>
-                                        <td>Lesson Name</td>
-                                        <td>Date creation</td>
-                                        <td>Options</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  
-                                       <tr>
-                                        <td>LES BASES DE JAVASCRIPT</td>
-                                        <td>12/01/2021</td>
-                                        <td>
-                                            <tr>
-                                                <td><i className='fas fa-eye text-primary' /></td>
-                                               
-                                            </tr>
-                                        </td>
-                                        </tr>
-                                   
-                                   <tr>
-                                        <td>INTRODUCTION AUX REGEX</td>
-                                        <td>12/01/2021</td>
-                                        <td>
-                                            <tr>
-                                                <td><i className='fas fa-eye text-primary' /></td>
-                                            </tr>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>HTML CSS JAVASCRIPT</td>
-                                        <td>12/01/2021</td>
-                                        <td>
-                                            <tr>
-                                                <td><i className='fas fa-eye text-primary' /></td>
-                                            </tr>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            {showLessonModal? <ContentLessonModal />:''}
-                    </div>
-
-
                 </div>
                {/* <!-- /.container-fluid -->*/} 
 
@@ -482,4 +444,4 @@ const ManageCourse = () => {
     </div>
     )
 }
-export default ManageCourse;
+export default CourseSettings;

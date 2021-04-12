@@ -246,11 +246,16 @@ const DashboardAdmin = ({props})  => {
                             console.log(row);
                         }
                     }
+                    const handleSideNavBody = () => {
+                        if(displaySide == 'block'){
+                            setDisplaySide('none');
+                        }
+                    }
 
                     
     
         return(
-    <div id="wrapper">
+    <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
             <Sidebar width={200} height={"100%"} display={displaySide}>

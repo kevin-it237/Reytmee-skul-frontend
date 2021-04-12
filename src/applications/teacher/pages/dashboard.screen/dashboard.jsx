@@ -28,6 +28,9 @@ const DashboardTeacher = ({props})  => {
     const [displaySide,setDisplaySide] = useState('none');
     const [showCreateCourse,setShowCreateCourse] = useState(false);
     const [showCourse,setShowCourse] = useState(true);
+    const [showEvaluationModal,setShowEvaluationModal] = useState(false);
+    const [showListStudentModal,setShowListStudentModal] = useState(false);
+    const [showSendToModal,setShowSendToModal] = useState(false);
 
     const handleLogout=()=>{
         history.push('/');
@@ -39,6 +42,77 @@ const DashboardTeacher = ({props})  => {
             setDisplaySide('none');
         }
     }
+    const handleListStudentClose = () =>{setShowListStudentModal(false)}
+    const handleEvaluationClose = () =>{setShowEvaluationModal(false)}
+
+    const listStudentContent = {
+        title: "Student Enrol to your Course",
+        bodycontent: 
+           <div>
+             <table className='table'>
+                 <thead>
+                     <tr>
+                         <th>Student Name</th>
+                         <th>Matricule</th>
+                         <th>Email</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr>
+                         <td>pirate</td>
+                         <td>2T15ER</td>
+                         <td>pirate@gmail.com</td>
+                     </tr>
+                     <tr>
+                         <td>paul</td>
+                         <td>2E25ER</td>
+                         <td>paul@gmail.com</td>
+                     </tr>
+                     <tr>
+                         <td>Alain</td>
+                         <td>2T89EER</td>
+                         <td>alain@gmail.com</td>
+                     </tr>
+                 </tbody>
+             </table>
+              
+           </div>
+  }
+
+  const evaluationContent = {
+    title: "Shoose Course to Create Evaluation",
+    bodycontent: 
+       <div>
+           <ul>
+               <li className="li" onClick={()=>history.push('/teacher/course/evaluation/create')}>Arithmétique</li>
+               <li className="li" onClick={()=>history.push('/teacher/course/evaluation/create')}>Programmation</li>
+               <li className="li" onClick={()=>history.push('/teacher/course/evaluation/create')}>Piratage informatique</li>
+           </ul>
+       </div>
+}
+
+  const ListStudentModal = () => {
+      return(
+          <Modals 
+              show={showListStudentModal} 
+              onhide={handleListStudentClose}
+              titlecontent={listStudentContent.title}
+              bodycontent={listStudentContent.bodycontent}
+              footercontent={listStudentContent.footercontent}
+          />
+      )
+  }
+  const EvaluationModal = () => {
+    return(
+        <Modals 
+            show={showEvaluationModal} 
+            onhide={handleEvaluationClose}
+            titlecontent={evaluationContent.title}
+            bodycontent={evaluationContent.bodycontent}
+            footercontent={evaluationContent.footercontent}
+        />
+    )
+}
 
     
 
@@ -61,10 +135,21 @@ const DashboardTeacher = ({props})  => {
                 break;
             }
     }}
+    const hiddenFileInput = React.useRef(null);
+    const handleClickFileInput = (event) => {hiddenFileInput.current.click()};
 
+    const outPutEvent=(e)=> {
+        setShowCreateCourse(false,setShowCourse(true));
+    }
+
+    const handleSideNavBody = () => {
+        if(displaySide == 'block'){
+            setDisplaySide('none');
+        }
+    }
     
         return(
-    <div id="wrapper">
+    <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
             <Sidebar width={260} height={"100%"} display={displaySide}>
@@ -87,23 +172,23 @@ const DashboardTeacher = ({props})  => {
                         <div className='col-md-8 text-white'>Dashboard</div>
                     </div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={console.log("add student")}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/notifications')}>
                         <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
                         <div className='col-md-8 text-white'>Notifications</div>
                         
                     </div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={console.log("add teacher")}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/course/list')}>
                          <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                          <div className='col-md-8 text-white'>Manages Courses</div>
                     </div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>console.log("")}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/settings')}>
                          <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                          <div className='col-md-8 text-white'>Accounts settings</div>
                     </div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>console.log("")}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
                          <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                          <div className='col-md-8 text-white'>Logout</div>
                     </div>
@@ -177,7 +262,7 @@ const DashboardTeacher = ({props})  => {
                         <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
 
-                        <Dropdown.Item href="#/action-1" class="dropdown-item mb-4">
+                        <Dropdown.Item onClick={()=>history.push('/teacher/settings')} class="dropdown-item mb-4">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </Dropdown.Item>
@@ -218,7 +303,7 @@ const DashboardTeacher = ({props})  => {
                                      <div class="card-body">
                                          <div class="row no-gutters align-items-center">
                                              <div class="col">
-                                                  <div onClick={()=>setShowCreateCourse(true,setShowCourse(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:10+'px',cursor:'pointer'}}>
+                                                  <div onClick={()=>setShowCreateCourse(true,setShowCourse(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                      Create a course
                                                   </div>
                                                  
@@ -234,8 +319,9 @@ const DashboardTeacher = ({props})  => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                            <div onClick={()=>console.log("download course")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:10+'px',cursor:'pointer'}}>
+                                                            <div onClick={handleClickFileInput} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                             <i className="fa fa-upload"/>  Import Course
+                                                            <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
                                                             </div>
                                                         
                                                     </div>
@@ -243,7 +329,7 @@ const DashboardTeacher = ({props})  => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                            </div>
      
                              
      
@@ -253,12 +339,12 @@ const DashboardTeacher = ({props})  => {
                                      <div class="card-body">
                                          <div class="row no-gutters align-items-center">
                                              <div class="col">
-                                                     <div onClick={()=>console.log("create evaluation")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:10+'px',cursor:'pointer'}}>
+                                                     <div onClick={()=>setShowEvaluationModal(true)} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                         Create Evaluation
                                                      </div>
                                                  
                                              </div>
-                                             
+                                             {showEvaluationModal? <EvaluationModal /> : ''}
                                          </div>
                                      </div>
                                  </div>
@@ -296,45 +382,30 @@ const DashboardTeacher = ({props})  => {
                                     style={{cursor:'pointer'}}
                                     onClick={()=>console.log("launch course")}
                                     >
-                                    <i class="fas fa-video fa-2x"></i>
+                                    <i class="fas fa-video fa-2x text-primary"></i>
                                     <div>Launch</div>
                                  </div>
                                  
                                  <div 
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("enrol student")}
+                                    onClick={()=>setShowListStudentModal(true)}
                                     >
-                                    <i class="fa fa-users fa-2x"></i>
+                                    <i class="fa fa-users fa-2x text-primary"></i>
                                     <div>3</div>
                                  </div>
+                                 {showListStudentModal? <ListStudentModal /> :'' }
 
                                  <div 
                                     class="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("details course")}
+                                    onClick={()=>history.push('/teacher/manage/course')}
                                     >
-                                    <i class="fas fa-eye fa-2x"></i>
+                                    <i class="fas fa-eye fa-2x text-primary"></i>
                                     <div>Details</div>
                                  </div>
 
-                                 <div 
-                                    class="m-0 font-weight-bold text-center col"
-                                    style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("send to")}
-                                    >
-                                    <i class="fas fa-paper-plane fa-2x"></i>
-                                    <div>Send To...</div>
-                                 </div>
-
-                                 <div 
-                                    class="m-0 font-weight-bold text-center col"
-                                    style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("Edit")}
-                                    >
-                                    <i class="fas fa-edit fa-2x"></i>
-                                    <div>Edit</div>
-                                 </div>
+                                 
 
                              </div>
                              
@@ -374,45 +445,32 @@ const DashboardTeacher = ({props})  => {
                                     style={{cursor:'pointer'}}
                                     onClick={()=>console.log("launch course")}
                                     >
-                                    <i class="fas fa-video fa-2x"></i>
+                                    <i class="fas fa-video fa-2x text-primary"></i>
                                     <div>Launch</div>
                                  </div>
                                 
                                  <div 
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("enrol student")}
+                                    onClick={()=>setShowListStudentModal(true)}
                                     >
-                                    <i class="fa fa-users fa-2x"></i>
+                                    <i class="fa fa-users fa-2x text-primary"></i>
                                     <div>3</div>
                                  </div>
+                                 {showListStudentModal? <ListStudentModal  />:'' }
 
                                  <div 
                                     class="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("details course")}
+                                    onClick={()=>history.push('/teacher/manage/course')}
                                     >
-                                    <i class="fas fa-eye fa-2x"></i>
+                                    <i class="fas fa-eye fa-2x text-primary"></i>
                                     <div>Details</div>
                                  </div>
 
-                                 <div 
-                                    class="m-0 font-weight-bold text-center col"
-                                    style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("send to")}
-                                    >
-                                    <i class="fas fa-paper-plane fa-2x"></i>
-                                    <div>Send To...</div>
-                                 </div>
+                                
 
-                                 <div 
-                                    class="m-0 font-weight-bold text-center col"
-                                    style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("Edit")}
-                                    >
-                                    <i class="fas fa-edit fa-2x"></i>
-                                    <div>Edit</div>
-                                 </div>
+                                
 
                              </div>
                              
@@ -439,7 +497,7 @@ const DashboardTeacher = ({props})  => {
                      </div>
 
                  </div>
-                   : showCreateCourse? <CreateCourse /> : ''}  
+                   : showCreateCourse? <CreateCourse onChildClick={outPutEvent} /> : ''}  
                   
                   
 

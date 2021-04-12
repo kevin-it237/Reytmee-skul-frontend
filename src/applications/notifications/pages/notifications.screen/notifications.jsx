@@ -19,24 +19,18 @@ import NotificationBadge from 'react-notification-badge';
 import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import './lesson.scss';
+import './notifications.scss';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
+const Notifications = () => {
 
-
-const  CreateLesson = () => {
     const history = useHistory();
 
-    const [objectiveEditorState, setObjectiveEditorState] = useState(()=>EditorState.createEmpty());
-    const [outlineEditorState, setOutlineEditorState] = useState(()=>EditorState.createEmpty());
-    const [homeworkEditorState, setHomeworkEditorState] = useState(()=>EditorState.createEmpty());
     const [evaluationEditorState, setEvaluationEditorState] = useState(()=>EditorState.createEmpty());
-
-    const [convertedObjectiveContent, setConvertedObjectiveContent] = useState(null);
-    const [convertedOutlineContent, setConvertedOutlineContent] = useState(null);
-    const [convertedHomeworkContent, setConvertedHomeworkContent] = useState(null);
     const [convertedEvaluationContent, setConvertedEvaluationContent] = useState(null);
+    
+    
 
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
@@ -48,51 +42,23 @@ const  CreateLesson = () => {
     const [showCreateCourse,setShowCreateCourse] = useState(false);
     const [showCourse,setShowCourse] = useState(true);
     
-    const handleObjectiveEditorChange = (state) => {
-        setObjectiveEditorState(state);
-        convertObjectiveContentToHTML();
-    }
-    const handleOutlineEditorChange = (state) => {
-        setOutlineEditorState(state);
-        convertOutlineContentToHTML();
-    }
-    const handleHomeworkEditorChange = (state) => {
-        setHomeworkEditorState(state);
-        convertHomeworkContentToHTML();
-    }
     const handleEvaluationEditorChange = (state) => {
         setEvaluationEditorState(state);
         convertEvaluationContentToHTML();
     }
-
-
-    const convertObjectiveContentToHTML = () => {
-        let currentObjectiveContentAsHTML = convertToHTML(objectiveEditorState.getCurrentContent());
-        setConvertedObjectiveContent(currentObjectiveContentAsHTML);
-    }
-    const convertOutlineContentToHTML = () => {
-        let currentOutlineContentAsHTML = convertToHTML(outlineEditorState.getCurrentContent());
-        setConvertedOutlineContent(currentOutlineContentAsHTML );
-    }
-    const convertHomeworkContentToHTML = () => {
-        let currentHomeworkContentAsHTML = convertToHTML(homeworkEditorState.getCurrentContent());
-        setConvertedHomeworkContent(currentHomeworkContentAsHTML );
-    }
+   
     const convertEvaluationContentToHTML = () => {
         let currentEvaluationContentAsHTML = convertToHTML(evaluationEditorState.getCurrentContent());
         setConvertedEvaluationContent(currentEvaluationContentAsHTML);
     }
-
-
-
-    const createMarkup = (html) => {
+       const createMarkup = (html) => {
         return {
             __html: DOMPurify.sanitize(html)
         }
     }
 
 
-    const onChangeCreateLesson = (e) => {
+    const onChangeCreate = (e) => {
         setCreateLessonForm({...createLessonForm,  [e.target.name]: e.target.value })
         
     }
@@ -191,7 +157,6 @@ const  CreateLesson = () => {
         )
     }
     return(
-        
         <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
@@ -210,7 +175,7 @@ const  CreateLesson = () => {
                     <div className='row text-white' style={{fontSize:2+'em',marginLeft: 20+'%'}}>Pierre Mvogo</div>
                     <div className='row text-white' style={{fontSize:1.5+'em',marginLeft: 20+'%'}}>Retymee School</div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>setShowCourse(true,setShowCreateCourse(false))}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/teacher/dashboard')}>
                         <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
                         <div className='col-md-8 text-white'>Dashboard</div>
                     </div>
@@ -361,46 +326,16 @@ const  CreateLesson = () => {
 
                                 <div class="col-xl-3 col-md-3 mb-3"></div>
                                     <div class="col-xl-3 col-md-3 mb-3"></div>
-                                        <div class="col-xl-3 col-md-3 mb-3">
-                                            <div class="card  shadow bg-secondary">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col">
-                                                                <div onClick={()=>console.log("course setting")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                                <i className="fas fa-save"/>  Save Lesson
-                                                                </div>
-                                                            
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                         </div>
-
-                         <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
- 
-                                <div 
-                                    className="col-xl-6 col-lg-8 text-center" 
-                                    style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
-                                    <p className='font-weight-bold'>Course Name:</p> 
-                                    <p>Arithmétique</p>
+                                      
                                 </div>
 
-                                <div 
-                                    className="col-xl-6 col-lg-8 text-center" 
-                                    style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
-                                    <p className='font-weight-bold'>Course Author:</p>
-                                    <p>Pierre mvogo</p>
-                                </div>
-                        </div>
 
-                         <div className='row justify-content-center'>  
+                         <div className='row'>  
                                 
                                         <div class="row no-gutters align-items-center" >
                                             <div class="col">
                                                 <div onClick={()=>console.log("create lesson")} class="text-xs font-weight-bold text-center">
-                                                    <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}>Add Lesson for this Course</span> 
+                                                    <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}></span> 
                                                 </div>
                                                             
                                             </div>
@@ -412,135 +347,27 @@ const  CreateLesson = () => {
 
                   {/*<!-- Content Row --> */}  
 
-                  <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
-
-                       {/*<!-- Area Chart --> */} 
-                        <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className="editor-header">Lesson Name</header>
-                            <input 
-                                type='text'
-                                className='form-control mb-4'
-                                placeholder='Enter Lesson Name here'
-                            />
-                          
-                        </div>
-                       
-                    </div>
-
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
                        {/*<!-- Area Chart --> */} 
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className="editor-header">Lesson Objective</header>
-                            <Editor 
-                                editorState={objectiveEditorState}
-                                onEditorStateChange={handleObjectiveEditorChange}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
-                            />
-                          
-                        </div>
-
-                        
-                       
-                    </div>
-
-                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
-
-                       {/*<!-- Area Chart --> */} 
-                        <div className="col-xl-12 col-lg-12 container-editor" >
-                            <header className='editor-header'>Lesson Outline</header>
-                            <Editor 
-                                editorState={outlineEditorState}
-                                onEditorStateChange={handleOutlineEditorChange}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
-                            />
-                          
-                        </div>
-                       
-                    </div>
-
-                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
-
-                       {/*<!-- Area Chart --> */} 
-                        <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className='editor-header'>Lesson Resources</header>
-                            <table className='table'>
-                                <thead>
-                                    <tr>
-                                        <th scope='col'>File Name</th>
-                                        <th scope='col'>Size</th>
-                                        <th scope='col'></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Object.keys(fileData).map((value,index)=>{ 
-                                        <tr>
-                                            <td>{fileData[value].name}</td>
-                                            <td>{fileData[value].size}</td>
-                                            <td><i className="far fa-window-close" style={{ fontSize:25+'px',color:'#17879C',cursor:'pointer' }}/></td>
-                                        </tr>
-                                       
-                                    })}
-                                       {isFilePicked?
-                                       <tr>
-                                                <td>
-                                                    {selectedFile.name.split('.').pop() === 'pdf'? 
-                                                    <i className="far fa-file-pdf mr-2 text-warning" style={{ fontSize:35+'px'}}/>
-                                                    : selectedFile.name.split('.').pop() === 'docx' ||  selectedFile.name.split('.').pop() === 'doc'?
-                                                    <i className="fas fa-file-word mr-2 text-warning" style={{ fontSize:35+'px'}}/> : '' }
-                                                    {selectedFile.name}
-                                                 </td>
-                                                <td>{selectedFile.size/1000} kB</td>
-                                                <td><i className="far fa-window-close" style={{ fontSize:25+'px',color:'#17879C',cursor:'pointer' }}/></td>
-                                      </tr> 
-
-                                      : ''} 
-                                    
-                                </tbody>
-                            </table>
-                        
-                            <div class="col-xl-3 col-md-3 mb-3">
-                                            <div class="card  shadow bg-white">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                       
-                                                        <div class="col">
-                                                                <div onClick={handleClickFileInput} class="text-xs font-weight-bold text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                                 Add File
-                                                                <input 
-                                                                   type="file" 
-                                                                   onChange={changeHandler}
-                                                                   ref={hiddenFileInput} 
-                                                                   style={{display:'none'}} 
-                                                                />
-                                                                </div>
-                                                            
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                        </div>
+                            <header className="editor-header">Notifications</header>
+                            View your activity and notification history on Retymee School.
+                            <div>
+                                
                             </div>
                           
                         </div>
+
+                        
                        
                     </div>
 
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <div className='editor-header'>Homework</div>
-                            <Editor 
-                              editorState={homeworkEditorState}
-                              onEditorStateChange={handleHomeworkEditorChange}
-                              wrapperClassName="wrapper-class"
-                              editorClassName="editor-class"
-                              toolbarClassName="toolbar-class"
-                            />
+                            
+                            
                           
                         </div>
                        
@@ -549,17 +376,11 @@ const  CreateLesson = () => {
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <div className='editor-header'>Lesson Evaluation</div>
-                            <Editor 
-                                editorState={evaluationEditorState}
-                                onEditorStateChange={handleEvaluationEditorChange}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
-                            />
+                           
+                           
                           
                         </div>
-                        <div dangerouslySetInnerHTML={createMarkup(convertedEvaluationContent)}></div>
+                        
                     </div>
 
                    {/* <!-- Content Row -->*/} 
@@ -587,7 +408,6 @@ const  CreateLesson = () => {
       {/*<!-- End of Content Wrapper --> */}  
 
     </div>
-       
     )
 }
-export default CreateLesson;
+export default Notifications;

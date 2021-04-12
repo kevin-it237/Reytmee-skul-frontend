@@ -4,7 +4,7 @@ import Button from '../../../../app/components/buttons/button/button';
 import {Redirect, useHistory} from 'react-router-dom';
 import './course.scss';
 
-const CreateCourse = () => {
+const CreateCourse = ({onChildClick}) => {
     const history = useHistory();
     const [createCourseForm,setCreateCourseForm] = useState({name: "", description: ""});
 
@@ -19,9 +19,12 @@ const CreateCourse = () => {
             console.log(e);
     }
 
+    const clickHandler=(e)=>{
+            onChildClick(e.target.name);
+    }
+
  
     return(
-
 <div className="container">
 
 <div class="row justify-content-center">
@@ -34,7 +37,7 @@ const CreateCourse = () => {
                 <div class="overflow-auto">
                 <h4 className="h4 title-course text-gray-600 font-weight-bold  text-center" style={{fontSize:2+'em'}}>
                     Add a Course 
-                      <span className='float-right' style={{cursor:'pointer'}} onClick={()=>console.log('rr')}><i class="fa fa-window-close  mr-2 text-blue-400" ></i></span>
+                      <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close  mr-2 text-blue-400" ></i></span>
                 </h4>
                     <div className="auth-container col-lg-6">
                         <div className="p-3" style={{width:50+'vh'}}>
@@ -110,8 +113,7 @@ const CreateCourse = () => {
 </div>
 
 </div>
-
-       
-    )
+              
+    )  
 }
 export default CreateCourse;

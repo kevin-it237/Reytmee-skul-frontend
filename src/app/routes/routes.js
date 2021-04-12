@@ -11,6 +11,11 @@ import DashboardStudent from '../../applications/student/pages/dashboard.screen/
 import DashboardTeacher from '../../applications/teacher/pages/dashboard.screen/dashboard';
 import ManageCourse from '../../applications/course/pages/course.screen/manage_course';
 import CreateLesson from '../../applications/lesson/pages/lesson.screen/create_lesson';
+import ListCourse from '../../applications/course/pages/course.screen/list_course';
+import CourseSettings from '../../applications/settings/pages/settings.screen/course_settings';
+import AccountSettings from '../../applications/settings/pages/settings.screen/account_settings';
+import Notifications from '../../applications/notifications/pages/notifications.screen/notifications';
+import EvaluationCourse from '../../applications/course/pages/course.screen/evaluation_course';
 
 /**
  * @description this is the main routes for the main application src/app. 
@@ -57,7 +62,32 @@ const Routes = () => {
                 <Route 
                     exact
                     component={CreateLesson}
-                    path={'/teacher/course/create/lesson'} />
+                    path={'/teacher/course/lesson/create'} />
+
+                <Route 
+                    exact
+                    component={ListCourse}
+                    path={'/teacher/course/list'} />
+
+                <Route 
+                    exact
+                    component={AccountSettings}
+                    path={'/teacher/settings'} />
+
+                <Route 
+                    exact
+                    component={CourseSettings}
+                    path={'/teacher/course/settings'} />
+
+                <Route 
+                    exact
+                    component={Notifications}
+                    path={'/teacher/notifications'} />
+
+            <Route 
+                    exact
+                    component={EvaluationCourse}
+                    path={'/teacher/course/evaluation/create'} />
 
                 
             </NormalRoute>
