@@ -255,7 +255,7 @@ const AccountSettings = () => {
                         <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
 
-                        <Dropdown.Item href="#/action-1" class="dropdown-item mb-4">
+                        <Dropdown.Item onClick={()=>history.push('/teacher/settings')} class="dropdown-item mb-4">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </Dropdown.Item>
@@ -359,7 +359,7 @@ const AccountSettings = () => {
                     <div class="row mt-5">
                     
                     <div class="col-lg-6 mb-4">
-                        <div class="shadow mb-4 border-none">
+                        <div class="mb-4">
                           
                             <div class="" align="center" onClick={()=>console.log("profile settings")}>
                                 <p style={{fontSize:'calc(10px + 2vmin)'}}>General Settings</p>

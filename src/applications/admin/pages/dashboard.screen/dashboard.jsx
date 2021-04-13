@@ -21,10 +21,13 @@ const DashboardAdmin = ({props})  => {
     const [isTeacher, setIsTeacher] = useState(false);
     const [isHome, setIsHome] = useState(true);
     const [modalInfo, setModalInfo] = useState([]);
-    const [show, setShow] = useState(false);
-
+    const [showTab, setShowTab] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(false)
     const [showStudentModal, setShowStudentModal] = useState(false);
     const [showTeacherModal, setShowTeacherModal] = useState(false);
+
+    const [showStudentTabModal, setShowStudentTabModal] = useState(false);
+    const [showTeacherTabModal, setShowTeacherTabModal] = useState(false);
 
     const [updateFormStudent, setUpdateFormStudent] = useState({name: "", surname: "", email: "", address: "", phonenumber: "",  matricule: "",datenaissance: "" });
     const [updateFormTeacher, setUpdateFormTeacher] = useState({name: "", surname: "", email: "", address: "", phoneNumber: "",  code: "" });
@@ -32,8 +35,11 @@ const DashboardAdmin = ({props})  => {
     const [isUpdate,setIsUpdate] = useState(false);
     const [isDelete,setIsDelete] = useState(false);
     
-    const handleClose = () =>{setShow(false)}
-    const handleShow = () =>{setShow(true)}
+    const handleTabClose = () =>{setShowTab(false)}
+    const handleCloseStudent = () =>{setShowStudentModal(false)}
+    const handleCloseTeacher = () =>{setShowTeacherModal(false)}
+    const handleCloseProfile = () =>{setShowProfileModal(false)}
+    
 
 
 
@@ -72,6 +78,7 @@ const DashboardAdmin = ({props})  => {
                 {dataField: "sex",  text: "Sex"},
                 {dataField: "matricule",  text: "Matricule"},
                 {dataField: "datenaissance",  text: "Date Naissance"},
+                {dataField: "role",  text: "Role"},
                 
                 
                 ];
@@ -104,6 +111,7 @@ const DashboardAdmin = ({props})  => {
                     {dataField: "phonenumber",  text: "Phone Number"},
                     {dataField: "sex",  text: "Sex"},
                     {dataField: "code",  text: "Code"},
+                    {dataField: "role",  text: "Role"},
                     
                 ];
 
@@ -126,27 +134,94 @@ const DashboardAdmin = ({props})  => {
                 ];
 
                     const ModalContentStudent=()=>{
-                       console.log("dfdsfd");
+                       const modalcontstudent = {
+                           title: "Register Student",
+                           bodycontent: <RegisterStudent />
+                       }
                         return(
-                            
+                            <div>
                             <Modals  
-                                show={show} 
-                                onhide={handleClose}
-                                titlecontent="kjdsfjd"
-                                bodycontent={<div>fcd</div>}
-                                footercontent="dsjnhfjnhdsj"
-                            />     
+                                show={showStudentModal} 
+                                onhide={handleCloseStudent}
+                                titlecontent={modalcontstudent.title}
+                                bodycontent={modalcontstudent.bodycontent}
+                                footercontent={modalcontstudent.footercontent}
+                                dialogclassname={"custom-register"}
+                            />    
+                            </div> 
                     )
                     }
                     const ModalContentTeacher=()=>{
-                       
+                        const modalcontteacher = {
+                            title: "Register Teacher",
+                            bodycontent: <RegisterTeacher />
+                        }
                         return(
                             <Modals  
-                                show={show} 
-                                onhide={handleClose}
-                                titlecontent="kjdsfjd"
-                                bodycontent={<div>fcd</div>}
-                                footercontent="dsjnhfjnhdsj"
+                                show={showTeacherModal} 
+                                onhide={handleCloseTeacher}
+                                titlecontent={modalcontteacher.title}
+                                bodycontent={modalcontteacher.bodycontent}
+                                footercontent={modalcontteacher.footercontent}
+                                dialogclassname={"custom-register"}
+                                
+                            />     
+                    )
+                    }
+
+
+                    const ModalContentProfile=()=>{
+                        const modalcontprofile = {
+                            title: "Your Admin Profile",
+                            bodycontent: 
+                            <div class="col-lg-6 mb-4">
+                               <div class="">
+                              
+                                <div class="" align="center" onClick={()=>console.log("profile settings")}>
+                                    <p style={{fontSize:'calc(10px + 2vmin)'}}>General Settings</p>
+
+                                    <form>
+                                        <div className='row mb-3'>
+                                            <label className='col-lg-3 mt-3'>Username: </label>
+                                            <input type='text' id='username' className='col-lg-7' value="Pirate" />
+                                            </div>
+                                        <div className='row mb-3'>
+                                            <label className='col-lg-3 mt-3'>First Name: </label>
+                                            <input type='text' id='username' className='col-lg-7' value="mvogo"/>
+                                            </div> 
+                                        <div className='row mb-5'>
+                                            <label className='col-lg-3 mt-3'>Last Name: </label>
+                                            <input type='text' id='username' className='col-lg-7 mb-5' value="paul"/>
+                                        </div> 
+                                        <div className='row mb-5'>
+                                            <label className='col-lg-3 mt-3'>Email: </label>
+                                            <input type='text' id='email' className='col-lg-7 mb-5' value="paul@gmail.com"/>
+                                        </div> 
+
+                                        <Button 
+                                            variant="warning" 
+                                            type="submit" 
+                                            value="update"
+                                            
+                                            size=""
+                                            className='dashboard-container__button'
+                                        >
+                                        Save
+                                        </Button>
+                                    </form>
+
+                                </div>
+                            </div> 
+                        </div>
+                        }
+                        return(
+                            <Modals  
+                                show={showProfileModal} 
+                                onhide={handleCloseProfile}
+                                titlecontent={modalcontprofile.title}
+                                bodycontent={modalcontprofile.bodycontent}
+                                footercontent={modalcontprofile.footercontent}
+                                dialogclassname={"custom-profile"}
                                 
                             />     
                     )
@@ -209,11 +284,12 @@ const DashboardAdmin = ({props})  => {
                         return( 
                         
                             <Modals  
-                                show={show} 
-                                onhide={handleClose}
+                                show={showTab} 
+                                onhide={handleTabClose}
                                 titlecontent={modalcont.title}
                                 bodycontent={modalcont.bodycontent}
                                 footercontent={modalcont.footercontent}
+                                dialogclassname={"custom-tabuser"}
                             />
                                    
                         )
@@ -229,7 +305,7 @@ const DashboardAdmin = ({props})  => {
                         selectColumnPosition: 'right',
                         headerColumnStyle:{backgroundColor: 'blue'},
                         onSelect: (row,isSelect,rowIndex,e) =>{
-                            setShow(!show,setShowStudentModal(!showStudentModal));
+                            setShowTab(!showTab,setShowStudentTabModal(!showStudentTabModal));
                             setModalInfo(row);
                             console.log(row);
                         }
@@ -241,7 +317,7 @@ const DashboardAdmin = ({props})  => {
                         selectColumnPosition: 'right',
                         headerColumnStyle:{backgroundColor: 'yellow'},
                         onSelect: (row,isSelect,rowIndex,e) =>{
-                            setShow(!show,setShowTeacherModal(!showTeacherModal)); 
+                            setShowTab(!showTab,setShowTeacherTabModal(!showTeacherTabModal)); 
                             setModalInfo(row);
                             console.log(row);
                         }
@@ -266,23 +342,27 @@ const DashboardAdmin = ({props})  => {
                         <div className='col-md-8 text-white'>Home</div>
                     </div>
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setIsStudent(true,setIsTeacher(false),setIsHome(false))}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setShowStudentModal(true)}>
                         <div className='col-md-2'><i className="fa fa-fw fa-users text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
                         <div className='col-md-8 text-white'>Add Student</div>
                         
                     </div>
+                    {showStudentModal? <ModalContentStudent /> : ''}
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setIsTeacher(true,setIsStudent(false),setIsHome(false))}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setShowTeacherModal(true)}>
                          <div className='col-md-2'><i className="fas fa-chalkboard-teacher text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                          <div className='col-md-8 text-white'>Add Teacher</div>
+                         
                     </div>
+                    {showTeacherModal? <ModalContentTeacher /> : ''}
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>console.log("")}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setShowProfileModal(true)}>
                          <div className='col-md-2'><i className="fa fa-user text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                          <div className='col-md-8 text-white'>Profile</div>
                     </div>
+                    {showProfileModal? <ModalContentProfile /> : ''}
                     <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>console.log("")}>
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={handleLogout}>
                          <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                          <div className='col-md-8 text-white'>Logout</div>
                     </div>
@@ -336,7 +416,7 @@ const DashboardAdmin = ({props})  => {
                         <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
 
-                        <Dropdown.Item href="#/action-1" class="dropdown-item mb-4">
+                        <Dropdown.Item onClick={()=>setShowProfileModal(true)} class="dropdown-item mb-4">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </Dropdown.Item>
@@ -363,7 +443,7 @@ const DashboardAdmin = ({props})  => {
                    {isHome? 
                       <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard Administrator</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        {/*<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>*/}
                     </div> : ''}   
 
                    {/*<!-- Content Row --> */} 
@@ -418,8 +498,10 @@ const DashboardAdmin = ({props})  => {
                             
 
                             { 
-                            isStudent ? <RegisterStudent /> : isTeacher? <RegisterTeacher /> : isHome?
+                             isHome?
                             <div>
+                                
+                                <Button className="font-weight-bold text-primary float-right mb-5" onClick={()=>setShowStudentModal(true)} style={{fontSize: 15+'px'}}>Add Student</Button>
                                 <span className="font-weight-bold text-primary" style={{fontSize: 15+'px'}}>Student</span>
                                 <BootStrapTable 
                                         
@@ -431,7 +513,7 @@ const DashboardAdmin = ({props})  => {
                                         
                                 />
                                  <div class="topbar-divider d-none d-sm-block mb-5"></div>
-                                 
+                                 <Button className="font-weight-bold text-warning float-right mb-5" onClick={()=>setShowTeacherModal(true)} style={{fontSize: 15+'px'}}>Add Teacher</Button>
                                 <span className="font-weight-bold text-warning" style={{fontSize: 15+'px'}}>Teacher</span>
                                 <BootStrapTable 
                                         keyField="id"
@@ -440,7 +522,7 @@ const DashboardAdmin = ({props})  => {
                                         pagination={paginationFactory()} 
                                         selectRow={selectTeacherRow} 
                                 />
-                                {show? <ModalContent /> : 'null' }
+                                {showTab? <ModalContent /> : 'null' }
                             </div>  : 'Noting to show'
                             } 
             

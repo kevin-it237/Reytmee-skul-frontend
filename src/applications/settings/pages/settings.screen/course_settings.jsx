@@ -357,7 +357,7 @@ const CourseSettings = () => {
                     <div class="row mt-5">
                     
                     <div class="col-lg-6 mb-4">
-                        <div class="shadow mb-4 border-none">
+                        <div class=" mb-4 ">
                           
                             <div class="" align="center" onClick={()=>console.log("profile settings")}>
                                 <p style={{fontSize:'calc(10px + 2vmin)'}}>General Settings</p>
