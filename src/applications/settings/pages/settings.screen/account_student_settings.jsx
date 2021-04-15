@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Button from '../../../../app/components/buttons/button/button';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
@@ -19,7 +20,7 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import './settings.scss';
 
-const AccountSettings = () => {
+const AccountStudentSettings = () => {
 
     const history = useHistory()
     const [displaySide,setDisplaySide] = useState('none');
@@ -139,54 +140,48 @@ const AccountSettings = () => {
             setDisplaySide('none');
         }
     }
-
-
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
         <Sidebar width={260} height={"100%"} display={displaySide}>
-                <div style={{marginTop:25+'%'}}>
-
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
-                           <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
-                               <Avatar 
-                                    size="100"
-                                    round={true}
-                                    src={profileImg}
-                               /> </div> 
-                       
-                    </div>
-                    <div className='row text-white' style={{fontSize:2+'em',marginLeft: 20+'%'}}>Pierre Mvogo</div>
-                    <div className='row text-white' style={{fontSize:1.5+'em',marginLeft: 20+'%'}}>Retymee School</div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/teacher/dashboard')}>
-                        <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Dashboard</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/notifications')}>
-                        <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Notifications</div>
-                        
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/course/list')}>
-                         <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Manages Courses</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/settings')}>
-                         <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Accounts settings</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
-                         <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Logout</div>
-                    </div>
-                </div> 
-            </Sidebar>
+                    <div style={{marginTop:25+'%'}}>
+    
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
+                               <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
+                                   <Avatar 
+                                        size="100"
+                                        round={true}
+                                        src={profileImg}
+                                   /> </div> 
+                           
+                        </div>
+                        <div className='row text-white justify-content-center' style={{fontSize:2+'em'}}>Paul aris</div>
+                        <div className='row text-white justify-content-center' style={{fontSize:1.5+'em'}}>Retymee School Student</div>
+                        <hr/>
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/student/dashboard')}>
+                            <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                            <div className='col-md-8 text-white'>Dashboard</div>
+                        </div>
+                        <hr/>
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/student/notifications')}>
+                            <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                            <div className='col-md-8 text-white'>Notifications</div>
+                            
+                        </div>
+                        <hr/>
+                
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/student/settings')}>
+                             <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                             <div className='col-md-8 text-white'>Accounts settings</div>
+                        </div>
+                        <hr/>
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
+                             <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                             <div className='col-md-8 text-white'>Logout</div>
+                        </div>
+                    </div> 
+                </Sidebar>
         {/* <!-- End of Sidebar -->*/} 
 
 
@@ -255,7 +250,7 @@ const AccountSettings = () => {
                         <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
 
-                        <Dropdown.Item onClick={()=>history.push('/teacher/settings')} class="dropdown-item mb-4">
+                        <Dropdown.Item onClick={()=>history.push('/student/settings')} class="dropdown-item mb-4">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </Dropdown.Item>
@@ -296,7 +291,7 @@ const AccountSettings = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/teacher/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                        <div onClick={()=>history.push('/student/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                         <i className="fas fa-chevron-left"/> Dashboard
                                                         </div>
                                                         
@@ -424,6 +419,6 @@ const AccountSettings = () => {
       {/*<!-- End of Content Wrapper --> */}  
 
     </div>
-    )
+    ) 
 }
-export default AccountSettings;
+export default AccountStudentSettings;

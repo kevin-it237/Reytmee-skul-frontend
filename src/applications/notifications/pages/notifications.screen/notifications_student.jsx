@@ -19,13 +19,13 @@ import NotificationBadge from 'react-notification-badge';
 import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import './course.scss';
+import './notifications.scss';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
 
+const NotificationStudent = () => {
 
-const EvaluationCourse = () => {
     const history = useHistory();
 
     const [evaluationEditorState, setEvaluationEditorState] = useState(()=>EditorState.createEmpty());
@@ -157,52 +157,49 @@ const EvaluationCourse = () => {
             />
         )
     }
+
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
         <Sidebar width={260} height={"100%"} display={displaySide}>
-                <div style={{marginTop:25+'%'}}>
-
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
-                           <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
-                               <Avatar 
-                                    size="100"
-                                    round={true}
-                                    src={profileImg}
-                               /> </div> 
-                       
-                    </div>
-                    <div className='row text-white' style={{fontSize:2+'em',marginLeft: 20+'%'}}>Pierre Mvogo</div>
-                    <div className='row text-white' style={{fontSize:1.5+'em',marginLeft: 20+'%'}}>Retymee School</div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/teacher/dashboard')}>
-                        <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Dashboard</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/notifications')}>
-                        <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Notifications</div>
-                        
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/course/list')}>
-                         <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Manages Courses</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/settings')}>
-                         <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Accounts settings</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
-                         <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Logout</div>
-                    </div>
-                </div> 
-            </Sidebar>
+                    <div style={{marginTop:25+'%'}}>
+    
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
+                               <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
+                                   <Avatar 
+                                        size="100"
+                                        round={true}
+                                        src={profileImg}
+                                   /> </div> 
+                           
+                        </div>
+                        <div className='row text-white justify-content-center' style={{fontSize:2+'em'}}>Paul aris</div>
+                        <div className='row text-white justify-content-center' style={{fontSize:1.5+'em'}}>Retymee School Student</div>
+                        <hr/>
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/student/dashboard')}>
+                            <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                            <div className='col-md-8 text-white'>Dashboard</div>
+                        </div>
+                        <hr/>
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/student/notifications')}>
+                            <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                            <div className='col-md-8 text-white'>Notifications</div>
+                            
+                        </div>
+                        <hr/>
+                
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/student/settings')}>
+                             <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                             <div className='col-md-8 text-white'>Accounts settings</div>
+                        </div>
+                        <hr/>
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
+                             <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                             <div className='col-md-8 text-white'>Logout</div>
+                        </div>
+                    </div> 
+                </Sidebar>
         {/* <!-- End of Sidebar -->*/} 
 
 
@@ -327,39 +324,9 @@ const EvaluationCourse = () => {
 
                                 <div class="col-xl-3 col-md-3 mb-3"></div>
                                     <div class="col-xl-3 col-md-3 mb-3"></div>
-                                        <div class="col-xl-3 col-md-3 mb-3">
-                                            <div class="card  shadow bg-secondary">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col">
-                                                                <div onClick={()=>console.log("course setting")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                                <i className="fas fa-save"/>  Save Evaluation
-                                                                </div>
-                                                            
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                         </div>
-
-                         <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
- 
-                                <div 
-                                    className="col-xl-6 col-lg-8 text-center" 
-                                    style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
-                                    <p className='font-weight-bold'>Course Name:</p> 
-                                    <p>Arithmétique</p>
+                                      
                                 </div>
 
-                                <div 
-                                    className="col-xl-6 col-lg-8 text-center" 
-                                    style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
-                                    <p className='font-weight-bold'>Course Author:</p>
-                                    <p>Pierre mvogo</p>
-                                </div>
-                        </div>
 
                          <div className='row'>  
                                 
@@ -382,14 +349,11 @@ const EvaluationCourse = () => {
 
                        {/*<!-- Area Chart --> */} 
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className="editor-header">Create Evaluation for this Course</header>
-                            <Editor 
-                                editorState={evaluationEditorState}
-                                onEditorStateChange={handleEvaluationEditorChange}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
-                            />
+                            <header className="editor-header">Notifications</header>
+                            View your activity and notification history on Retymee School.
+                            <div>
+                                
+                            </div>
                           
                         </div>
 
@@ -414,7 +378,7 @@ const EvaluationCourse = () => {
                            
                           
                         </div>
-                        {/*<div dangerouslySetInnerHTML={createMarkup(convertedEvaluationContent)}></div> */}
+                        
                     </div>
 
                    {/* <!-- Content Row -->*/} 
@@ -444,4 +408,4 @@ const EvaluationCourse = () => {
     </div>
     )
 }
-export default EvaluationCourse;
+export default NotificationStudent;

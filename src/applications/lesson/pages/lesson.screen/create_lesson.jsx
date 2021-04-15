@@ -559,7 +559,7 @@ const  CreateLesson = () => {
                             />
                           
                         </div>
-                        <div dangerouslySetInnerHTML={createMarkup(convertedEvaluationContent)}></div>
+                       {/* <div dangerouslySetInnerHTML={createMarkup(convertedEvaluationContent)}></div>*/}
                     </div>
 
                    {/* <!-- Content Row -->*/} 

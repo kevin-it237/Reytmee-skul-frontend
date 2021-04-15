@@ -164,8 +164,8 @@ const DashboardTeacher = ({props})  => {
                                /> </div> 
                        
                     </div>
-                    <div className='row text-white' style={{fontSize:2+'em',marginLeft: 20+'%'}}>Pierre Mvogo</div>
-                    <div className='row text-white' style={{fontSize:1.5+'em',marginLeft: 20+'%'}}>Retymee School</div>
+                    <div className='row text-white justify-content-center' style={{fontSize:2+'em'}}>Pierre Mvogo</div>
+                    <div className='row text-white justify-content-center' style={{fontSize:1.5+'em'}}>Retymee School Educator</div>
                     <hr/>
                     <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>setShowCourse(true,setShowCreateCourse(false))}>
                         <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
@@ -231,7 +231,7 @@ const DashboardTeacher = ({props})  => {
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
-                    <Dropdown class="nav-item dropdown no-arrow" style={{zIndex: 10000}}>
+                    <Dropdown class="nav-item dropdown no-arrow">
                         <Dropdown.Toggle variant='light' onClick={createNotification('success')}>
                            <NotificationBadge count={5} effect={Effect.SCALE} style={{fontSize:10+'px'}}/>
                            <i className="fas fa-bell text-dark" style={{fontSize:20+'px'}}/>
@@ -254,7 +254,7 @@ const DashboardTeacher = ({props})  => {
                         </Dropdown.Menu>
                     </Dropdown>
 
-                    <Dropdown class="nav-item dropdown no-arrow " style={{zIndex: 10000}}>
+                    <Dropdown class="nav-item dropdown no-arrow " >
                         <Dropdown.Toggle variant='light'>
                         <i className="fas fa-cog text-dark"/>
                         </Dropdown.Toggle>
@@ -380,7 +380,7 @@ const DashboardTeacher = ({props})  => {
                                  <div 
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("launch course")}
+                                    onClick={()=>history.push('/teacher/video')}
                                     >
                                     <i class="fas fa-video fa-2x text-primary"></i>
                                     <div>Launch</div>
@@ -443,7 +443,7 @@ const DashboardTeacher = ({props})  => {
                                  <div 
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>console.log("launch course")}
+                                    onClick={()=>history.push('/teacher/video')}
                                     >
                                     <i class="fas fa-video fa-2x text-primary"></i>
                                     <div>Launch</div>

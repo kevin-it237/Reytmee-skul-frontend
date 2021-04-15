@@ -16,7 +16,9 @@ import CourseSettings from '../../applications/settings/pages/settings.screen/co
 import AccountSettings from '../../applications/settings/pages/settings.screen/account_settings';
 import Notifications from '../../applications/notifications/pages/notifications.screen/notifications';
 import EvaluationCourse from '../../applications/course/pages/course.screen/evaluation_course';
-
+import VideoConf from '../../applications/videoconf/pages/videoconf.screen/videoconf';
+import AccountStudentSettings from '../../applications/settings/pages/settings.screen/account_student_settings';
+import NotificationStudent from '../../applications/notifications/pages/notifications.screen/notifications_student';
 /**
  * @description this is the main routes for the main application src/app. 
  */
@@ -84,10 +86,25 @@ const Routes = () => {
                     component={Notifications}
                     path={'/teacher/notifications'} />
 
-            <Route 
+                <Route 
+                    exact
+                    component={NotificationStudent}
+                    path={'/student/notifications'} />          
+
+                <Route 
                     exact
                     component={EvaluationCourse}
                     path={'/teacher/course/evaluation/create'} />
+
+                <Route 
+                    exact
+                    component={VideoConf}
+                    path={'/teacher/video'} />
+
+                <Route 
+                    exact
+                    component={AccountStudentSettings}
+                    path={'/student/settings'} />
 
                 
             </NormalRoute>

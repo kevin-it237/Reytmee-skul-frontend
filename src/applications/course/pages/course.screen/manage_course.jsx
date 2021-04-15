@@ -104,9 +104,13 @@ const ManageCourse = () => {
     const invitemodal = {
         title: "Invite Student to Course",
         bodycontent: 
-           <div>
-              
+        <form> 
+           <div className='row form-group'>
+              <label className='col-md-3' id='email'>Email: </label>
+              <input type='email' className='form-control col-md-8 float-right' placeholder='Enter Email for Student' />
            </div>
+           <Button variant='warning' className='float-right'>Send Invitation</Button>
+        </form>
   }
   const ContentInviteModal = () => {
       return(
