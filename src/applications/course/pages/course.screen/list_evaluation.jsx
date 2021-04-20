@@ -20,14 +20,15 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import './course.scss';
 import CreateCourse from '../../../course/pages/course.screen/create_course';
+import EvaluationCourse from './evaluation_course';
 
 
-const ListCourse = ({isUserDisplayList,onChildClick}) => {
+const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
     const history = useHistory();
     const [displaySide,setDisplaySide] = useState('none');
 
-    const [showCreateCourse,setShowCreateCourse] = useState(false);
-    const [showListCourse,setShowListCourse] = useState(true);
+    const [showCreateEvaluation,setShowCreateEvaluation] = useState(false);
+    const [showListEvaluation,setShowListEvaluation] = useState(true);
 
     const outPutEvent=(e)=> {
         if(displaySide == 'none'){
@@ -42,7 +43,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
         onChildClick(e.target.name);
     }
     const outPutShowEvent=(e)=> {
-        setShowCreateCourse(false,setShowListCourse(true));
+        setShowCreateEvaluation(false,setShowListEvaluation(true));
     }
     
     const handleSideNavBody = () => {
@@ -98,12 +99,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                 {isUserDisplayList==="teacher"?
                 <div className="container">
 
-                  {/*<!-- Page Heading --> */}  
-                    
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"></h1>
-                        
-                    </div>    
+                  {/*<!-- Page Heading --> */}     
 
                    {/*<!-- Content Row --> */} 
                      
@@ -123,8 +119,8 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-            */}
+                                    </div>*/}
+            
                                 {/* <!-- Pending Requests Card Example --> 
                                     
 
@@ -133,8 +129,8 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                            <div onClick={()=>setShowCreateCourse(true,setShowListCourse(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                            <i className="fa fa-cog"/>  Create Course
+                                                            <div onClick={()=>setShowCreateEvaluation(true,setShowListEvaluation(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
+                                                            <i className="fa fa-cog"/>  Create Evaluation
                                                             </div>
                                                         
                                                     </div>
@@ -147,14 +143,14 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                        
                          </div>
 
-                        {showListCourse?
+                        {showListEvaluation?
                         <div> 
                             <div className='row '>  
                                     
                                             <div class="row no-gutters" >
                                                 <div class="col">
                                                     <div onClick={()=>console.log("create lesson")} class="text-xs font-weight-bold">
-                                                        <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}>Courses</span> 
+                                                        <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}>Evaluations</span> 
                                                     </div>
                                                                 
                                                 </div>
@@ -173,35 +169,52 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
 
                         {/*<!-- Area Chart --> */} 
                             <div className="col-xl-12 col-lg-12 container-editor">
-                                <header className="editor-header">Current Courses</header>
+                                <header className="editor-header">Your Current Evaluations</header>
                                 <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close fa-2x text-blue-400" ></i></span>
                                 <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Course Name</th>
-                                        <th>Course Author</th>
-                                        <th>Open</th>
+                                        <th>Course</th>
+                                        <th>Author</th>
+                                        <th>type</th>
+                                        <th>Duration</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Details</th>
                                         <th>Edit</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className='justify-content-center'>Arithmetique</td>
                                         <td>Pierre mvogo</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        <td>Session normale</td>
+                                        <td>2h</td>
+                                        <td>05/11/2020</td>
+                                        <td>In progress</td>
+                                        <td><i className='fas fa-eye text-primary'></i></td>
+                                        <td><i className='fas fa-edit text-primary'></i></td>
                                     </tr>
                                     <tr>
-                                        <td>Anglais</td>
-                                        <td>Ali pirate</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        <td className='justify-content-center'>Anglais</td>
+                                        <td>Aris pirate</td>
+                                        <td>Controle continue</td>
+                                        <td>1h</td>
+                                        <td>05/11/2012</td>
+                                        <td>Not start</td>
+                                        <td><i className='fas fa-eye text-primary'></i></td>
+                                        <td><i className='fas fa-edit text-primary'></i></td>
                                     </tr>
                                     <tr>
-                                        <td>Programmation C++</td>
-                                        <td>Paul jovi</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        <td className='justify-content-center'>Programmation C++</td>
+                                        <td>Paul Jean</td>
+                                        <td>Session normale</td>
+                                        <td>3h</td>
+                                        <td>05/11/2015</td>
+                                        <td>In progress</td>
+                                        <td><i className='fas fa-eye text-primary'></i></td>
+                                        <td><i className='fas fa-edit text-primary'></i></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -210,7 +223,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                         
                         </div>
                     </div>
-                    : showCreateCourse? <CreateCourse onChildClick={outPutShowEvent} /> : ''}
+                    : showCreateEvaluation? <EvaluationCourse  /> : ''}
              
                 </div>: 
                  isUserDisplayList==="student"?
@@ -218,35 +231,49 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
 
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className="editor-header">List of Courses</header>
+                            <header className="editor-header">Current Evaluations</header>
                             <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close fa-2x text-blue-400" ></i></span>
                             <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Course Name</th>
-                                        <th>Course Author</th>
-                                        <th>Open</th>
-                                        <th>Download</th>
+                                        <th>Course</th>
+                                        <th>Author</th>
+                                        <th>type</th>
+                                        <th>Duration</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Start</th>
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td className='justify-content-center'>Arithmetique</td>
                                         <td>Pierre mvogo</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-download text-primary' /></td>
+                                        <td>Session normale</td>
+                                        <td>2h</td>
+                                        <td>05/11/2020</td>
+                                        <td>In progress</td>
+                                        <td><i className='fas fa-rocket text-primary'></i></td>
                                     </tr>
                                     <tr>
-                                        <td>Anglais</td>
-                                        <td>Ali pirate</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-download text-primary' /></td>
+                                        <td className='justify-content-center'>Anglais</td>
+                                        <td>Aris pirate</td>
+                                        <td>Controle continue</td>
+                                        <td>1h</td>
+                                        <td>05/11/2012</td>
+                                        <td>Not start</td>
+                                        <td><i className='fas fa-rocket text-primary'></i></td>
                                     </tr>
                                     <tr>
-                                        <td>Programmation C++</td>
-                                        <td>Paul jovi</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-download text-primary' /></td>
+                                        <td className='justify-content-center'>Programmation C++</td>
+                                        <td>Paul Jean</td>
+                                        <td>Session normale</td>
+                                        <td>3h</td>
+                                        <td>05/11/2015</td>
+                                        <td>In progress</td>
+                                        <td><i className='fas fa-rocket text-primary'></i></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -284,4 +311,4 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
     )
     
 }
-export default ListCourse;
+export default ListEvaluation;

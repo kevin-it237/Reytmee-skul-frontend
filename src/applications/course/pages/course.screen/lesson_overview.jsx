@@ -24,16 +24,14 @@ import './course.scss';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
+const LessonOverview = ({isUserDisplayList,onChildClick}) => {
 
 
-const EvaluationCourse = () => {
     const history = useHistory();
 
     const [evaluationEditorState, setEvaluationEditorState] = useState(()=>EditorState.createEmpty());
     const [convertedEvaluationContent, setConvertedEvaluationContent] = useState(null);
     
-    
-
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
     const [showModal,setShowModal] = useState(false);
@@ -59,6 +57,9 @@ const EvaluationCourse = () => {
         }
     }
 
+    const clickHandler=(e)=>{
+        onChildClick(e.target.name);
+    }
 
     const onChangeCreate = (e) => {
         setCreateLessonForm({...createLessonForm,  [e.target.name]: e.target.value })
@@ -159,11 +160,12 @@ const EvaluationCourse = () => {
             />
         )
     }
+
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
-        <Sidebar width={260} height={"100%"} display={displaySide} isUserSidebar={"teacher"}></Sidebar>
+       
         {/* <!-- End of Sidebar -->*/} 
 
 
@@ -175,18 +177,22 @@ const EvaluationCourse = () => {
             
 
                {/*<!-- Topbar --> */} 
-               <Topbar isUserTopbar={"teacher"} isDisplaySide={displaySide} onChildClick={outPutEvent} />
+               
                {/* <!-- End of Topbar -->*/} 
 
 
                {/*<!-- Begin Page Content --> */} 
+
+               {isUserDisplayList==="student"?
+               
+           
                 <div className="container">
 
                   {/*<!-- Page Heading --> */}  
                     
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"></h1>
-                       
+                        <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close fa-2x text-blue-400" ></i></span>
                     </div>    
 
                    {/*<!-- Content Row --> */} 
@@ -199,8 +205,8 @@ const EvaluationCourse = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/teacher/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                        <i className="fas fa-chevron-left"/> Dashboard
+                                                        <div onClick={clickHandler} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
+                                                        <i className="fas fa-chevron-left"/>
                                                         </div>
                                                         
                                                     </div>
@@ -209,7 +215,7 @@ const EvaluationCourse = () => {
                                         </div>
                                     </div>
             
-                                {/* <!-- Pending Requests Card Example -->*/}  
+                                {/* <!-- Pending Requests Card Example -->  
                                     
 
                                 <div class="col-xl-3 col-md-3 mb-3"></div>
@@ -228,7 +234,7 @@ const EvaluationCourse = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*/}
                          </div>
 
                          <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
@@ -236,15 +242,8 @@ const EvaluationCourse = () => {
                                 <div 
                                     className="col-xl-6 col-lg-8 text-center" 
                                     style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
-                                    <p className='font-weight-bold'>Course Name:</p> 
-                                    <p>Arithmétique</p>
-                                </div>
-
-                                <div 
-                                    className="col-xl-6 col-lg-8 text-center" 
-                                    style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
-                                    <p className='font-weight-bold'>Course Author:</p>
-                                    <p>Pierre mvogo</p>
+                                    <p className='font-weight-bold'>Lesson Name:</p> 
+                                    <p>LES BASES DE JAVASCRIPT</p>
                                 </div>
                         </div>
 
@@ -269,14 +268,11 @@ const EvaluationCourse = () => {
 
                        {/*<!-- Area Chart --> */} 
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className="editor-header">Create Evaluation for this Course</header>
-                            <Editor 
-                                editorState={evaluationEditorState}
-                                onEditorStateChange={handleEvaluationEditorChange}
-                                wrapperClassName="wrapper-class"
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
-                            />
+                            <header className="editor-header">Lesson Objective</header>
+                            <p>
+                                view here objective of lesson
+                            </p>
+                            
                           
                         </div>
 
@@ -284,11 +280,32 @@ const EvaluationCourse = () => {
                        
                     </div>
 
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
+
+                        {/*<!-- Area Chart --> */} 
+                        <div 
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Lesson Outline</p> 
+                            <p></p>
+                        </div>
+
+                        <div 
+                            className="col-xl-6 col-lg-8 text-center" 
+                            style={{fontSize:'calc(3px + 2vmin)'}}>
+                            
+                            
+                        </div>
+                    </div>
+
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 
                         <div className="col-xl-12 col-lg-12 container-editor">
                             
-                            
+                        <header className="editor-header">Lesson Ressouces</header>
+                            <p>
+                                view here ressource of lesson
+                            </p>
                           
                         </div>
                        
@@ -298,22 +315,200 @@ const EvaluationCourse = () => {
 
                         <div className="col-xl-12 col-lg-12 container-editor">
                            
-                           
+                        <header className="editor-header">Lesson Homework</header>
+                            <p>
+                                view here homework of lesson
+                            </p>
                           
                         </div>
-                        {/*<div dangerouslySetInnerHTML={createMarkup(convertedEvaluationContent)}></div> */}
+                        
                     </div>
 
-                   {/* <!-- Content Row -->*/} 
-
-
-                   
-                     <div class="row mt-5">
-
-                     </div>
               
 
                 </div>
+                : 
+                isUserDisplayList==="teacher"?
+                
+                <div className="container">
+
+                  {/*<!-- Page Heading --> */}  
+                    
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800"></h1>
+                       
+                    </div>    
+
+                   {/*<!-- Content Row --> */} 
+                     
+                            <div class="row">
+
+                            {/* <!-- Earnings (Monthly) Card Example --> */}
+                                    <div class="col-xl-3 col-md-3 mb-3">
+                                        <div class="card  shadow" style={{backgroundColor:'#17879C'}}>
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col">
+                                                        <div onClick={clickHandler} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
+                                                        <i className="fas fa-arrow-left"/>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                {/* <!-- Pending Requests Card Example -->
+                                    
+
+                                <div class="col-xl-3 col-md-3 mb-3"></div>
+                                    <div class="col-xl-3 col-md-3 mb-3"></div>
+                                        <div class="col-xl-3 col-md-3 mb-3">
+                                            <div class="card  shadow bg-secondary">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col">
+                                                                <div onClick={()=>console.log("course setting")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
+                                                                <i className="fas fa-save"/>  Save Evaluation
+                                                                </div>
+                                                            
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*/}  
+                         </div>
+
+                         <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
+ 
+                                <div 
+                                    className="col-xl-6 col-lg-8 text-center" 
+                                    style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
+                                    <p className='font-weight-bold'>Lesson Name:</p> 
+                                    <p>LES BASES DE JAVASCRIPT</p>
+                                </div>
+                        </div>
+
+                         <div className='row'>  
+                                
+                                        <div class="row no-gutters align-items-center" >
+                                            <div class="col">
+                                                <div onClick={()=>console.log("create lesson")} class="text-xs font-weight-bold text-center">
+                                                    <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}></span> 
+                                                </div>
+                                                            
+                                            </div>
+                                                        
+                                        </div>
+                         </div>
+
+                         
+
+                  {/*<!-- Content Row --> */}  
+
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
+
+                       {/*<!-- Area Chart --> */} 
+                        <div className="col-xl-12 col-lg-12 container-editor">
+                        
+                            <div 
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Lesson Objective</p> 
+                            <p></p>
+                        </div>
+                            
+                            <p>
+                                view here objective of lesson
+                            </p>
+                            
+                          
+                        </div>
+
+                        
+                       
+                    </div>
+
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
+                    <div className="col-xl-12 col-lg-12 container-editor">
+                        {/*<!-- Area Chart --> */} 
+                        <div 
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Lesson Outline</p> 
+                            <p></p>
+                        </div>
+
+                        
+                        <p>
+                                View here your lesson Outline
+                        </p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
+
+                        <div className="col-xl-12 col-lg-12 container-editor">
+                            
+                        
+                        <div 
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Lesson Ressources</p> 
+                            <p></p>
+                        </div>
+                        
+                            <p>
+                                view here ressources of lesson
+                            </p>
+                          
+                        </div>
+                       
+                    </div>
+
+                    <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
+
+                        <div className="col-xl-12 col-lg-12 container-editor">
+                           
+                        
+                        <div 
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Lesson Homework</p> 
+                            <p></p>
+                        </div>
+                            <p>
+                                view here homework of lesson
+                            </p>
+                          
+                        </div>
+                        
+                    </div>
+
+                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
+
+                        <div className="col-xl-12 col-lg-12 container-editor">
+                           
+                        
+                        <div 
+                            className="col-xl-6 col-lg-8" 
+                            style={{fontSize:'calc(10px + 2vmin)'}}>
+                            <p className='font-weight-bold'>Lesson Evaluation</p> 
+                            <p></p>
+                        </div>
+                            <p>
+                                view here Evaluation of lesson
+                            </p>
+                          
+                        </div>
+                        
+                    </div>
+
+              
+
+                </div>: ''}
                {/* <!-- /.container-fluid -->*/} 
 
             </div>
@@ -331,4 +526,4 @@ const EvaluationCourse = () => {
     </div>
     )
 }
-export default EvaluationCourse;
+export default LessonOverview;

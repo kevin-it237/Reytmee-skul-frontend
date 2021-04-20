@@ -22,7 +22,7 @@ import './course.scss';
 import CreateCourse from '../../../course/pages/course.screen/create_course';
 
 
-const ListCourse = ({isUserDisplayList,onChildClick}) => {
+const Results = ({isUserDisplayList,onChildClick}) => {
     const history = useHistory();
     const [displaySide,setDisplaySide] = useState('none');
 
@@ -41,6 +41,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
     const clickHandler=(e)=>{
         onChildClick(e.target.name);
     }
+
     const outPutShowEvent=(e)=> {
         setShowCreateCourse(false,setShowListCourse(true));
     }
@@ -109,7 +110,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                      
                             <div class="row">
 
-                            {/* <!-- Earnings (Monthly) Card Example --> 
+                            {/* <!-- Earnings (Monthly) Card Example --> */}
                                     <div class="col-xl-3 col-md-3 mb-3">
                                         <div class="card  shadow" style={{backgroundColor:'#17879C'}}>
                                             <div class="card-body">
@@ -124,8 +125,8 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                             </div>
                                         </div>
                                     </div>
-            */}
-                                {/* <!-- Pending Requests Card Example --> 
+            
+                                {/* <!-- Pending Requests Card Example -->*/}  
                                     
 
                                     <div class="col-xl-3 col-md-3 mb-3">
@@ -142,7 +143,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>*/} 
+                                    </div>
                                     <div class="col-xl-3 col-md-3 mb-3"></div>
                                        
                          </div>
@@ -154,7 +155,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                             <div class="row no-gutters" >
                                                 <div class="col">
                                                     <div onClick={()=>console.log("create lesson")} class="text-xs font-weight-bold">
-                                                        <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}>Courses</span> 
+                                                        <span className='mr-2' style={{fontSize:'calc(10px + 2vmin)'}}>Evaluations Results</span> 
                                                     </div>
                                                                 
                                                 </div>
@@ -178,29 +179,36 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                 <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Course Name</th>
-                                        <th>Course Author</th>
-                                        <th>Open</th>
+                                        <th>Course</th>
+                                        <th>Student</th>
+                                        <th>Note/20</th>
+                                        <th>Author</th>
                                         <th>Edit</th>
+                       
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td className='justify-content-center'>Arithmetique</td>
-                                        <td>Pierre mvogo</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
+                                        
+                                        <td>Arithmétique</td>
+                                        <td>jorque paul</td>
+                                        <td>15</td>
+                                        <td>Alain Paul</td>
+                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Arithmétique</td>
+                                        <td>jorque paul</td>
+                                        <td>15</td>
+                                        <td>Alain Paul</td>
                                         <td><i className='fas fa-edit text-primary' /></td>
                                     </tr>
                                     <tr>
-                                        <td>Anglais</td>
-                                        <td>Ali pirate</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Programmation C++</td>
-                                        <td>Paul jovi</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
+                                        <td>Arithmétique</td>
+                                        <td>jorque paul</td>
+                                        <td>15</td>
+                                        <td>Alain Paul</td>
                                         <td><i className='fas fa-edit text-primary' /></td>
                                     </tr>
                                 </tbody>
@@ -215,38 +223,37 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                 </div>: 
                  isUserDisplayList==="student"?
                  <div className="container">
-
+            
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}}>
                         <div className="col-xl-12 col-lg-12 container-editor">
-                            <header className="editor-header">List of Courses</header>
+                            <header className="editor-header">Evaluation Results</header>
                             <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close fa-2x text-blue-400" ></i></span>
                             <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Course Name</th>
-                                        <th>Course Author</th>
-                                        <th>Open</th>
-                                        <th>Download</th>
+                                        <th>Course</th>
+                                        <th>Note/20</th>
+                                        <th>Author</th>
+                       
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td className='justify-content-center'>Arithmetique</td>
-                                        <td>Pierre mvogo</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-download text-primary' /></td>
+                                        
+                                        <td>Arithmétique</td>
+                                        <td>18</td>
+                                        <td>Alain Paul</td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>Anglais</td>
-                                        <td>Ali pirate</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-download text-primary' /></td>
+                                        <td>15</td>
+                                        <td>Alain atshu</td>
                                     </tr>
                                     <tr>
                                         <td>Programmation C++</td>
-                                        <td>Paul jovi</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-download text-primary' /></td>
+                                        <td>17</td>
+                                        <td>Alain Paul</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -284,4 +291,4 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
     )
     
 }
-export default ListCourse;
+export default Results;

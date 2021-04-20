@@ -22,8 +22,9 @@ import 'react-notifications/lib/notifications.css';
 import './notifications.scss';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
+import Topbar from '../../../../app/components/topbar/topbar';
 
-const Notifications = () => {
+const Notifications = ({isUserDisplayList,onChildClick}) => {
 
     const history = useHistory();
 
@@ -42,91 +43,29 @@ const Notifications = () => {
     const [showCreateCourse,setShowCreateCourse] = useState(false);
     const [showCourse,setShowCourse] = useState(true);
     
-    const handleEvaluationEditorChange = (state) => {
-        setEvaluationEditorState(state);
-        convertEvaluationContentToHTML();
-    }
    
     const convertEvaluationContentToHTML = () => {
         let currentEvaluationContentAsHTML = convertToHTML(evaluationEditorState.getCurrentContent());
         setConvertedEvaluationContent(currentEvaluationContentAsHTML);
     }
-       const createMarkup = (html) => {
-        return {
-            __html: DOMPurify.sanitize(html)
-        }
-    }
 
-
-    const onChangeCreate = (e) => {
-        setCreateLessonForm({...createLessonForm,  [e.target.name]: e.target.value })
-        
-    }
-    const handleClose = () =>{setShowModal(false)}
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-          history.push('/teacher/manage/course');
-            console.log(e);
-    }
      
     useEffect(()=>{
         
     }, [])
-
-    const handleLogout=()=>{
-        history.push('/');
+     
+    const clickHandler=(e)=>{
+        onChildClick(e.target.name);
     }
 
-    const handleSideNav = () => {
-        if(displaySide == 'none'){
-            setDisplaySide('block');
-        }else{
-            setDisplaySide('none');
-        }
-    }
-
+    
     const handleSideNavBody = () => {
         if(displaySide == 'block'){
             setDisplaySide('none');
         }
     }
-  
-    
-    const createNotification = (type) =>{
-        return () => {
-            switch (type) {
-              case 'info':
-                NotificationManager.info('Info message');
-                break;
-              case 'success':
-                NotificationManager.success('Success message', 'Title here');
-                break;
-              case 'warning':
-                NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
-                break;
-              case 'error':
-                NotificationManager.error('Error message', 'Click me!', 5000, () => {
-                  alert('callback');
-                });
-                break;
-            }
-    }}
 
-    const hiddenFileInput = React.useRef(null);
 
-    const handleClickFileInput = (event) => {
-        hiddenFileInput.current.click();
-        
-    };
-
-    
-    const changeHandler = (e) => {
-        setSelectedFile(e.target.files[0]);
-        setIsFilePicked(true);
-        
-        
-    }
     const fileData = [
         {"name": 'programmation_web.docx', "size" : '31'
         },
@@ -135,73 +74,12 @@ const Notifications = () => {
         },
     ];
     
-
-
-
-    const modalcont = {
-          title: "Invite Student to course",
-          bodycontent: 
-             <div>
-                
-             </div>
-    }
-    const ContentModal = () => {
-        return(
-            <Modals 
-                show={showModal} 
-                onhide={handleClose}
-                titlecontent={modalcont.title}
-                bodycontent={modalcont.bodycontent}
-                footercontent={modalcont.footercontent}
-            />
-        )
-    }
+   
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
-        <Sidebar width={260} height={"100%"} display={displaySide}>
-                <div style={{marginTop:25+'%'}}>
-
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
-                           <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
-                               <Avatar 
-                                    size="100"
-                                    round={true}
-                                    src={profileImg}
-                               /> </div> 
-                       
-                    </div>
-                    <div className='row text-white' style={{fontSize:2+'em',marginLeft: 20+'%'}}>Pierre Mvogo</div>
-                    <div className='row text-white' style={{fontSize:1.5+'em',marginLeft: 20+'%'}}>Retymee School</div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/teacher/dashboard')}>
-                        <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Dashboard</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/notifications')}>
-                        <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Notifications</div>
-                        
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/course/list')}>
-                         <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Manages Courses</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/teacher/settings')}>
-                         <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Accounts settings</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
-                         <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Logout</div>
-                    </div>
-                </div> 
-            </Sidebar>
+      
         {/* <!-- End of Sidebar -->*/} 
 
 
@@ -213,81 +91,7 @@ const Notifications = () => {
             
 
                {/*<!-- Topbar --> */} 
-               <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                   
-
-                    <div style={{fontSize: 2+'em'}} className="sidebar-brand d-flex align-items-center justify-content-center">
-                        <div className="sidebar-brand-icon  mr-5" style={{cursor:'pointer'}} onClick={handleSideNav}>
-                            {displaySide == 'none'? <i class="fas fa-bars text-primary"></i>: displaySide == 'block'? <i class="far fa-window-close text-primary"></i>: ''}
-                        </div>
-
-                        <div className="sidebar-brand-icon">
-                            <Avatar 
-                                size="50"
-                                round={true}
-                                src={profileImg}
-                            />
-                        
-                        </div>
-                        <div className="sidebar-brand-text mx-3"><sup></sup></div>
-                    </div>
-
-
-                    <ul class="navbar-nav ml-auto">
-
-
-                    <div class="topbar-divider d-none d-sm-block"></div>
-
-                    <Dropdown class="nav-item dropdown no-arrow">
-                        <Dropdown.Toggle variant='light' onClick={createNotification('success')}>
-                           <NotificationBadge count={5} effect={Effect.SCALE} style={{fontSize:10+'px'}}/>
-                           <i className="fas fa-bell text-dark" style={{fontSize:20+'px'}}/>
-                        </Dropdown.Toggle>
-                        
-                        <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-
-                        <Dropdown.Item  class="dropdown-item mb-4">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
-                        </Dropdown.Item>
-
-                        <div class="dropdown-divider"></div>
-                            <Dropdown.Item onClick={handleLogout} class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" ></i>
-                                Logout
-                            </Dropdown.Item>
-
-                        </Dropdown.Menu>
-                    </Dropdown>
-
-                    <Dropdown class="nav-item dropdown no-arrow ">
-                        <Dropdown.Toggle variant='light'>
-                        <i className="fas fa-cog text-dark"/>
-                        </Dropdown.Toggle>
-                        
-                        <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-
-                        <Dropdown.Item onClick={()=>history.push('/teacher/settings')} class="dropdown-item mb-4">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
-                        </Dropdown.Item>
-
-                        <div class="dropdown-divider"></div>
-                            <Dropdown.Item onClick={handleLogout} class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" ></i>
-                                Logout
-                            </Dropdown.Item>
-
-                        </Dropdown.Menu>
-                    </Dropdown>
-                   
-                </ul>
-                
-            </nav>
-            <NotificationContainer/>
+               
                {/* <!-- End of Topbar -->*/} 
 
 
@@ -305,7 +109,7 @@ const Notifications = () => {
                      
                             <div class="row">
 
-                            {/* <!-- Earnings (Monthly) Card Example --> */}
+                            {/* <!-- Earnings (Monthly) Card Example --> 
                                     <div class="col-xl-3 col-md-3 mb-3">
                                         <div class="card  shadow" style={{backgroundColor:'#17879C'}}>
                                             <div class="card-body">
@@ -319,7 +123,7 @@ const Notifications = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*/}
             
                                 {/* <!-- Pending Requests Card Example -->*/}  
                                     
@@ -348,20 +152,42 @@ const Notifications = () => {
                   {/*<!-- Content Row --> */}  
 
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
-
-                       {/*<!-- Area Chart --> */} 
+                        {isUserDisplayList==="teacher"?
                         <div className="col-xl-12 col-lg-12 container-editor">
+                            
                             <header className="editor-header">Notifications</header>
-                            View your activity and notification history on Retymee School.
-                            <div>
-                                
+                            <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close fa-2x text-blue-400" ></i></span>
+                            <hr />
+                            
+                            <div className="mt-5 mb-3">
+                            <div>View your activity and notification history on Retymee School.</div>
+                               <div className='mt-5 mb-3'>
+                                   Your Educator Retymee School Notifications
+                               </div> 
+                            </div>
+                        </div>
+                        :isUserDisplayList==="student"?
+                        <div className="col-xl-12 col-lg-12 container-editor">
+                            
+                            <header className="editor-header">Notifications</header>
+                            <span className='float-right' style={{cursor:'pointer'}} onClick={clickHandler}><i class="fa fa-window-close fa-2x text-blue-400" ></i></span>
+                           <hr />
+                           
+                            <div className="mt-5">
+                            <div>View your activity and notification history on Retymee School.</div>
+                            <div className="mt-5 mb-3">
+                                Your Student Retymee School Notifications
+                            </div>
                             </div>
                           
                         </div>
-
                         
-                       
+                        :''}
                     </div>
+
+
+
+
 
                     <div class="row mt-5" style={{backgroundColor: '#EFEFEF'}} >
 

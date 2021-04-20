@@ -13,12 +13,11 @@ import ManageCourse from '../../applications/course/pages/course.screen/manage_c
 import CreateLesson from '../../applications/lesson/pages/lesson.screen/create_lesson';
 import ListCourse from '../../applications/course/pages/course.screen/list_course';
 import CourseSettings from '../../applications/settings/pages/settings.screen/course_settings';
-import AccountSettings from '../../applications/settings/pages/settings.screen/account_settings';
 import Notifications from '../../applications/notifications/pages/notifications.screen/notifications';
 import EvaluationCourse from '../../applications/course/pages/course.screen/evaluation_course';
 import VideoConf from '../../applications/videoconf/pages/videoconf.screen/videoconf';
-import AccountStudentSettings from '../../applications/settings/pages/settings.screen/account_student_settings';
-import NotificationStudent from '../../applications/notifications/pages/notifications.screen/notifications_student';
+import CourseOverview from '../../applications/course/pages/course.screen/course_overview';
+
 /**
  * @description this is the main routes for the main application src/app. 
  */
@@ -73,11 +72,6 @@ const Routes = () => {
 
                 <Route 
                     exact
-                    component={AccountSettings}
-                    path={'/teacher/settings'} />
-
-                <Route 
-                    exact
                     component={CourseSettings}
                     path={'/teacher/course/settings'} />
 
@@ -86,10 +80,7 @@ const Routes = () => {
                     component={Notifications}
                     path={'/teacher/notifications'} />
 
-                <Route 
-                    exact
-                    component={NotificationStudent}
-                    path={'/student/notifications'} />          
+                         
 
                 <Route 
                     exact
@@ -98,13 +89,17 @@ const Routes = () => {
 
                 <Route 
                     exact
-                    component={VideoConf}
-                    path={'/teacher/video'} />
+                    component={CourseOverview}
+                    path={'/student/course/overview'} />
+
+                    
 
                 <Route 
                     exact
-                    component={AccountStudentSettings}
-                    path={'/student/settings'} />
+                    component={VideoConf}
+                    path={'/teacher/video'} />
+
+                
 
                 
             </NormalRoute>

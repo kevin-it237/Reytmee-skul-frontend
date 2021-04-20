@@ -14,23 +14,31 @@ import '../../../../app/components/sidebar/sidebar'
 import Sidebar from '../../../../app/components/sidebar/sidebar';
 import Modals from '../../../../app/components/modals/modal';
 import Avatar   from 'react-avatar';
-import profileImg from '../../../../assets/images/profile_icon.png';
+import profileImg from '../../../../assets/images/profilestudent_icon.png';
 import NotificationBadge from 'react-notification-badge';
 import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import CreateCourse from '../../../course/pages/course.screen/create_course';
+import Topbar from '../../../../app/components/topbar/topbar';
+import ListCourse from '../../../course/pages/course.screen/list_course';
+import ListEvaluation from '../../../course/pages/course.screen/list_evaluation';
+import Results from '../../../course/pages/course.screen/results';
+import Notifications from '../../../notifications/pages/notifications.screen/notifications';
+import AccountSettings from '../../../settings/pages/settings.screen/account_settings';
 
 
 const DashboardStudent = () => {
 
     const history = useHistory()
     const [displaySide,setDisplaySide] = useState('none');
-    const [showCreateCourse,setShowCreateCourse] = useState(false);
-    const [showCourse,setShowCourse] = useState(true);
-    const [showEvaluationModal,setShowEvaluationModal] = useState(false);
-    const [showListStudentModal,setShowListStudentModal] = useState(false);
-    const [showSendToModal,setShowSendToModal] = useState(false);
+    const [showCourseList,setShowCourseList] = useState(false);
+    const [showDashboard,setShowDashboard] = useState(true);
+    const [showEvaluationList,setShowEvaluationList] = useState(false);
+    const [showEvaluationResults,setShowEvaluationResults] = useState(false);
+    const [showNotifications,setShowNotifications] = useState(false);
+    const [showSettings,setShowSettings] = useState(false);
+
 
     const handleLogout=()=>{
         history.push('/');
@@ -42,105 +50,37 @@ const DashboardStudent = () => {
             setDisplaySide('none');
         }
     }
-    const handleListStudentClose = () =>{setShowListStudentModal(false)}
-    const handleEvaluationClose = () =>{setShowEvaluationModal(false)}
-
-    const listStudentContent = {
-        title: "Student Enrol to your Course",
-        bodycontent: 
-           <div>
-             <table className='table'>
-                 <thead>
-                     <tr>
-                         <th>Student Name</th>
-                         <th>Matricule</th>
-                         <th>Email</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr>
-                         <td>pirate</td>
-                         <td>2T15ER</td>
-                         <td>pirate@gmail.com</td>
-                     </tr>
-                     <tr>
-                         <td>paul</td>
-                         <td>2E25ER</td>
-                         <td>paul@gmail.com</td>
-                     </tr>
-                     <tr>
-                         <td>Alain</td>
-                         <td>2T89EER</td>
-                         <td>alain@gmail.com</td>
-                     </tr>
-                 </tbody>
-             </table>
-              
-           </div>
-  }
-
-  const evaluationContent = {
-    title: "Shoose Course to Create Evaluation",
-    bodycontent: 
-       <div>
-           <ul>
-               <li className="li" onClick={()=>history.push('/teacher/course/evaluation/create')}>Arithmétique</li>
-               <li className="li" onClick={()=>history.push('/teacher/course/evaluation/create')}>Programmation</li>
-               <li className="li" onClick={()=>history.push('/teacher/course/evaluation/create')}>Piratage informatique</li>
-           </ul>
-       </div>
-}
-
-  const ListStudentModal = () => {
-      return(
-          <Modals 
-              show={showListStudentModal} 
-              onhide={handleListStudentClose}
-              titlecontent={listStudentContent.title}
-              bodycontent={listStudentContent.bodycontent}
-              footercontent={listStudentContent.footercontent}
-          />
-      )
-  }
-  const EvaluationModal = () => {
-    return(
-        <Modals 
-            show={showEvaluationModal} 
-            onhide={handleEvaluationClose}
-            titlecontent={evaluationContent.title}
-            bodycontent={evaluationContent.bodycontent}
-            footercontent={evaluationContent.footercontent}
-        />
-    )
-}
-
+   
     
-
-    const createNotification = (type) =>{
-        return () => {
-            switch (type) {
-              case 'info':
-                NotificationManager.info('Info message');
-                break;
-              case 'success':
-                NotificationManager.success('Success message', 'Title here');
-                break;
-              case 'warning':
-                NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
-                break;
-              case 'error':
-                NotificationManager.error('Error message', 'Click me!', 5000, () => {
-                  alert('callback');
-                });
-                break;
-            }
-    }}
     const hiddenFileInput = React.useRef(null);
     const handleClickFileInput = (event) => {hiddenFileInput.current.click()};
 
     const outPutEvent=(e)=> {
-        setShowCreateCourse(false,setShowCourse(true));
+        if(displaySide == 'none'){
+            setDisplaySide('block');
+        }else{
+            setDisplaySide('none');
+        }
+
     }
+    const outPutShowEvent=(e)=> {
+        setShowEvaluationList(false,setShowDashboard(true),
+        setShowEvaluationResults(false),setShowCourseList(false),
+        setShowSettings(false),setShowNotifications(false));
+        
+    }
+    const outPutNotifications=(e)=> {
+        setShowEvaluationList(false,setShowDashboard(false),
+        setShowEvaluationResults(false),setShowCourseList(false),
+        setShowSettings(false),setShowNotifications(true));
+    }
+
+    const outPutSettings=(e)=> {
+        setShowEvaluationList(false,setShowDashboard(false),
+        setShowEvaluationResults(false),setShowCourseList(false),
+        setShowSettings(true),setShowNotifications(false));
+    }
+    
 
     const handleSideNavBody = () => {
         if(displaySide == 'block'){
@@ -152,44 +92,15 @@ const DashboardStudent = () => {
             <div id="wrapper" onClick={handleSideNavBody}>
 
             {/*  <!-- Sidebar -->*/}
-                <Sidebar width={260} height={"100%"} display={displaySide}>
-                    <div style={{marginTop:25+'%'}}>
-    
-                        <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
-                               <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
-                                   <Avatar 
-                                        size="100"
-                                        round={true}
-                                        src={profileImg}
-                                   /> </div> 
-                           
-                        </div>
-                        <div className='row text-white justify-content-center' style={{fontSize:2+'em'}}>Paul aris</div>
-                        <div className='row text-white justify-content-center' style={{fontSize:1.5+'em'}}>Retymee School Student</div>
-                        <hr/>
-                        <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>history.push('/student/dashboard')}>
-                            <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                            <div className='col-md-8 text-white'>Dashboard</div>
-                        </div>
-                        <hr/>
-                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/student/notifications')}>
-                            <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                            <div className='col-md-8 text-white'>Notifications</div>
-                            
-                        </div>
-                        <hr/>
-                
-                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/student/settings')}>
-                             <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                             <div className='col-md-8 text-white'>Accounts settings</div>
-                        </div>
-                        <hr/>
-                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
-                             <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                             <div className='col-md-8 text-white'>Logout</div>
-                        </div>
-                    </div> 
-                </Sidebar>
+            <Sidebar 
+                width={300} 
+                height={"100%"} 
+                display={displaySide} 
+                isUserSidebar={"student"} 
+                onChildClick={outPutShowEvent} 
+                onChildClickNotifications={outPutNotifications} 
+                onChildClickSettings={outPutSettings}>
+            </Sidebar>
             {/* <!-- End of Sidebar -->*/} 
     
     
@@ -201,81 +112,7 @@ const DashboardStudent = () => {
                 
     
                    {/*<!-- Topbar --> */} 
-                   <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    
-                       
-    
-                        <div style={{fontSize: 2+'em'}} className="sidebar-brand d-flex align-items-center justify-content-center">
-                            <div className="sidebar-brand-icon  mr-5" style={{cursor:'pointer'}} onClick={handleSideNav}>
-                                {displaySide == 'none'? <i class="fas fa-bars text-primary"></i>: displaySide == 'block'? <i class="far fa-window-close text-primary"></i>: ''}
-                            </div>
-    
-                            <div className="sidebar-brand-icon">
-                                <Avatar 
-                                    size="50"
-                                    round={true}
-                                    src={profileImg}
-                                />
-                            
-                            </div>
-                            <div className="sidebar-brand-text mx-3"><sup></sup></div>
-                        </div>
-    
-    
-                        <ul class="navbar-nav ml-auto">
-    
-    
-                        <div class="topbar-divider d-none d-sm-block"></div>
-    
-                        <Dropdown class="nav-item dropdown no-arrow">
-                            <Dropdown.Toggle variant='light' onClick={createNotification('success')}>
-                               <NotificationBadge count={5} effect={Effect.SCALE} style={{fontSize:10+'px'}}/>
-                               <i className="fas fa-bell text-dark" style={{fontSize:20+'px'}}/>
-                            </Dropdown.Toggle>
-                            
-                            <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-    
-                            <Dropdown.Item  class="dropdown-item mb-4">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </Dropdown.Item>
-    
-                            <div class="dropdown-divider"></div>
-                                <Dropdown.Item onClick={handleLogout} class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" ></i>
-                                    Logout
-                                </Dropdown.Item>
-    
-                            </Dropdown.Menu>
-                        </Dropdown>
-    
-                        <Dropdown class="nav-item dropdown no-arrow " >
-                            <Dropdown.Toggle variant='light'>
-                            <i className="fas fa-cog text-dark"/>
-                            </Dropdown.Toggle>
-                            
-                            <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-    
-                            <Dropdown.Item onClick={()=>history.push('/student/settings')} class="dropdown-item mb-4">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </Dropdown.Item>
-    
-                            <div class="dropdown-divider"></div>
-                                <Dropdown.Item onClick={handleLogout} class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" ></i>
-                                    Logout
-                                </Dropdown.Item>
-    
-                            </Dropdown.Menu>
-                        </Dropdown>
-                       
-                    </ul>
-                    
-                </nav>
-                <NotificationContainer/>
+                    <Topbar isUserTopbar={"student"} isDisplaySide={displaySide} onChildClick={outPutEvent}  onChildClickSettings={outPutSettings} />
                    {/* <!-- End of Topbar -->*/} 
     
     
@@ -299,7 +136,9 @@ const DashboardStudent = () => {
                                          <div class="card-body">
                                              <div class="row no-gutters align-items-center">
                                                  <div class="col">
-                                                      <div onClick={()=>setShowCreateCourse(true,setShowCourse(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                      <div onClick={()=>setShowCourseList(true,setShowDashboard(false),
+                                                        setShowEvaluationList(false),setShowEvaluationResults(false),
+                                                        setShowNotifications(false),setShowSettings(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                          Courses
                                                       </div>
                                                      
@@ -315,11 +154,12 @@ const DashboardStudent = () => {
                                                 <div class="card-body">
                                                     <div class="row no-gutters align-items-center">
                                                         <div class="col">
-                                                                <div onClick={handleClickFileInput} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                                <div onClick={()=>setShowEvaluationList(true,setShowDashboard(false),
+                                                                    setShowCourseList(false),setShowEvaluationResults(false),
+                                                                    setShowSettings(false),setShowNotifications(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                                  Evaluations
-                                                                <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
                                                                 </div>
-                                                            
+                                                           
                                                         </div>
                                                         
                                                     </div>
@@ -335,13 +175,15 @@ const DashboardStudent = () => {
                                          <div class="card-body">
                                              <div class="row no-gutters align-items-center">
                                                  <div class="col">
-                                                         <div onClick={()=>setShowEvaluationModal(true)} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                         <div onClick={()=>setShowEvaluationResults(true,setShowDashboard(false),
+                                                            setShowEvaluationList(false),setShowCourseList(false),
+                                                            setShowSettings(false),setShowNotifications(false))} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                          <i className="fa fa-list-alt mr-2"/>
                                                             Results
                                                          </div>
                                                      
                                                  </div>
-                                                 {showEvaluationModal? <EvaluationModal /> : ''}
+                                                 
                                              </div>
                                          </div>
                                      </div>
@@ -365,7 +207,7 @@ const DashboardStudent = () => {
                        {/* <!-- Content Row -->*/} 
     
     
-                      {showCourse? 
+                      {showDashboard? 
                          <div class="row">
                         
                          <div class="col-lg-6 mb-4">
@@ -388,7 +230,7 @@ const DashboardStudent = () => {
                                      <div 
                                         class="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
-                                        onClick={()=>history.push('/teacher/manage/course')}
+                                        onClick={()=>history.push('/student/course/overview')}
                                         >
                                         <i class="fas fa-eye fa-2x text-primary"></i>
                                         <div>Details</div>
@@ -443,7 +285,7 @@ const DashboardStudent = () => {
                                      <div 
                                         class="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
-                                        onClick={()=>history.push('/teacher/manage/course')}
+                                        onClick={()=>history.push('/student/course/overview')}
                                         >
                                         <i class="fas fa-eye fa-2x text-primary"></i>
                                         <div>Details</div>
@@ -478,7 +320,15 @@ const DashboardStudent = () => {
                          </div>
     
                      </div>
-                       : showCreateCourse? <CreateCourse onChildClick={outPutEvent} /> : ''}  
+                       : showCourseList? <ListCourse isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : 
+                       
+                        showEvaluationList? <ListEvaluation isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> :
+                        
+                        showEvaluationResults? <Results isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : 
+                        
+                        showNotifications? <Notifications isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> :
+                        
+                        showSettings? <AccountSettings isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : '' }  
                       
                       
     

@@ -22,7 +22,7 @@ import './course.scss';
 import LessonOverview from './lesson_overview';
 
 
-const ManageCourse = () => {
+const CourseOverview = () => {
     const history = useHistory()
     const [displaySide,setDisplaySide] = useState('none');
     const [showLessonModal,setShowLessonModal] = useState(false);
@@ -31,7 +31,7 @@ const ManageCourse = () => {
     const [showManageLesson,setShowManageLesson] = useState(true);
     const [showLessonOverview,setShowLessonOverview] = useState(false);
 
-    const handleLogout=({isUserDisplayList,onChildClick})=>{
+    const handleLogout=()=>{
         history.push('/');
     }
 
@@ -196,7 +196,7 @@ const ManageCourse = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/teacher/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                        <div onClick={()=>history.push('/student/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                         <i className="fas fa-chevron-left"/> Dashboard
                                                         </div>
                                                         
@@ -209,41 +209,10 @@ const ManageCourse = () => {
                                 {/* <!-- Pending Requests Card Example -->*/}  
                                     
 
-                                    <div class="col-xl-3 col-md-3 mb-3">
-                                        <div class="card  shadow "style={{backgroundColor:'#17879C'}}>
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col">
-                                                            <div onClick={()=>history.push('/teacher/course/settings')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
-                                                            <i className="fa fa-cog"/>  Course settings
-                                                            </div>
-                                                        
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="col-xl-3 col-md-3 mb-3"></div>
-                                    <div class="col-xl-3 col-md-3 mb-3">
-                                        <div class="card  shadow">
-                                            <div class="card-body bg-warning">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col">
-                                                            <div onClick={()=>console.log("student")} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
-                                                            <span className='mr-2'>0</span>  Students
-                                                            </div>
-                                                        
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
+    
                          </div>
 
                         
@@ -271,32 +240,9 @@ const ManageCourse = () => {
 
 
                     <div class="row mt-5">
-                    
+              
                     <div class="col-lg-6 mb-4">
-                        <div class="shadow mb-4 border-none">
-                          
-                            <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>history.push('/teacher/course/lesson/create')}>
-                                <i class="fa fa-plus text-primary" style={{fontSize:10+'em'}}></i>
-                                <p className='font-weight-bold'>Add a Lesson</p>
-                                <p className='font-weight-bold'>Create Lesson for your Course</p>
-                                
-                            </div>
-                        </div> 
-                    </div>
-
-
-         
-                     
-                    <div class="col-lg-6 mb-4">
-                    <div class="shadow mb-4 border-none">
-                           <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>setShowInviteModal(true)}>
-                                <i class="fa fa-user-friends text-warning" style={{fontSize:10+'em'}}></i>
-                                <p className='font-weight-bold'>Invite Student</p>
-                                <p className='font-weight-bold'>Invite Student to enrol in the course</p>
-                                
-                           </div>
-                           {showInviteModal? <ContentInviteModal />:''}
-                   </div>  
+                      
                </div>
                
 
@@ -379,4 +325,4 @@ const ManageCourse = () => {
     </div>
     )
 }
-export default ManageCourse;
+export default CourseOverview;
