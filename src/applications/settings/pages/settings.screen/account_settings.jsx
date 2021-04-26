@@ -297,6 +297,9 @@ const AccountSettings = ({isUserDisplayList,onChildClick}) => {
 
                </div>
                </div>
+
+
+
                 : isUserDisplayList==="student"?
                   
                 <div className="container">
@@ -433,7 +436,7 @@ const AccountSettings = ({isUserDisplayList,onChildClick}) => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+              
            {/*<!-- End of Footer --> */} 
 
         </div>

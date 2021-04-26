@@ -26,6 +26,8 @@ import ListEvaluation from '../../../course/pages/course.screen/list_evaluation'
 import Results from '../../../course/pages/course.screen/results';
 import Notifications from '../../../notifications/pages/notifications.screen/notifications';
 import AccountSettings from '../../../settings/pages/settings.screen/account_settings';
+import CustomTooltip from '../../../../app/components/tooltip/tooltip';
+import CourseOverview from '../../../course/pages/course.screen/course_overview';
 
 
 const DashboardStudent = () => {
@@ -38,6 +40,7 @@ const DashboardStudent = () => {
     const [showEvaluationResults,setShowEvaluationResults] = useState(false);
     const [showNotifications,setShowNotifications] = useState(false);
     const [showSettings,setShowSettings] = useState(false);
+    const [showCourseOverview,setShowCourseOverview] = useState(false);
 
 
     const handleLogout=()=>{
@@ -66,19 +69,29 @@ const DashboardStudent = () => {
     const outPutShowEvent=(e)=> {
         setShowEvaluationList(false,setShowDashboard(true),
         setShowEvaluationResults(false),setShowCourseList(false),
-        setShowSettings(false),setShowNotifications(false));
+        setShowSettings(false),setShowNotifications(false),
+        setShowCourseOverview(false));
         
     }
     const outPutNotifications=(e)=> {
         setShowEvaluationList(false,setShowDashboard(false),
         setShowEvaluationResults(false),setShowCourseList(false),
-        setShowSettings(false),setShowNotifications(true));
+        setShowSettings(false),setShowNotifications(true),
+        setShowCourseOverview(false));
     }
 
     const outPutSettings=(e)=> {
         setShowEvaluationList(false,setShowDashboard(false),
         setShowEvaluationResults(false),setShowCourseList(false),
-        setShowSettings(true),setShowNotifications(false));
+        setShowSettings(true),setShowNotifications(false),
+        setShowCourseOverview(false));
+    }
+
+    const outPutShowCourseOverview=(e)=> {
+        setShowEvaluationList(false,setShowDashboard(false),
+        setShowEvaluationResults(false),setShowCourseList(false),
+        setShowSettings(false),setShowNotifications(false),
+        setShowCourseOverview(true));
     }
     
 
@@ -112,7 +125,11 @@ const DashboardStudent = () => {
                 
     
                    {/*<!-- Topbar --> */} 
-                    <Topbar isUserTopbar={"student"} isDisplaySide={displaySide} onChildClick={outPutEvent}  onChildClickSettings={outPutSettings} />
+                    <Topbar 
+                        isUserTopbar={"student"} 
+                        isDisplaySide={displaySide} 
+                        onChildClick={outPutEvent}  
+                        onChildClickSettings={outPutSettings} />
                    {/* <!-- End of Topbar -->*/} 
     
     
@@ -131,7 +148,8 @@ const DashboardStudent = () => {
                                 <div class="row" style={{fontSize: 2+'em'}}>
     
                                 {/* <!-- Earnings (Monthly) Card Example --> */}
-                                 <div class="col-xl-3 col-md-3 mb-3">
+                               {showDashboard?
+                               <div class="col-xl-3 col-md-3 mb-3">
                                      <div class="card shadow" style={{backgroundColor:'#17879C'}}>
                                          <div class="card-body">
                                              <div class="row no-gutters align-items-center">
@@ -147,8 +165,10 @@ const DashboardStudent = () => {
                                          </div>
                                      </div>
                                  </div>
+                               :''}  
     
     
+                                {showDashboard? 
                                  <div class="col-xl-3 col-md-3 mb-3">
                                             <div class="card  shadow "style={{backgroundColor:'#17879C'}}>
                                                 <div class="card-body">
@@ -166,11 +186,13 @@ const DashboardStudent = () => {
                                                 </div>
                                             </div>
                                 </div>
+                                : ''}
          
                                  
          
                                {/* <!-- Pending Requests Card Example -->*/}  
-                                 <div class="col-xl-3 col-md-3 mb-3">
+                                {showDashboard? 
+                                <div class="col-xl-3 col-md-3 mb-3">
                                      <div class="card  shadow " style={{backgroundColor:'#17879C'}}>
                                          <div class="card-body">
                                              <div class="row no-gutters align-items-center">
@@ -188,6 +210,7 @@ const DashboardStudent = () => {
                                          </div>
                                      </div>
                                  </div>
+                                : ''} 
                              </div>
     
                       {/*<!-- Content Row --> */}  
@@ -219,22 +242,28 @@ const DashboardStudent = () => {
                                      <div 
                                         className="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
-                                        onClick={()=>history.push('/teacher/video')}
+                                        onClick={()=>console.log("ddd")}
+                                        data-tip='Download this Course'
+                                        data-for="download"
                                         >
                                         <i class="fas fa-download fa-2x text-primary"></i>
                                         <div>Download</div>
                                      </div>
+                                     <CustomTooltip idTooltip={"download"} placeTooltip={"top"} />
                                      
                                     
     
                                      <div 
                                         class="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
-                                        onClick={()=>history.push('/student/course/overview')}
+                                        onClick={outPutShowCourseOverview}
+                                        data-tip='Course Details'
+                                        data-for="details"
                                         >
                                         <i class="fas fa-eye fa-2x text-primary"></i>
                                         <div>Details</div>
                                      </div>
+                                     <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
     
                                      
     
@@ -274,22 +303,28 @@ const DashboardStudent = () => {
                                      <div 
                                         className="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
-                                        onClick={()=>history.push('/teacher/video')}
+                                        onClick={()=>console.log("jksdfhjk")}
+                                        data-tip='Download this Course'
+                                        data-for="download"
                                         >
                                         <i class="fas fa-download fa-2x text-primary"></i>
                                         <div>Download</div>
                                      </div>
+                                     <CustomTooltip idTooltip={"download"} placeTooltip={"top"} />
                                     
                                      
     
                                      <div 
                                         class="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
-                                        onClick={()=>history.push('/student/course/overview')}
+                                        onClick={outPutShowCourseOverview}
+                                        data-tip='Course Details'
+                                        data-for="details"
                                         >
                                         <i class="fas fa-eye fa-2x text-primary"></i>
                                         <div>Details</div>
                                      </div>
+                                     <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
     
                                     
     
@@ -320,7 +355,7 @@ const DashboardStudent = () => {
                          </div>
     
                      </div>
-                       : showCourseList? <ListCourse isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : 
+                       : showCourseList? <ListCourse isUserDisplayList={"student"} onChildClick={outPutShowEvent} /> : 
                        
                         showEvaluationList? <ListEvaluation isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> :
                         
@@ -328,7 +363,9 @@ const DashboardStudent = () => {
                         
                         showNotifications? <Notifications isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> :
                         
-                        showSettings? <AccountSettings isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : '' }  
+                        showSettings? <AccountSettings isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : 
+                        
+                        showCourseOverview? <CourseOverview onChildClick={outPutShowEvent}/>: ''}  
                       
                       
     

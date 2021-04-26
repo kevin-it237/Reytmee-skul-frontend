@@ -22,7 +22,7 @@ import './course.scss';
 import CreateCourse from '../../../course/pages/course.screen/create_course';
 
 
-const ListCourse = ({isUserDisplayList,onChildClick}) => {
+const ListCourse = ({isUserDisplayList,onChildClick, onChildClickManageCourse}) => {
     const history = useHistory();
     const [displaySide,setDisplaySide] = useState('none');
 
@@ -41,6 +41,12 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
     const clickHandler=(e)=>{
         onChildClick(e.target.name);
     }
+
+    const clickHandlerManageCourse=(e)=>{
+        onChildClickManageCourse(e.target.name);
+     } 
+
+
     const outPutShowEvent=(e)=> {
         setShowCreateCourse(false,setShowListCourse(true));
     }
@@ -180,28 +186,28 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                     <tr>
                                         <th>Course Name</th>
                                         <th>Course Author</th>
-                                        <th>Open</th>
+                                        
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td className='justify-content-center'>Arithmetique</td>
+                                        <td>Arithmetique</td>
                                         <td>Pierre mvogo</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        
+                                        <td onClick={clickHandlerManageCourse}><i className='fas fa-edit text-primary' /></td>
                                     </tr>
                                     <tr>
                                         <td>Anglais</td>
                                         <td>Ali pirate</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        
+                                        <td onClick={clickHandlerManageCourse}><i className='fas fa-edit text-primary' /></td>
                                     </tr>
                                     <tr>
                                         <td>Programmation C++</td>
                                         <td>Paul jovi</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        
+                                        <td onClick={clickHandlerManageCourse}><i className='fas fa-edit text-primary' /></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -225,7 +231,7 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                     <tr>
                                         <th>Course Name</th>
                                         <th>Course Author</th>
-                                        <th>Open</th>
+                                        
                                         <th>Download</th>
                                     </tr>
                                 </thead>
@@ -233,19 +239,19 @@ const ListCourse = ({isUserDisplayList,onChildClick}) => {
                                     <tr>
                                         <td className='justify-content-center'>Arithmetique</td>
                                         <td>Pierre mvogo</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
+                                        
                                         <td><i className='fas fa-download text-primary' /></td>
                                     </tr>
                                     <tr>
                                         <td>Anglais</td>
                                         <td>Ali pirate</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
+                                        
                                         <td><i className='fas fa-download text-primary' /></td>
                                     </tr>
                                     <tr>
                                         <td>Programmation C++</td>
                                         <td>Paul jovi</td>
-                                        <td><i className='fas fa-eye text-primary mr-2' /></td>
+                                        
                                         <td><i className='fas fa-download text-primary' /></td>
                                     </tr>
                                 </tbody>

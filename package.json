@@ -34,6 +34,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-table-view": "^1.1.1",
+    "react-tooltip": "^4.2.17",
     "react-user-avatar": "^1.10.0",
     "reactstrap": "^8.9.0",
     "redux": "^4.0.5",

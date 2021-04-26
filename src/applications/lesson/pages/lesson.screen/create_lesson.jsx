@@ -24,7 +24,7 @@ import DOMPurify from 'dompurify';
 
 
 
-const  CreateLesson = () => {
+const  CreateLesson = ({onChildClickBackAll}) => {
     const history = useHistory();
 
     const [objectiveEditorState, setObjectiveEditorState] = useState(()=>EditorState.createEmpty());
@@ -97,11 +97,10 @@ const  CreateLesson = () => {
     }
     const handleClose = () =>{setShowModal(false)}
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-          history.push('/teacher/manage/course');
-            console.log(e);
+    const clickBackHandler=(e)=>{
+        onChildClickBackAll(e.target.name);
     }
+
      
     useEffect(()=>{
         
@@ -194,23 +193,14 @@ const  CreateLesson = () => {
         
         <div id="wrapper" onClick={handleSideNavBody}>
 
-        {/*  <!-- Sidebar -->*/}
-        <Sidebar width={260} height={"100%"} display={displaySide} isUserSidebar={"teacher"}></Sidebar>
-        {/* <!-- End of Sidebar -->*/} 
-
+      
 
        {/*<!-- Content Wrapper --> */} 
         <div id="content-wrapper" class="d-flex flex-column">
            {/* <!-- Main Content -->*/} 
             <div id="content">
 
-            
-
-               {/*<!-- Topbar --> */} 
-               <Topbar isUserTopbar={"teacher"} isDisplaySide={displaySide} onChildClick={outPutEvent} />
-               {/* <!-- End of Topbar -->*/} 
-
-
+           
                {/*<!-- Begin Page Content --> */} 
                 <div className="container">
 
@@ -231,8 +221,8 @@ const  CreateLesson = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/teacher/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                        <i className="fas fa-chevron-left"/> Dashboard
+                                                        <div onClick={clickBackHandler} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
+                                                        <i className="fas fa-chevron-left"/> 
                                                         </div>
                                                         
                                                     </div>
@@ -465,7 +455,7 @@ const  CreateLesson = () => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+               
            {/*<!-- End of Footer --> */} 
 
         </div>

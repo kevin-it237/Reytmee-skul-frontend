@@ -26,7 +26,13 @@ import DOMPurify from 'dompurify';
 
 
 
-const EvaluationCourse = () => {
+const EvaluationCourse = ({
+        onChildClick,
+        onChildClickBack1,
+        courseName,
+        courseAuthor,
+        isDashboard,
+             }) => {
     const history = useHistory();
 
     const [evaluationEditorState, setEvaluationEditorState] = useState(()=>EditorState.createEmpty());
@@ -80,6 +86,14 @@ const EvaluationCourse = () => {
         history.push('/');
     }
 
+    const clickHandlerBack1=(e)=>{
+        onChildClickBack1(e.target.name);
+    }
+
+    const clickHandler=(e)=>{
+        onChildClick(e.target.name);
+    }
+
     const outPutEvent=(e)=> {
         if(displaySide == 'none'){
             setDisplaySide('block');
@@ -87,7 +101,7 @@ const EvaluationCourse = () => {
             setDisplaySide('none');
         }
 
-    }
+    } 
 
     const handleSideNavBody = () => {
         if(displaySide == 'block'){
@@ -162,22 +176,11 @@ const EvaluationCourse = () => {
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
-        {/*  <!-- Sidebar -->*/}
-        <Sidebar width={260} height={"100%"} display={displaySide} isUserSidebar={"teacher"}></Sidebar>
-        {/* <!-- End of Sidebar -->*/} 
-
-
+       
        {/*<!-- Content Wrapper --> */} 
         <div id="content-wrapper" class="d-flex flex-column">
            {/* <!-- Main Content -->*/} 
             <div id="content">
-
-            
-
-               {/*<!-- Topbar --> */} 
-               <Topbar isUserTopbar={"teacher"} isDisplaySide={displaySide} onChildClick={outPutEvent} />
-               {/* <!-- End of Topbar -->*/} 
-
 
                {/*<!-- Begin Page Content --> */} 
                 <div className="container">
@@ -199,8 +202,8 @@ const EvaluationCourse = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/teacher/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
-                                                        <i className="fas fa-chevron-left"/> Dashboard
+                                                        <div onClick={isDashboard? clickHandler: clickHandlerBack1} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(3px + 2vmin)',cursor:'pointer'}}>
+                                                        <i className="fas fa-chevron-left"/>
                                                         </div>
                                                         
                                                     </div>
@@ -208,11 +211,11 @@ const EvaluationCourse = () => {
                                             </div>
                                         </div>
                                     </div>
-            
+
+                                    <div class="col-xl-3 col-md-3 mb-3"></div>
                                 {/* <!-- Pending Requests Card Example -->*/}  
                                     
 
-                                <div class="col-xl-3 col-md-3 mb-3"></div>
                                     <div class="col-xl-3 col-md-3 mb-3"></div>
                                         <div class="col-xl-3 col-md-3 mb-3">
                                             <div class="card  shadow bg-secondary">
@@ -237,14 +240,14 @@ const EvaluationCourse = () => {
                                     className="col-xl-6 col-lg-8 text-center" 
                                     style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
                                     <p className='font-weight-bold'>Course Name:</p> 
-                                    <p>Arithmétique</p>
+                                    <p>{courseName}</p>
                                 </div>
 
                                 <div 
                                     className="col-xl-6 col-lg-8 text-center" 
                                     style={{cursor:'pointer',fontSize:'calc(3px + 2vmin)'}}>
                                     <p className='font-weight-bold'>Course Author:</p>
-                                    <p>Pierre mvogo</p>
+                                    <p>{courseAuthor}</p>
                                 </div>
                         </div>
 
@@ -322,7 +325,7 @@ const EvaluationCourse = () => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+            
            {/*<!-- End of Footer --> */} 
 
         </div>

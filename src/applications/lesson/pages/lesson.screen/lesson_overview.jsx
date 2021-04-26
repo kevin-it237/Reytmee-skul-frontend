@@ -20,7 +20,7 @@ import NotificationBadge from 'react-notification-badge';
 import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import './course.scss';
+import './lesson.scss';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
@@ -517,7 +517,7 @@ const LessonOverview = ({isUserDisplayList,onChildClick}) => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+                
            {/*<!-- End of Footer --> */} 
 
         </div>

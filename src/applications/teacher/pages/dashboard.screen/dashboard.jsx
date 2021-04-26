@@ -25,6 +25,11 @@ import Notifications from '../../../notifications/pages/notifications.screen/not
 import AccountSettings from '../../../settings/pages/settings.screen/account_settings';
 import ListEvaluation from '../../../course/pages/course.screen/list_evaluation';
 import ListCourse from '../../../course/pages/course.screen/list_course';
+import CustomTooltip from '../../../../app/components/tooltip/tooltip';
+import ManageCourse from '../../../course/pages/course.screen/manage_course';
+import EvaluationCourse from '../../../course/pages/course.screen/evaluation_course';
+import CreateLesson from '../../../lesson/pages/lesson.screen/create_lesson';
+import CourseSettings from '../../../settings/pages/settings.screen/course_settings';
 
 
 
@@ -39,7 +44,17 @@ const DashboardTeacher = ({props})  => {
     const [showNotifications,setShowNotifications] = useState(false);
     const [showSettings,setShowSettings] = useState(false);
     const [showEvaluation,setShowEvaluation] = useState(false);
+    const [showListCourse,setShowListCourse] = useState(false);
     const [showManageCourse,setShowManageCourse] = useState(false);
+    const [showCreateLesson,setShowCreateLesson] = useState(false);
+    const [showCreateEvaluation,setShowCreateEvaluation] = useState(false);
+    const [showCourseSettings,setShowCourseSettings] = useState(false);
+    
+    const [courseName,setCourseName] = useState("");
+    const [courseAuthor,setCourseAuthor] = useState("");
+
+    const [isDashboard,setIsDashboard] = useState(true);
+    
 
     
     const handleListStudentClose = () =>{setShowListStudentModal(false)}
@@ -79,17 +94,7 @@ const DashboardTeacher = ({props})  => {
            </div>
   }
 
-  const evaluationContent = {
-    title: "Shoose Course to Create Evaluation",
-    bodycontent: 
-       <div className="row">
-           <ul className="ul col">
-               <li className="li row" onClick={()=>history.push('/teacher/course/evaluation/create')}>Arithmétique</li>
-               <li className="li row" onClick={()=>history.push('/teacher/course/evaluation/create')}>Programmation</li>
-               <li className="li row" onClick={()=>history.push('/teacher/course/evaluation/create')}>Piratage informatique</li>
-           </ul>
-       </div>
-}
+ 
 
   const ListStudentModal = () => {
       return(
@@ -123,33 +128,120 @@ const DashboardTeacher = ({props})  => {
     const outPutShowEvent=(e)=> {
         setShowCreateCourse(false,setShowCourse(true),
         setShowNotifications(false), setShowSettings(false),
-        setShowEvaluation(false),setShowManageCourse(false));
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
         
     }
     
     const outPutNotifications=(e)=> {
         setShowCreateCourse(false,setShowCourse(false),
         setShowNotifications(true), setShowSettings(false),
-        setShowEvaluation(false),setShowManageCourse(false));
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
     }
 
     const outPutSettings=(e)=> {
         setShowCreateCourse(false,setShowCourse(false),
         setShowNotifications(false), setShowSettings(true),
-        setShowEvaluation(false),setShowManageCourse(false));
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
     }
 
     const outPutEvaluations=(e)=> {
         setShowCreateCourse(false,setShowCourse(false),
         setShowNotifications(false), setShowSettings(false),
-        setShowEvaluation(true),setShowManageCourse(false));
+        setShowEvaluation(true),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
     }
 
     const outPutCourses=(e)=> {
         setShowCreateCourse(false,setShowCourse(false),
         setShowNotifications(false), setShowSettings(false),
-        setShowEvaluation(false),setShowManageCourse(true));
+        setShowEvaluation(false),setShowListCourse(true),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
     }
+
+    const outPutManageCourse=(e)=> {
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(true,setIsDashboard(true)),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        
+    }
+
+    const outPutCreateLesson=(e)=> {
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(true),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
+    }
+    const outPutCreateEvaluation=(coursename,courseauthor)=> {
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(true,setIsDashboard(true)),setShowCourseSettings(false));
+        setCourseName(coursename);
+        setCourseAuthor(courseauthor);
+    }
+
+    const outPutCourseSettings=(e)=> {
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(true));
+    }
+
+    const outPutShowBackEvent=()=>{
+        setShowCreateCourse(true,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
+    }
+
+    const outPutShowBackEvent1=()=>{
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(true),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
+    }
+
+    const outPutShowBackAll=(e)=>{
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(true),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false));
+    }
+
+    const outPutDash=(e)=>{
+        setIsDashboard(false);
+    }
+
+   
+
+    const evaluationContent = {
+        title: "Shoose Course to Create Evaluation",
+        bodycontent: 
+           <div className="row">
+               <ul className="ul col">
+                   <li className="li row" onClick={()=>outPutCreateEvaluation("programmation web","Paul ING")}>programmation web</li>
+                   <li className="li row" onClick={()=>outPutCreateEvaluation("Hacking os","Sidjeu paul")}>Hacking os</li>
+                   <li className="li row" onClick={()=>outPutCreateEvaluation("base de java","pierre ING")}>base de java</li>
+               </ul>
+           </div>
+    }
+
 
     const outPutEvent=(e)=> {
         if(displaySide == 'none'){
@@ -203,7 +295,6 @@ const DashboardTeacher = ({props})  => {
 
                {/*<!-- Begin Page Content --> */} 
                 <div className="container">
-
                   {/*<!-- Page Heading --> */}  
                     
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -216,7 +307,8 @@ const DashboardTeacher = ({props})  => {
                             <div class="row" style={{fontSize: 2+'em'}}>
 
                             {/* <!-- Earnings (Monthly) Card Example --> */}
-                             <div class="col-xl-3 col-md-3 mb-3">
+                          {showCourse? 
+                            <div class="col-xl-3 col-md-3 mb-3">
                                  <div class="card shadow" style={{backgroundColor:'#17879C'}}>
                                      <div class="card-body">
                                          <div class="row no-gutters align-items-center">
@@ -230,9 +322,11 @@ const DashboardTeacher = ({props})  => {
                                      </div>
                                  </div>
                              </div>
+                          : ''} 
 
 
-                             <div class="col-xl-3 col-md-3 mb-3">
+                         {showCourse? 
+                         <div class="col-xl-3 col-md-3 mb-3">
                                         <div class="card  shadow "style={{backgroundColor:'#17879C'}}>
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
@@ -248,12 +342,14 @@ const DashboardTeacher = ({props})  => {
                                             </div>
                                         </div>
                             </div>
+                         : ''}    
      
                              
      
                            {/* <!-- Pending Requests Card Example -->*/}  
-                             <div class="col-xl-3 col-md-3 mb-3">
-                                 <div class="card  shadow " style={{backgroundColor:'#17879C'}}>
+                            <div class="col-xl-3 col-md-3 mb-3">
+                           {showCourse? 
+                           <div class="card  shadow " style={{backgroundColor:'#17879C'}}>
                                      <div class="card-body">
                                          <div class="row no-gutters align-items-center">
                                              <div class="col">
@@ -266,6 +362,8 @@ const DashboardTeacher = ({props})  => {
                                          </div>
                                      </div>
                                  </div>
+                           : ''} 
+                                 
                              </div>
                          </div>
 
@@ -299,29 +397,38 @@ const DashboardTeacher = ({props})  => {
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
                                     onClick={()=>history.push('/teacher/video')}
+                                    data-tip='Launch Video Course'
+                                    data-for="launch"
                                     >
                                     <i class="fas fa-video fa-2x text-primary"></i>
                                     <div>Launch</div>
                                  </div>
+                                 <CustomTooltip idTooltip={"launch"} placeTooltip={"top"} />
                                  
                                  <div 
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
                                     onClick={()=>setShowListStudentModal(true)}
+                                    data-tip="Enrolled Student"
+                                    data-for="enrol"
                                     >
                                     <i class="fa fa-users fa-2x text-primary"></i>
                                     <div>3</div>
                                  </div>
+                                 <CustomTooltip idTooltip={"enrol"} placeTooltip={"top"} />
                                  {showListStudentModal? <ListStudentModal /> :'' }
 
                                  <div 
                                     class="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>history.push('/teacher/manage/course')}
+                                    onClick={outPutManageCourse}
+                                    data-tip="Course Details"
+                                    data-for="details"
                                     >
                                     <i class="fas fa-eye fa-2x text-primary"></i>
                                     <div>Details</div>
                                  </div>
+                                 <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
 
                                  
 
@@ -362,29 +469,39 @@ const DashboardTeacher = ({props})  => {
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
                                     onClick={()=>history.push('/teacher/video')}
+                                    data-tip='Launch Video Course'
+                                    data-for="launch"
                                     >
                                     <i class="fas fa-video fa-2x text-primary"></i>
                                     <div>Launch</div>
                                  </div>
+                                 <CustomTooltip idTooltip={"launch"} placeTooltip={"top"} />
                                 
                                  <div 
                                     className="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
                                     onClick={()=>setShowListStudentModal(true)}
+                                    data-tip="Enrolled Student"
+                                    data-for="enrol"
                                     >
                                     <i class="fa fa-users fa-2x text-primary"></i>
                                     <div>3</div>
                                  </div>
+                                 <CustomTooltip idTooltip={"enrol"} placeTooltip={"top"} />
                                  {showListStudentModal? <ListStudentModal  />:'' }
 
                                  <div 
                                     class="m-0 font-weight-bold text-center col"
                                     style={{cursor:'pointer'}}
-                                    onClick={()=>history.push('/teacher/manage/course')}
+                                    onClick={outPutManageCourse}
+                                    data-tip="Course Details"
+                                    data-for="details"
                                     >
                                     <i class="fas fa-eye fa-2x text-primary"></i>
                                     <div>Details</div>
                                  </div>
+                                 <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
+                                 
 
                                 
 
@@ -416,15 +533,34 @@ const DashboardTeacher = ({props})  => {
 
                  </div>
                    : 
-                   showCreateCourse? <CreateCourse onChildClick={outPutShowEvent} /> : 
+                   showCreateCourse? <CreateCourse onChildClick={outPutShowEvent}  onChildClickManageCourse={outPutManageCourse}  onChildClickDash={outPutDash} /> : 
                    
                    showNotifications? <Notifications isUserDisplayList={"teacher"} onChildClick={outPutShowEvent} /> : 
                    
                    showSettings? <AccountSettings isUserDisplayList={"teacher"} onChildClick={outPutShowEvent} /> : 
                    
-                   showEvaluation? <ListEvaluation isUserDisplayList={"teacher"} onChildClick={outPutShowEvent}/> : 
+                   showEvaluation? <ListEvaluation onChildClickDash={outPutDash}  isUserDisplayList={"teacher"} onChildClick={outPutShowEvent} onChildClickHandlerCreateEvaluation={outPutCreateEvaluation}/> : 
                    
-                   showManageCourse? <ListCourse isUserDisplayList={"teacher"} onChildClick={outPutShowEvent}/> : ''}  
+                   showListCourse? <ListCourse isUserDisplayList={"teacher"} onChildClick={outPutShowEvent} onChildClickManageCourse={outPutManageCourse}/> : 
+                   
+                   showManageCourse? <ManageCourse 
+                                        isDashboard={isDashboard}
+                                        onChildClick={outPutShowEvent}
+                                        onChildClickBack={outPutShowBackEvent} 
+                                        onChildClickHandlerCourseSettings={outPutCourseSettings} 
+                                        onChildClickHandlerCreateEvaluation={outPutCreateEvaluation} 
+                                        onChildClickHandlerCreateLesson={outPutCreateLesson} /> : 
+                   
+                   showCreateEvaluation? <EvaluationCourse  
+                                            isDashboard={isDashboard} 
+                                            onChildClick={outPutShowEvent} 
+                                            onChildClickBack1={outPutShowBackEvent1} 
+                                            courseName={courseName} 
+                                            courseAuthor={courseAuthor}/>: 
+                   
+                   showCreateLesson? <CreateLesson onChildClickBackAll={outPutShowBackAll} />:
+                   
+                   showCourseSettings? <CourseSettings  onChildClickBackAll={outPutShowBackAll}/>: ''}  
                   
                   
 

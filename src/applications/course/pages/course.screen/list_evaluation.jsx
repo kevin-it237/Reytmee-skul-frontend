@@ -23,7 +23,10 @@ import CreateCourse from '../../../course/pages/course.screen/create_course';
 import EvaluationCourse from './evaluation_course';
 
 
-const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
+const ListEvaluation = ({isUserDisplayList, 
+            onChildClick,
+            onChildClickHandlerCreateEvaluation,
+            onChildClickDash}) => {
     const history = useHistory();
     const [displaySide,setDisplaySide] = useState('none');
 
@@ -39,9 +42,22 @@ const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
 
     }
 
-    const clickHandler=(e)=>{
-        onChildClick(e.target.name);
+     const clickHandler=(e)=>{
+         onChildClick(e.target.name);
+     }
+
+     const clickHandlerDash=(e)=>{
+        onChildClickDash(e.target.name);
     }
+
+    const clickHandlerCreateEvaluation=(e)=>{
+        onChildClickHandlerCreateEvaluation(e.target.name);
+        clickHandlerDash(e);
+     }   
+
+     
+
+
     const outPutShowEvent=(e)=> {
         setShowCreateEvaluation(false,setShowListEvaluation(true));
     }
@@ -174,13 +190,13 @@ const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
                                 <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Course</th>
+                                        <th>Course Evaluation</th>
                                         <th>Author</th>
                                         <th>type</th>
                                         <th>Duration</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th>Details</th>
+                                        
                                         <th>Edit</th>
 
                                     </tr>
@@ -193,8 +209,8 @@ const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
                                         <td>2h</td>
                                         <td>05/11/2020</td>
                                         <td>In progress</td>
-                                        <td><i className='fas fa-eye text-primary'></i></td>
-                                        <td><i className='fas fa-edit text-primary'></i></td>
+                                        
+                                        <td onClick={clickHandlerCreateEvaluation}><i className='fas fa-edit text-primary'></i></td>
                                     </tr>
                                     <tr>
                                         <td className='justify-content-center'>Anglais</td>
@@ -203,8 +219,8 @@ const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
                                         <td>1h</td>
                                         <td>05/11/2012</td>
                                         <td>Not start</td>
-                                        <td><i className='fas fa-eye text-primary'></i></td>
-                                        <td><i className='fas fa-edit text-primary'></i></td>
+                                       
+                                        <td onClick={clickHandlerCreateEvaluation}><i className='fas fa-edit text-primary'></i></td>
                                     </tr>
                                     <tr>
                                         <td className='justify-content-center'>Programmation C++</td>
@@ -213,8 +229,8 @@ const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
                                         <td>3h</td>
                                         <td>05/11/2015</td>
                                         <td>In progress</td>
-                                        <td><i className='fas fa-eye text-primary'></i></td>
-                                        <td><i className='fas fa-edit text-primary'></i></td>
+                                        
+                                        <td onClick={clickHandlerCreateEvaluation}><i className='fas fa-edit text-primary'></i></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -236,7 +252,7 @@ const ListEvaluation = ({isUserDisplayList,onChildClick}) => {
                             <table className='table'>
                                 <thead>
                                     <tr>
-                                        <th>Course</th>
+                                        <th>Course Evaluation</th>
                                         <th>Author</th>
                                         <th>type</th>
                                         <th>Duration</th>

@@ -13,6 +13,7 @@ import Footer from '../../../../app/components/footer/footer';
 import '../../../../app/components/sidebar/sidebar'
 import Sidebar from '../../../../app/components/sidebar/sidebar';
 import Modals from '../../../../app/components/modals/modal';
+import Topbar from '../../../../app/components/topbar/topbar';
 
 
 const DashboardAdmin = ({props})  => {
@@ -328,46 +329,50 @@ const DashboardAdmin = ({props})  => {
                         }
                     }
 
+                    const outPutShowEvent=(e)=>{
+                        setIsHome(true);
+                    } 
+
+                    const outPutStudentModal=(e)=>{
+                        setShowStudentModal(true);
+                    }
+                    
+                    const outPutTeacherModal=(e)=>{
+                        setShowTeacherModal(true);
+                    }
+                    const outPutShowSettings=(e)=>{
+                        setShowProfileModal(true);
+                    }
+
+                    const outPutEvent=(e)=> {
+                        if(displaySide == 'none'){
+                            setDisplaySide('block');
+                        }else{
+                            setDisplaySide('none');
+                        }
+                
+                    }
+
                     
     
         return(
     <div id="wrapper" onClick={handleSideNavBody}>
 
         {/*  <!-- Sidebar -->*/}
-            <Sidebar width={200} height={"100%"} display={displaySide}>
-                <div style={{marginTop:25+'%'}}>
-
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={()=>setIsHome(true,setIsTeacher(false),setIsStudent(false))}>
-                        <div className='col-md-2'><i className="fa fa-fw fa-home text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Home</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setShowStudentModal(true)}>
-                        <div className='col-md-2'><i className="fa fa-fw fa-users text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Add Student</div>
-                        
-                    </div>
-                    {showStudentModal? <ModalContentStudent /> : ''}
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setShowTeacherModal(true)}>
-                         <div className='col-md-2'><i className="fas fa-chalkboard-teacher text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Add Teacher</div>
-                         
-                    </div>
-                    {showTeacherModal? <ModalContentTeacher /> : ''}
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>setShowProfileModal(true)}>
-                         <div className='col-md-2'><i className="fa fa-user text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Profile</div>
-                    </div>
-                    {showProfileModal? <ModalContentProfile /> : ''}
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={handleLogout}>
-                         <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                         <div className='col-md-8 text-white'>Logout</div>
-                    </div>
-                </div> 
+            <Sidebar 
+                width={300} 
+                height={"100%"} 
+                display={displaySide}
+                isUserSidebar={"admin"}
+                onChildClick={outPutShowEvent}
+                onChildClickStudentModal={outPutStudentModal}
+                onChildClickTeacherModal={outPutTeacherModal}
+                onChildClickSettings={outPutShowSettings}>
+                
             </Sidebar>
+            {showStudentModal? <ModalContentStudent />: ''}
+            {showTeacherModal? <ModalContentTeacher />: ''}
+            {showProfileModal? <ModalContentProfile />: ''}
         {/* <!-- End of Sidebar -->*/} 
 
 
@@ -384,55 +389,13 @@ const DashboardAdmin = ({props})  => {
             
 
                {/*<!-- Topbar --> */} 
-               <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+               <Topbar  
+                    isUserTopbar={"admin"} 
+                    isDisplaySide={displaySide} 
+                    onChildClick={outPutEvent}  
+                    onChildClickSettings={outPutShowSettings}
+               />
 
-                   
-
-                    <div style={{fontSize: 2+'em'}} className="sidebar-brand d-flex align-items-center justify-content-center">
-                        <div className="sidebar-brand-icon  mr-5" style={{cursor:'pointer'}} onClick={handleSideNav}>
-                            {displaySide == 'none'? <i class="fas fa-bars text-primary"></i>: displaySide == 'block'? <i class="far fa-window-close text-primary"></i>: ''}
-                        </div>
-
-                        <div className="sidebar-brand-icon rotate-n-15">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div className="sidebar-brand-text mx-3">Retymee School E-learning<sup></sup></div>
-                    </div>
-
-
-                    <ul class="navbar-nav ml-auto">
-
-
-                    <div class="topbar-divider d-none d-sm-block"></div>
-
-                    <Dropdown class="nav-item dropdown no-arrow">
-                        <Dropdown.Toggle style={{border:'none'}} variant="none" class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{fontSize:20+'px'}}>
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin User</span>
-                            <img class="img-profile rounded-circle"
-                                src="img/undraw_profile.svg"/>
-                        </Dropdown.Toggle>
-                        
-                        <Dropdown.Menu style={{width: 100+'%', fontSize: 1.5+'em', marginRight: 2+'em'}} class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-
-                        <Dropdown.Item onClick={()=>setShowProfileModal(true)} class="dropdown-item mb-4">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
-                        </Dropdown.Item>
-
-                        <div class="dropdown-divider"></div>
-                            <Dropdown.Item onClick={handleLogout} class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" ></i>
-                                Logout
-                            </Dropdown.Item>
-
-                        </Dropdown.Menu>
-                    </Dropdown>
-
-                </ul>
-
-            </nav>
                {/* <!-- End of Topbar -->*/} 
 
 

@@ -232,8 +232,10 @@ const Results = ({isUserDisplayList,onChildClick}) => {
                                 <thead>
                                     <tr>
                                         <th>Course</th>
+                                        <th>Type</th>
                                         <th>Note/20</th>
                                         <th>Author</th>
+                                        
                        
                                     </tr>
                                 </thead>
@@ -241,19 +243,25 @@ const Results = ({isUserDisplayList,onChildClick}) => {
                                     <tr>
                                         
                                         <td>Arithmétique</td>
+                                        <td>Controle Continu</td>
                                         <td>18</td>
                                         <td>Alain Paul</td>
+                                        
                                         
                                     </tr>
                                     <tr>
                                         <td>Anglais</td>
+                                        <td>Session normale</td>
                                         <td>15</td>
                                         <td>Alain atshu</td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>Programmation C++</td>
-                                        <td>17</td>
+                                        <td>Controle Continu</td>
+                                        <td>17</td> 
                                         <td>Alain Paul</td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -263,14 +271,6 @@ const Results = ({isUserDisplayList,onChildClick}) => {
                     </div>
                  </div>
                  :''}
-
-
-
-
-
-
-
-
 
                {/* <!-- /.container-fluid -->*/} 
 

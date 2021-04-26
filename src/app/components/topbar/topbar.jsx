@@ -77,7 +77,8 @@ const Topbar = ({
                                         round={true}
                                         src={profileStudentImg}
                                     />
-                                 :''}
+                                     :isUserTopbar==="admin"?
+                                     "Retymee School Elearning": ''}
                             
                             </div>
                             <div className="sidebar-brand-text mx-3"><sup></sup></div>

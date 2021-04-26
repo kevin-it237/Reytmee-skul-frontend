@@ -19,10 +19,10 @@ import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import './course.scss';
-import LessonOverview from './lesson_overview';
+import LessonOverview from '../../../lesson/pages/lesson.screen/lesson_overview';
 
 
-const CourseOverview = () => {
+const CourseOverview = ({onChildClick}) => {
     const history = useHistory()
     const [displaySide,setDisplaySide] = useState('none');
     const [showLessonModal,setShowLessonModal] = useState(false);
@@ -42,6 +42,9 @@ const CourseOverview = () => {
             setDisplaySide('none');
         }
 
+    }
+    const clickHandler=(e)=>{
+        onChildClick(e.target.name);
     }
 
     const selectLessonRow = {
@@ -155,22 +158,12 @@ const CourseOverview = () => {
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
-        {/*  <!-- Sidebar -->*/}
-        <Sidebar width={260} height={"100%"} display={displaySide} isUserSidebar={"teacher"}></Sidebar>
-        {/* <!-- End of Sidebar -->*/} 
 
 
        {/*<!-- Content Wrapper --> */} 
         <div id="content-wrapper" class="d-flex flex-column">
            {/* <!-- Main Content -->*/} 
             <div id="content">
-
-            
-
-               {/*<!-- Topbar --> */} 
-               <Topbar isUserTopbar={"teacher"} isDisplaySide={displaySide} onChildClick={outPutEvent} />
-               {/* <!-- End of Topbar -->*/} 
-
 
                {/*<!-- Begin Page Content --> */} 
 
@@ -191,12 +184,12 @@ const CourseOverview = () => {
                             <div class="row" style={{fontSize: 2+'em'}}>
 
                             {/* <!-- Earnings (Monthly) Card Example --> */}
-                                    <div class="col-xl-3 col-md-3 mb-3">
+                            <div class="col-xl-3 col-md-3 mb-3">
                                         <div class="card  shadow" style={{backgroundColor:'#17879C'}}>
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/student/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                        <div onClick={clickHandler} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                         <i className="fas fa-chevron-left"/> Dashboard
                                                         </div>
                                                         
@@ -253,9 +246,9 @@ const CourseOverview = () => {
                        {/*<!-- Area Chart --> */} 
                         <div 
                            className="col-xl-12 col-lg-12 text-center" 
-                           style={{height:45+'vh',border:'2px dashed black',cursor:'pointer'}} onClick={handleClickFileInput}>
-                          <i class="fas fa-image text-white" style={{fontSize:7+'em'}}></i><p>Cliquez pour Ajouter une Image de couverture</p>
-                          <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
+                           style={{height:45+'vh',border:'2px dashed black'}}>
+                          <i class="fas fa-image text-white" style={{fontSize:7+'em'}}></i><p> Image de couverture</p>
+                          <img src=""></img>
                         </div>
                        
                     </div>
@@ -271,7 +264,7 @@ const CourseOverview = () => {
                                         <td>Lesson Name</td>
                                         <td>Date creation</td>
                                         <td>Details</td>
-                                        <td>Edit</td>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -280,14 +273,14 @@ const CourseOverview = () => {
                                             <td>LES BASES DE JAVASCRIPT</td>
                                             <td>12/01/2021</td>
                                             <td onClick={()=>setShowManageLesson(false,setShowLessonOverview(true))}><i className='fas fa-eye text-primary' /></td>
-                                            <td><i className='fas fa-edit text-primary' /></td>
+                                            
                                         </tr>
                                    
                                    <tr>
                                         <td>INTRODUCTION AUX REGEX</td>
                                         <td>12/01/2021</td>
                                         <td onClick={()=>setShowManageLesson(false,setShowLessonOverview(true))}><i className='fas fa-eye text-primary' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        
                                         
                                     </tr>
 
@@ -295,7 +288,7 @@ const CourseOverview = () => {
                                         <td>HTML CSS JAVASCRIPT</td>
                                         <td>12/01/2021</td>
                                         <td onClick={()=>setShowManageLesson(false,setShowLessonOverview(true))}><i className='fas fa-eye text-primary' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        
                                         
                                     </tr>
                                 </tbody>
@@ -316,7 +309,7 @@ const CourseOverview = () => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+              
            {/*<!-- End of Footer --> */} 
 
         </div>

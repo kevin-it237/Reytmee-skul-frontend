@@ -19,10 +19,17 @@ import {Effect} from 'react-notification-badge';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import './course.scss';
-import LessonOverview from './lesson_overview';
+import LessonOverview from '../../../lesson/pages/lesson.screen/lesson_overview';
 
 
-const ManageCourse = () => {
+const ManageCourse = ({
+    isDashboard,
+    onChildClick,
+    onChildClickBack,
+    onChildClickHandlerCreateEvaluation,
+    onChildClickHandlerCreateLesson,
+    onChildClickHandlerCourseSettings,}) => {
+
     const history = useHistory()
     const [displaySide,setDisplaySide] = useState('none');
     const [showLessonModal,setShowLessonModal] = useState(false);
@@ -31,7 +38,7 @@ const ManageCourse = () => {
     const [showManageLesson,setShowManageLesson] = useState(true);
     const [showLessonOverview,setShowLessonOverview] = useState(false);
 
-    const handleLogout=({isUserDisplayList,onChildClick})=>{
+    const handleLogout=()=>{
         history.push('/');
     }
 
@@ -60,6 +67,28 @@ const ManageCourse = () => {
         setShowManageLesson(true,setShowLessonOverview(false));
         
     }
+    
+    const clickBackHandler=(e)=>{
+        onChildClickBack(e.target.name);
+    }
+
+    const clickHandler=(e)=>{
+        onChildClick(e.target.name);
+    }
+
+    const clickHandlerCreateEvaluation=(e)=>{
+        onChildClickHandlerCreateEvaluation(e.target.name);
+    }
+
+    const clickHandlerCreateLesson=(e)=>{
+        onChildClickHandlerCreateLesson(e.target.name);
+    }
+
+    const clickHandlerCourseSettings=(e)=>{
+        onChildClickHandlerCourseSettings(e.target.name);
+    }
+
+
      
 
     const handleLessonClose = () =>{setShowLessonModal(false)}
@@ -155,21 +184,10 @@ const ManageCourse = () => {
     return(
         <div id="wrapper" onClick={handleSideNavBody}>
 
-        {/*  <!-- Sidebar -->*/}
-        <Sidebar width={260} height={"100%"} display={displaySide} isUserSidebar={"teacher"}></Sidebar>
-        {/* <!-- End of Sidebar -->*/} 
-
-
        {/*<!-- Content Wrapper --> */} 
         <div id="content-wrapper" class="d-flex flex-column">
            {/* <!-- Main Content -->*/} 
             <div id="content">
-
-            
-
-               {/*<!-- Topbar --> */} 
-               <Topbar isUserTopbar={"teacher"} isDisplaySide={displaySide} onChildClick={outPutEvent} />
-               {/* <!-- End of Topbar -->*/} 
 
 
                {/*<!-- Begin Page Content --> */} 
@@ -196,8 +214,8 @@ const ManageCourse = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                        <div onClick={()=>history.push('/teacher/dashboard')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
-                                                        <i className="fas fa-chevron-left"/> Dashboard
+                                                        <div onClick={isDashboard? clickHandler: clickBackHandler} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                        <i className="fas fa-chevron-left"/>
                                                         </div>
                                                         
                                                     </div>
@@ -205,6 +223,7 @@ const ManageCourse = () => {
                                             </div>
                                         </div>
                                     </div>
+                                
             
                                 {/* <!-- Pending Requests Card Example -->*/}  
                                     
@@ -214,7 +233,7 @@ const ManageCourse = () => {
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col">
-                                                            <div onClick={()=>history.push('/teacher/course/settings')} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
+                                                            <div onClick={clickHandlerCourseSettings} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                             <i className="fa fa-cog"/>  Course settings
                                                             </div>
                                                         
@@ -225,7 +244,7 @@ const ManageCourse = () => {
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-3 col-md-3 mb-3"></div>
+                                  
                                     <div class="col-xl-3 col-md-3 mb-3">
                                         <div class="card  shadow">
                                             <div class="card-body bg-warning">
@@ -275,7 +294,7 @@ const ManageCourse = () => {
                     <div class="col-lg-6 mb-4">
                         <div class="shadow mb-4 border-none">
                           
-                            <div class="" align="center" style={{cursor:'pointer'}} onClick={()=>history.push('/teacher/course/lesson/create')}>
+                            <div class="" align="center" style={{cursor:'pointer'}} onClick={clickHandlerCreateLesson}>
                                 <i class="fa fa-plus text-primary" style={{fontSize:10+'em'}}></i>
                                 <p className='font-weight-bold'>Add a Lesson</p>
                                 <p className='font-weight-bold'>Create Lesson for your Course</p>
@@ -334,14 +353,14 @@ const ManageCourse = () => {
                                             <td>LES BASES DE JAVASCRIPT</td>
                                             <td>12/01/2021</td>
                                             <td onClick={()=>setShowManageLesson(false,setShowLessonOverview(true))}><i className='fas fa-eye text-primary' /></td>
-                                            <td><i className='fas fa-edit text-primary' /></td>
+                                            <td onClick={clickHandlerCreateLesson}><i className='fas fa-edit text-primary' /></td>
                                         </tr>
                                    
                                    <tr>
                                         <td>INTRODUCTION AUX REGEX</td>
                                         <td>12/01/2021</td>
                                         <td onClick={()=>setShowManageLesson(false,setShowLessonOverview(true))}><i className='fas fa-eye text-primary' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        <td onClick={clickHandlerCreateLesson}><i className='fas fa-edit text-primary' /></td>
                                         
                                     </tr>
 
@@ -349,7 +368,7 @@ const ManageCourse = () => {
                                         <td>HTML CSS JAVASCRIPT</td>
                                         <td>12/01/2021</td>
                                         <td onClick={()=>setShowManageLesson(false,setShowLessonOverview(true))}><i className='fas fa-eye text-primary' /></td>
-                                        <td><i className='fas fa-edit text-primary' /></td>
+                                        <td onClick={clickHandlerCreateLesson}><i className='fas fa-edit text-primary' /></td>
                                         
                                     </tr>
                                 </tbody>
@@ -370,7 +389,7 @@ const ManageCourse = () => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+              
            {/*<!-- End of Footer --> */} 
 
         </div>

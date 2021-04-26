@@ -80,8 +80,6 @@ const Routes = () => {
                     component={Notifications}
                     path={'/teacher/notifications'} />
 
-                         
-
                 <Route 
                     exact
                     component={EvaluationCourse}
@@ -91,8 +89,6 @@ const Routes = () => {
                     exact
                     component={CourseOverview}
                     path={'/student/course/overview'} />
-
-                    
 
                 <Route 
                     exact

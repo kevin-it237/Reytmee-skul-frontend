@@ -166,6 +166,9 @@ const Notifications = ({isUserDisplayList,onChildClick}) => {
                                </div> 
                             </div>
                         </div>
+
+
+
                         :isUserDisplayList==="student"?
                         <div className="col-xl-12 col-lg-12 container-editor">
                             
@@ -227,7 +230,7 @@ const Notifications = ({isUserDisplayList,onChildClick}) => {
 
 
            {/*<!-- Footer --> */} 
-                <Footer />
+               
            {/*<!-- End of Footer --> */} 
 
         </div>

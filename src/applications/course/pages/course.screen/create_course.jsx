@@ -4,7 +4,7 @@ import Button from '../../../../app/components/buttons/button/button';
 import {Redirect, useHistory} from 'react-router-dom';
 import './course.scss';
 
-const CreateCourse = ({onChildClick}) => {
+const CreateCourse = ({onChildClick,onChildClickManageCourse,onChildClickDash}) => {
     const history = useHistory();
     const [createCourseForm,setCreateCourseForm] = useState({name: "", description: ""});
 
@@ -12,16 +12,27 @@ const CreateCourse = ({onChildClick}) => {
         setCreateCourseForm({...createCourseForm,  [e.target.name]: e.target.value })
         
     }
-
+    
     const onSubmit = (e) => {
         e.preventDefault();
-          history.push('/teacher/manage/course');
+        clickHandlerManageCourse(e);
+        clickHandlerDash(e);
+        console.log(createCourseForm.name);
             console.log(e);
     }
+
+    const clickHandlerManageCourse=(e)=>{
+        onChildClickManageCourse(e.target.name);
+     }
+     
+     const clickHandlerDash=(e)=>{
+         onChildClickDash(e.target.name);
+     }
 
     const clickHandler=(e)=>{
             onChildClick(e.target.name);
     }
+    
 
  
     return(
@@ -43,7 +54,7 @@ const CreateCourse = ({onChildClick}) => {
                         <div className="p-3" style={{width:50+'vh'}}>
                         
                         
-                            <form onSubmit={onSubmit} >
+                            <form onSubmit={onSubmit}>
                          
                          <>
                              { Object.keys(createCourseForm).map((input,index)=>{
@@ -90,6 +101,7 @@ const CreateCourse = ({onChildClick}) => {
                                  value="update"
                                  size="xl"
                                  className='dashboard-container__button'
+                                
                                  >
                                 Create Course
                              </Button>

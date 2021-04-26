@@ -35,12 +35,14 @@ const Sidebar = ({
     onChildClickSettings,
     onChildClickEvaluations,
     onChildClickCourses,
+    onChildClickStudentModal,
+    onChildClickTeacherModal,
     ...res}) => {
         const history = useHistory();
 
         const clickHandlerNotifications=(e)=>{
                onChildClickNotifications(e.target.name);
-            }
+        }
                 
         const clickHandlerSettings=(e)=>{
             onChildClickSettings(e.target.name);
@@ -56,6 +58,14 @@ const Sidebar = ({
 
         const clickHandler=(e)=>{
             onChildClick(e.target.name)
+        }
+
+        const clickHandlerStudentModal=(e)=>{
+            onChildClickStudentModal(e.target.name);
+        }
+
+        const clickHandlerTeacherModal=(e)=>{
+            onChildClickTeacherModal(e.target.name);
         }
     
      return (
@@ -94,19 +104,38 @@ const Sidebar = ({
                         <div className='col-md-8 text-white'>Dashboard</div>
                     </div>
                     <hr/>
+                    {isUserSidebar==="student" || isUserSidebar==="teacher"?
                     <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerNotifications}>
                         <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
                         <div className='col-md-8 text-white'>Notifications</div>
                         
                     </div>
-                    <hr/>
+                    : ''}
+                    
+                   
+                    {isUserSidebar==="admin"?
+                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerStudentModal}>
+                        <div className='col-md-2'><i className="fa fa-fw fa-users text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                        <div className='col-md-8 text-white'>Add Student</div>
+                    
+                     </div>
+                    : ''}
+                    <hr />
+                    {isUserSidebar==="admin"? 
+                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerTeacherModal}>
+                        <div className='col-md-2'><i className="fas fa-chalkboard-teacher text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                        <div className='col-md-8 text-white'>Add Teacher</div>
+                        
+                   </div>
+                    : ''}
+                  
                     {isUserSidebar==="teacher"?
                     <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerCourses}>
                         <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
                         <div className='col-md-8 text-white'>Manages Courses</div>
                     </div>
                     : ''}
-
+                    <hr/>
                     {isUserSidebar==="teacher"?
                     <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerEvaluation}>
                         <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
