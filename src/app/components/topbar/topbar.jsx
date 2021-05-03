@@ -22,7 +22,11 @@ import 'popper.js';
  */
 
 const Topbar = ({
-    isUserTopbar, isDisplaySide, onChildClick, onChildClickSettings
+    isUserTopbar, 
+    isDisplaySide, 
+    onChildClick, 
+    onChildClickSettings,
+    onChildClickGroupChat
     }) => {
         const history = useHistory();
         const handleLogout=()=>{
@@ -35,6 +39,10 @@ const Topbar = ({
 
     const clickHandlerSettings=(e)=>{
         onChildClickSettings(e.target.name);
+    }
+
+    const clickHandlerGroupChat=(e)=>{
+        onChildClickGroupChat(e.target.name);
     }
 
         const createNotification = (type) =>{
@@ -90,7 +98,7 @@ const Topbar = ({
     
                         <div class="topbar-divider d-none d-sm-block"></div>
     
-                        <Dropdown class="nav-item dropdown no-arrow">
+                        <Dropdown class="nav-item dropdown no-arrow" onClick={clickHandlerGroupChat}>
                             <Dropdown.Toggle variant='light' onClick={createNotification('success')}>
                                <NotificationBadge count={5} effect={Effect.SCALE} style={{fontSize:10+'px'}}/>
                                <i className="fas fa-bell text-dark" style={{fontSize:20+'px'}}/>

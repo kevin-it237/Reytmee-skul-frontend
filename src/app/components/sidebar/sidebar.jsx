@@ -76,83 +76,83 @@ const Sidebar = ({
                     display: display
                     }}>
                
-             <div style={{marginTop:25+'%'}}>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
-                        <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
-                          {isUserSidebar==="student"?
-                               <Avatar 
-                                        size="100"
-                                        round={true}
-                                        src={profileStudentImg}
-                                />
-                          : isUserSidebar==="teacher"?
-                                <Avatar 
-                                    size="100"
-                                    round={true}
-                                    src={profileTeacherImg}
-                                />
-                          : ''}   
-                        </div> 
-                    
-                    </div>
-        
-                    <div className='row text-white justify-content-center' style={{fontSize:2+'em'}}>{isUserSidebar==="teacher"? 'Pierre Mvogo': isUserSidebar==="student"? 'Paul Aris': ''}</div>
-                    <div className='row text-white justify-content-center' style={{fontSize:1.5+'em'}}>{isUserSidebar==="teacher"? 'Retymee School Educator': isUserSidebar==="student"? 'Retymee School Student': ''}</div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={clickHandler}>
-                        <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Dashboard</div>
-                    </div>
-                    <hr/>
-                    {isUserSidebar==="student" || isUserSidebar==="teacher"?
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerNotifications}>
-                        <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Notifications</div>
+                    <div style={{marginTop:25+'%'}}>
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={console.log("home")}>
+                                <div className='row bg-white ' style={{marginLeft: 25+'%'}}>
+                                {isUserSidebar==="student"?
+                                    <Avatar 
+                                                size="100"
+                                                round={true}
+                                                src={profileStudentImg}
+                                        />
+                                : isUserSidebar==="teacher"?
+                                        <Avatar 
+                                            size="100"
+                                            round={true}
+                                            src={profileTeacherImg}
+                                        />
+                                : ''}   
+                                </div> 
+                            
+                            </div>
+                
+                            <div className='row text-white justify-content-center' style={{fontSize:2+'em'}}>{isUserSidebar==="teacher"? 'Pierre Mvogo': isUserSidebar==="student"? 'Paul Aris': ''}</div>
+                            <div className='row text-white justify-content-center' style={{fontSize:1.5+'em'}}>{isUserSidebar==="teacher"? 'Retymee School Educator': isUserSidebar==="student"? 'Retymee School Student': ''}</div>
+                            <hr/>
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px', cursor:'pointer'}} onClick={clickHandler}>
+                                <div className='col-md-2'><i className="fas fa-tachometer-alt text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                                <div className='col-md-8 text-white'>Dashboard</div>
+                            </div>
+                            <hr/>
+                            {isUserSidebar==="student" || isUserSidebar==="teacher"?
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerNotifications}>
+                                <div className='col-md-2'><i className="fa fa-bell text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                                <div className='col-md-8 text-white'>Notifications</div>
+                                
+                            </div>
+                            : ''}
+                            
                         
-                    </div>
-                    : ''}
-                    
-                   
-                    {isUserSidebar==="admin"?
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerStudentModal}>
-                        <div className='col-md-2'><i className="fa fa-fw fa-users text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
-                        <div className='col-md-8 text-white'>Add Student</div>
-                    
-                     </div>
-                    : ''}
-                    <hr />
-                    {isUserSidebar==="admin"? 
-                        <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerTeacherModal}>
-                        <div className='col-md-2'><i className="fas fa-chalkboard-teacher text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                        <div className='col-md-8 text-white'>Add Teacher</div>
+                            {isUserSidebar==="admin"?
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerStudentModal}>
+                                <div className='col-md-2'><i className="fa fa-fw fa-users text-white mb-5" style={{ fontSize: '1.75em' }}/></div>
+                                <div className='col-md-8 text-white'>Add Student</div>
+                            
+                            </div>
+                            : ''}
+                            <hr />
+                            {isUserSidebar==="admin"? 
+                                <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerTeacherModal}>
+                                <div className='col-md-2'><i className="fas fa-chalkboard-teacher text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                                <div className='col-md-8 text-white'>Add Teacher</div>
+                                
+                        </div>
+                            : ''}
                         
-                   </div>
-                    : ''}
-                  
-                    {isUserSidebar==="teacher"?
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerCourses}>
-                        <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                        <div className='col-md-8 text-white'>Manages Courses</div>
-                    </div>
-                    : ''}
-                    <hr/>
-                    {isUserSidebar==="teacher"?
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerEvaluation}>
-                        <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                        <div className='col-md-8 text-white'>Manage Evaluations</div>
-                    </div>
-                    : ''}
-                    
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerSettings}>
-                        <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                        <div className='col-md-8 text-white'>Accounts settings</div>
-                    </div>
-                    <hr/>
-                    <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
-                        <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
-                        <div className='col-md-8 text-white'>Logout</div>
-                    </div>
-                    </div>
+                            {isUserSidebar==="teacher"?
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerCourses}>
+                                <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                                <div className='col-md-8 text-white'>Manages Courses</div>
+                            </div>
+                            : ''}
+                            <hr/>
+                            {isUserSidebar==="teacher"?
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerEvaluation}>
+                                <div className='col-md-2'><i className="fas fa-tasks text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                                <div className='col-md-8 text-white'>Manage Evaluations</div>
+                            </div>
+                            : ''}
+                            
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={clickHandlerSettings}>
+                                <div className='col-md-2'><i className="fa fa-cog text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                                <div className='col-md-8 text-white'>Accounts settings</div>
+                            </div>
+                            <hr/>
+                            <div className='row' style={{fontSize:12+'px', margin: 2+'px',cursor:'pointer'}} onClick={()=>history.push('/')}>
+                                <div className='col-md-2'><i className="fas fa-sign-out-alt text-white mb-5" style={{ fontSize: '1.75em' }} /></div>
+                                <div className='col-md-8 text-white'>Logout</div>
+                            </div>
+                            </div>
                  </div> 
      )
     }

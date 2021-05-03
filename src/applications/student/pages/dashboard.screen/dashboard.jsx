@@ -12,6 +12,7 @@ import Footer from '../../../../app/components/footer/footer';
 import './dashboard.scss';
 import '../../../../app/components/sidebar/sidebar'
 import Sidebar from '../../../../app/components/sidebar/sidebar';
+import Chat from '../../../../app/components/chat/chat';
 import Modals from '../../../../app/components/modals/modal';
 import Avatar   from 'react-avatar';
 import profileImg from '../../../../assets/images/profilestudent_icon.png';
@@ -41,6 +42,9 @@ const DashboardStudent = () => {
     const [showNotifications,setShowNotifications] = useState(false);
     const [showSettings,setShowSettings] = useState(false);
     const [showCourseOverview,setShowCourseOverview] = useState(false);
+    const [displayChatSide,setDisplayChatSide] = useState('none');
+    const [showGroupChat,setShowGroupChat] = useState(false);
+    const [courseName,setCourseName] = useState('');
 
 
     const handleLogout=()=>{
@@ -70,34 +74,44 @@ const DashboardStudent = () => {
         setShowEvaluationList(false,setShowDashboard(true),
         setShowEvaluationResults(false),setShowCourseList(false),
         setShowSettings(false),setShowNotifications(false),
-        setShowCourseOverview(false));
+        setShowCourseOverview(false),setShowGroupChat(false));
         
     }
     const outPutNotifications=(e)=> {
         setShowEvaluationList(false,setShowDashboard(false),
         setShowEvaluationResults(false),setShowCourseList(false),
         setShowSettings(false),setShowNotifications(true),
-        setShowCourseOverview(false));
+        setShowCourseOverview(false),setShowGroupChat(false));
     }
 
     const outPutSettings=(e)=> {
         setShowEvaluationList(false,setShowDashboard(false),
         setShowEvaluationResults(false),setShowCourseList(false),
         setShowSettings(true),setShowNotifications(false),
-        setShowCourseOverview(false));
+        setShowCourseOverview(false),setShowGroupChat(false));
     }
 
     const outPutShowCourseOverview=(e)=> {
         setShowEvaluationList(false,setShowDashboard(false),
         setShowEvaluationResults(false),setShowCourseList(false),
         setShowSettings(false),setShowNotifications(false),
-        setShowCourseOverview(true));
+        setShowCourseOverview(true),setShowGroupChat(false));
+    }
+
+
+    const outPutShowGroupChat=()=>{
+        setShowEvaluationList(false,setShowDashboard(false),
+        setShowEvaluationResults(false),setShowCourseList(false),
+        setShowSettings(false),setShowNotifications(false),
+        setShowCourseOverview(false),setShowGroupChat(true));
     }
     
 
     const handleSideNavBody = () => {
         if(displaySide == 'block'){
             setDisplaySide('none');
+        }else if(displayChatSide == 'block'){
+            setDisplayChatSide('none');
         }
     }
 
@@ -129,7 +143,8 @@ const DashboardStudent = () => {
                         isUserTopbar={"student"} 
                         isDisplaySide={displaySide} 
                         onChildClick={outPutEvent}  
-                        onChildClickSettings={outPutSettings} />
+                        onChildClickSettings={outPutSettings}
+                        onChildClickGroupChat={outPutShowGroupChat} />
                    {/* <!-- End of Topbar -->*/} 
     
     
@@ -139,7 +154,7 @@ const DashboardStudent = () => {
                       {/*<!-- Page Heading --> */}  
                         
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            <h1 class="h3 mb-0 text-gray-800">{showGroupChat? <Button onClick={outPutShowEvent}><i className="fas fa-chevron-left mr-3"/>Dashboard</Button>: 'Dashboard'}</h1>
                            
                         </div>    
     
@@ -250,9 +265,7 @@ const DashboardStudent = () => {
                                         <div>Download</div>
                                      </div>
                                      <CustomTooltip idTooltip={"download"} placeTooltip={"top"} />
-                                     
-                                    
-    
+              
                                      <div 
                                         class="m-0 font-weight-bold text-center col"
                                         style={{cursor:'pointer'}}
@@ -264,6 +277,17 @@ const DashboardStudent = () => {
                                         <div>Details</div>
                                      </div>
                                      <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
+                                     <div 
+                                        class="m-0 font-weight-bold text-center col"
+                                        style={{cursor:'pointer'}}
+                                        onClick={outPutShowGroupChat}
+                                        data-tip='Comment this Course'
+                                        data-for="comment"
+                                        >
+                                        <i class="far fa-comment-dots fa-2x text-primary"></i>
+                                        <div>Comment</div>
+                                     </div>
+                                     <CustomTooltip idTooltip={"comment"} placeTooltip={"top"} />
     
                                      
     
@@ -326,7 +350,17 @@ const DashboardStudent = () => {
                                      </div>
                                      <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
     
-                                    
+                                     <div 
+                                        class="m-0 font-weight-bold text-center col"
+                                        style={{cursor:'pointer'}}
+                                        onClick={outPutShowGroupChat}
+                                        data-tip='Comment this Course'
+                                        data-for="comment"
+                                        >
+                                        <i class="far fa-comment-dots fa-2x text-primary"></i>
+                                        <div>Comment</div>
+                                     </div>
+                                     <CustomTooltip idTooltip={"comment"} placeTooltip={"top"} />
     
                                     
     
@@ -337,7 +371,7 @@ const DashboardStudent = () => {
                                      <h4 className="small font-weight-bold h1 mt-3">Course Name : </h4>
     
                                      <div className="mb-4" style={{width: 100+'%', height: 25+'%',backgroundColor:'#F7F7F7'}}>
-                                         <div style={{marginLeft:5+'%'}}>Programmation Web</div>
+                                         <div style={{marginLeft:5+'%'}}>C ++ pour debutant</div>
                                      </div>
     
                                      <h4 class="small font-weight-bold">Course Description : </h4>
@@ -365,7 +399,9 @@ const DashboardStudent = () => {
                         
                         showSettings? <AccountSettings isUserDisplayList={"student"} onChildClick={outPutShowEvent}/> : 
                         
-                        showCourseOverview? <CourseOverview onChildClick={outPutShowEvent}/>: ''}  
+                        showCourseOverview? <CourseOverview onChildClick={outPutShowEvent}/>: 
+                        
+                        showGroupChat? <Chat courseName={courseName}/>: ''}  
                       
                       
     

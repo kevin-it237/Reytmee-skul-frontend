@@ -25,7 +25,7 @@ const Button = ({
     ...rest}) =>
 {
     return (
-    <button {...rest} onClick={onClick} disabled={disabled || loading}
+    <button {...rest} onClick={onClick} disabled={disabled || loading }
         className={`btn ${actived ? 'actived': ''} ${loading ? 'btn-loading': ''} ${!border ? 'btn-no-border': ''}
                     btn-${variant} ${variant ? '' : 'btn-default' } 
                     ${outline ? 'btn-outline': ''} 

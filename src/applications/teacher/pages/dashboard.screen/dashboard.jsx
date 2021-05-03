@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import './dashboard.scss';
 import Button from '../../../../app/components/buttons/button/button';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
@@ -12,6 +12,7 @@ import Footer from '../../../../app/components/footer/footer';
 import './dashboard.scss';
 import '../../../../app/components/sidebar/sidebar'
 import Sidebar from '../../../../app/components/sidebar/sidebar';
+import Chat from '../../../../app/components/chat/chat';
 import Modals from '../../../../app/components/modals/modal';
 import Avatar   from 'react-avatar';
 import profileImg from '../../../../assets/images/profile_icon.png';
@@ -49,17 +50,25 @@ const DashboardTeacher = ({props})  => {
     const [showCreateLesson,setShowCreateLesson] = useState(false);
     const [showCreateEvaluation,setShowCreateEvaluation] = useState(false);
     const [showCourseSettings,setShowCourseSettings] = useState(false);
+    const [showGroupChat,setShowGroupChat] = useState(false);
     
     const [courseName,setCourseName] = useState("");
     const [courseAuthor,setCourseAuthor] = useState("");
 
     const [isDashboard,setIsDashboard] = useState(true);
+    const [displayChatSide,setDisplayChatSide] = useState('none');
     
+    const refchild = useRef();
 
     
     const handleListStudentClose = () =>{setShowListStudentModal(false)}
     const handleEvaluationClose = () =>{setShowEvaluationModal(false)}
-
+    const months = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"];
+    const today = new Date(),
+    hour = today.getHours()+':'+today.getMinutes()+':'+today.getSeconds(),
+    
+    date = today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear();
+    
     const listStudentContent = {
         title: "Student Enrol to this Course",
         bodycontent: 
@@ -130,7 +139,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
         
     }
     
@@ -139,7 +149,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(true), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
 
     const outPutSettings=(e)=> {
@@ -147,7 +158,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(true),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
 
     const outPutEvaluations=(e)=> {
@@ -155,7 +167,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(true),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
 
     const outPutCourses=(e)=> {
@@ -163,7 +176,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(true),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
 
     const outPutManageCourse=(e)=> {
@@ -171,7 +185,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(true,setIsDashboard(true)),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
         
     }
 
@@ -180,14 +195,16 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(true),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
     const outPutCreateEvaluation=(coursename,courseauthor)=> {
         setShowCreateCourse(false,setShowCourse(false),
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(true,setIsDashboard(true)),setShowCourseSettings(false));
+        setShowCreateEvaluation(true,setIsDashboard(true)),setShowCourseSettings(false),
+        setShowGroupChat(false));
         setCourseName(coursename);
         setCourseAuthor(courseauthor);
     }
@@ -197,7 +214,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(true));
+        setShowCreateEvaluation(false),setShowCourseSettings(true),
+        setShowGroupChat(false));
     }
 
     const outPutShowBackEvent=()=>{
@@ -205,7 +223,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
 
     const outPutShowBackEvent1=()=>{
@@ -213,7 +232,8 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(true),setShowListCourse(false),
         setShowManageCourse(false),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
 
     const outPutShowBackAll=(e)=>{
@@ -221,12 +241,30 @@ const DashboardTeacher = ({props})  => {
         setShowNotifications(false), setShowSettings(false),
         setShowEvaluation(false),setShowListCourse(false),
         setShowManageCourse(true),setShowCreateLesson(false),
-        setShowCreateEvaluation(false),setShowCourseSettings(false));
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(false));
     }
+
+    const outPutShowGroupChat=(e)=>{
+        setShowCreateCourse(false,setShowCourse(false),
+        setShowNotifications(false), setShowSettings(false),
+        setShowEvaluation(false),setShowListCourse(false),
+        setShowManageCourse(false),setShowCreateLesson(false),
+        setShowCreateEvaluation(false),setShowCourseSettings(false),
+        setShowGroupChat(true));
+    }
+
+
+
 
     const outPutDash=(e)=>{
         setIsDashboard(false);
     }
+
+
+    const clickHandlerChat=(e)=>{
+        
+     }
 
    
 
@@ -257,6 +295,8 @@ const DashboardTeacher = ({props})  => {
             setDisplaySide('none');
         }
     }
+
+   
     
         return(
     <div id="wrapper" onClick={handleSideNavBody}>
@@ -289,6 +329,7 @@ const DashboardTeacher = ({props})  => {
                     isDisplaySide={displaySide} 
                     onChildClick={outPutEvent} 
                     onChildClickSettings={outPutSettings}
+                    onChildClickGroupChat={outPutShowGroupChat}
                 />
                {/* <!-- End of Topbar -->*/} 
 
@@ -298,7 +339,7 @@ const DashboardTeacher = ({props})  => {
                   {/*<!-- Page Heading --> */}  
                     
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">{showGroupChat? <Button onClick={outPutShowEvent}><i className="fas fa-chevron-left mr-3"/>Dashboard</Button>: 'Dashboard'}</h1>
                        
                     </div>    
 
@@ -373,7 +414,7 @@ const DashboardTeacher = ({props})  => {
 
                        {/*<!-- Area Chart --> */} 
                         <div className="col-xl-10 col-lg-7">
-            
+                           
                         </div>
 
 
@@ -429,9 +470,18 @@ const DashboardTeacher = ({props})  => {
                                     <div>Details</div>
                                  </div>
                                  <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
-
-                                 
-
+                                 <div 
+                                        class="m-0 font-weight-bold text-center col"
+                                        style={{cursor:'pointer'}}
+                                        onClick={outPutShowGroupChat}
+                                        data-tip='Comment this Course'
+                                        data-for="comment"
+                                        >
+                                        <i class="far fa-comment-dots fa-2x text-primary"></i>
+                                        <div>Comment</div>
+                                     </div>
+                                     <CustomTooltip idTooltip={"comment"} placeTooltip={"top"} />
+                           
                              </div>
                              
                              <div class="card-body" style={{fontSize:1+'em'}}>
@@ -451,7 +501,7 @@ const DashboardTeacher = ({props})  => {
                                      </div>
                                  </div>
                                  
-                                 
+                                
                              </div>
                          </div> 
                      </div>
@@ -501,12 +551,18 @@ const DashboardTeacher = ({props})  => {
                                     <div>Details</div>
                                  </div>
                                  <CustomTooltip idTooltip={"details"} placeTooltip={"top"} />
-                                 
-
-                                
-
-                                
-
+                                 <div 
+                                        class="m-0 font-weight-bold text-center col"
+                                        style={{cursor:'pointer'}}
+                                        onClick={outPutShowGroupChat}
+                                        data-tip='Comment this Course'
+                                        data-for="comment"
+                                        >
+                                        <i class="far fa-comment-dots fa-2x text-primary"></i>
+                                        <div>Comment</div>
+                                     </div>
+                                     <CustomTooltip idTooltip={"comment"} placeTooltip={"top"} />
+                             
                              </div>
                              
                              <div class="card-body" style={{fontSize:1+'em'}}>
@@ -560,7 +616,14 @@ const DashboardTeacher = ({props})  => {
                    
                    showCreateLesson? <CreateLesson onChildClickBackAll={outPutShowBackAll} />:
                    
-                   showCourseSettings? <CourseSettings  onChildClickBackAll={outPutShowBackAll}/>: ''}  
+                   showCourseSettings? <CourseSettings  onChildClickBackAll={outPutShowBackAll}/>: 
+                   
+                   showGroupChat? <Chat 
+                                    userProfile={profileImg}
+                                    userPseudo={"Pierre Mvogo"}
+                                    isConnected={true}
+                                    chatHour={hour}
+                                    chatDate={date}/>: ''}  
                   
                   
 
