@@ -6,6 +6,7 @@ import Button from '../buttons/button/button';
 import { Document, Page, pdfjs, } from 'react-pdf';
 
 
+
 /**
  * @description simple chat component.  
  * @param {string} userProfile
@@ -39,14 +40,22 @@ const Chat = ({
         const [outgoingMessage,setOutgoingMessage] = useState('');
         const [isTextMessage,setIstextMessage] = useState(false);
         const [isFileUpload,setIsFileUpload] = useState(false);
+        const [listMessageIncoming,setListMessageIncoming] = useState(['']);
+
+        const [isPDF,setIsPDF] = useState(false);
+        const [isDoc,setIsDoc] = useState(false);
+        const [isImage,setIsImage] = useState(false);
+        const [isText,setIsText] = useState(false);
        
         const [fileDoc,setFileDoc] = useState(null); 
-        const [previewDoc,setPreviewDoc] = useState('');
-        const [isImage,setIsImage] = useState(false);
         
-        const [isPDF, setIsPDF] = useState(false);
-        const [disableButton,setDesableButton] = useState(true);
+        const [previewDoc,setPreviewDoc] = useState('');
 
+        const [disableButton,setDesableButton] = useState(true);
+       
+        const [todoList,setTodoList] = useState(['']);
+
+       
 
         pdfjs.GlobalWorkerOptions.workerSrc = 
          `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -58,52 +67,64 @@ const Chat = ({
           setNumPages(numPages);
           setPageNumber(1);
         }
-         
+      
         useEffect(()=>{
           if(fileDoc){
             const reader = new FileReader();
             reader.onloadend = () =>{
-                setPreviewDoc(reader.result);
+              if(fileDoc.type.substr(0,5) ==='image'){
+                setTodoList(todoList.concat(reader.result));
+                setListMessageIncoming(listMessageIncoming.concat(reader.result));
+              }else if(fileDoc.type==='application/pdf'){              
+                setTodoList(todoList.concat(reader.result));
+                setListMessageIncoming(listMessageIncoming.concat(reader.result));
+              }else if(fileDoc.type === "application/msword" || 
+              fileDoc.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
+                setTodoList(todoList.concat(fileDoc.name));
+                setListMessageIncoming(listMessageIncoming.concat(fileDoc.name));
+              }
+              else{setPreviewDoc(reader.result);}  
             }
             reader.readAsDataURL(fileDoc);
           }else{
-            setPreviewDoc(null);
+            setPreviewDoc(null);  
           }
         },[fileDoc]);
 
         const onChangeUploadFile = (e) => {
-              setIsFileUpload(true,setIstextMessage(false));
               const file = e.target.files[0];
-              console.log("FILE TYPE ---->>>>>>>")
-              console.log(file.type);
+
               if(file && file.type.substr(0, 5) === "image"){
-                setIsImage(true,setIsPDF(false));
+                setFileDoc(file); 
+             
+
+              }else if(file &&  file.type === "application/pdf"){
+                setFileDoc(file); 
+              
+               
+              }else if(file.type === "application/msword" || 
+              file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
                 setFileDoc(file);
-              }else if(file &&  file.type === "application/pdf")
-                       {
-                          setIsImage(false, setIsPDF(true));
-                          setFileDoc(file);
-              }else if(file.type === "application/msword" || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
-                          setIsImage(false,setIsPDF(false));
-                          setFileDoc(file);
-              }else{setFileDoc(null);}
-        }
+          
+                          
+              }else{setFileDoc(null);}      
+         }
         
     
         const onChangeSendMessage = (e) => {
             setSendMessageForm({...sendMessageForm,  [e.target.name]: e.target.value })
-            console.log(sendMessageForm.messageContent.length); 
             setDesableButton(e.target.value === '');
         }
-
         
         const onSubmit = (e) => {
             e.preventDefault();   
-            setIstextMessage(true,setIsFileUpload(false));
+            setIsImage(false,setIsDoc(false),setIsPDF(false),setIsText(true));
+            const newListText = todoList.concat(sendMessageForm.messageContent);
+            setTodoList(newListText);
+            setListMessageIncoming(newListText);
             setOutgoingMessage(sendMessageForm.messageContent);
-            console.log(outgoingMessage);
-            console.log(outgoingMessage.length);
-            console.log(e);
+            sendMessageForm.messageContent = '';
+            setDesableButton(sendMessageForm.messageContent === '');
         }
 
         const hiddenFileInput = useRef(null); 
@@ -176,130 +197,73 @@ const Chat = ({
                 <div class="mesgs">
                   <div class="msg_history">
 
+                  {Object.keys(todoList).map((value,index)=>{
+                        if(value != 0){
+                          console.log("MY TODO LIST VALUE");
+                          let pdfFile = JSON.stringify(todoList[value]).substr(6,15);
+                          let imageFile = JSON.stringify(todoList[value]).substr(6,5);
+                          let docFile = JSON.stringify(todoList[value]).substr(6,30);
+                          return(
+                          <div key={index} class="outgoing_msg">
+                            <div class="sent_msg mr-5">
+                                {
+                                 imageFile==='image'?<img  src={todoList[value]}/>:
+                                 pdfFile==='application/pdf'?
+                                  <Document
+                                  style={{cursor:'grab'}}
+                                    file={todoList[value]}
+                                    onLoadSuccess={onDocumentLoadSuccess}
+                                  >
+                                  <Page  pageNumber={pageNumber} />
+                                  </Document>:
+                                  docFile==='application/msword'|| docFile==='application/vnd.openxmlformats'?
+                                 <div onClick={()=>console.log("Download")} 
+                                   style={{backgroundColor:'#F8F9FC',fontSize:'1.2em'}}>
+                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{todoList[value]}
+                                 </div>:
+                                 todoList[value]}
+                                <span class="time_out"> {hour}    |    Today</span> 
+                            </div>
+                          </div>
+                      )}})}
 
-
-                    <div class="incoming_msg mb-5">
-                      <div class="incoming_msg_img"> <Avatar 
-                                        size="50"
-                                        round={true}
-                                        src={userProfile}
-                                    /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5></div>
-                      <div class="received_msg">
-                        <div class="received_withd_msg ml-4">
-                          {incomingMessage}bsdbfjsbgj<br />sddsdsd
-                          <span class="time_date ml-4"> {hour}    |    June 9</span>
-                        </div>
-                      </div>
-                    </div>
-                    {isTextMessage?
-                    <div class="outgoing_msg">
-                        <div class="sent_msg mr-5">
-                            {outgoingMessage}
-                            <span class="time_out"> {hour}   |    Today</span> 
-                        </div>
-                    </div>
-
-                    :isFileUpload?
-                    <div class="outgoing_msg">
-                        <div  class="sent_msg mr-5">
-                            {isImage?<img src={previewDoc}/>: isPDF?
-                            <Document style={{width:'10px'}}
-                            file={previewDoc}
-                            onLoadSuccess={onDocumentLoadSuccess}
-                            >
-                            <Page pageNumber={pageNumber} />
-                          </Document>
-                            : <div style={{backgroundColor:'#F8F9FC',fontSize:'1.5em'}}><i className="fas fa-file-word  mr-2 text-primary"></i>{fileDoc.name}</div>}
-                            <span class="time_out"> {hour}    |    Today</span> 
-                        </div>
-                    </div>:
-                    ''}
-
-
-
-
-                    <div class="incoming_msg mb-5">
-                      <div class="incoming_msg_img"> <Avatar 
-                                        size="50"
-                                        round={true}
-                                        src={userProfile}        
-                                    /><h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
-                      <div class="received_msg">
-                        <div class="received_withd_msg ml-4">
-                          {incomingMessage}bsdbfjsbgjhushfuishifuhsduifhuhsghkdfyilhusdifhuisdghfusdhgyufsdh
-                          <span class="time_date ml-3"> {hour}    |    Yesterday</span></div>
-                      </div>
-                    </div>
-                    {isTextMessage?
-                    <div class="outgoing_msg">
-                        <div class="sent_msg mr-5">
-                            {outgoingMessage}
-                            <span class="time_out"> {hour}    |    Today</span> 
-                        </div>
-                    </div>
-
-                    :isFileUpload?
-                    <div class="outgoing_msg">
-                        <div class="sent_msg mr-5">
-                           {isImage?<img src={previewDoc}/>: isPDF?
-                           <Document
-                           file={previewDoc}
-                           onLoadSuccess={onDocumentLoadSuccess}
-                           >
-                           <Page pageNumber={pageNumber} />
-                           </Document>
-                            :<div style={{backgroundColor:'#F8F9FC',fontSize:'1.5em'}}><i className="fas fa-file-word  mr-2 text-primary"></i>{fileDoc.name}</div>}
-                            <span class="time_out"> {hour}   |    Today</span> 
-                        </div>
-                    </div>:
-                    ''}
-
-
-
-                    <div class="incoming_msg mb-5">
+                    {Object.keys(listMessageIncoming).map((value,index)=>{
+                       let pdfFile = JSON.stringify(todoList[value]).substr(6,15);
+                       let imageFile = JSON.stringify(todoList[value]).substr(6,5);
+                       let docFile = JSON.stringify(todoList[value]).substr(6,30);
+                       if(value != 0){
+                      return(
+                      <div key={index} class="incoming_msg mb-5">
                       <div class="incoming_msg_img"> <Avatar 
                                         size="50"
                                         round={true}
                                         src={userProfile}             
                                     /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
+                      
                       <div class="received_msg">
                         <div class="received_withd_msg ml-4">
-                          {incomingMessage}bsdbfjsbgj<br />sddsdsd
+                          { imageFile==='image'?<img  src={listMessageIncoming[value]}/>:
+                                 pdfFile==='application/pdf'?
+                                  <Document
+                                  style={{cursor:'grab'}}
+                                    file={listMessageIncoming[value]}
+                                    onLoadSuccess={onDocumentLoadSuccess}
+                                  >
+                                  <Page  pageNumber={pageNumber} />
+                                  </Document>:
+                                  docFile==='application/msword'|| docFile==='application/vnd.openxmlformats'?
+                                 <div onClick={()=>console.log("Download")} 
+                                   style={{backgroundColor:'#F8F9FC',fontSize:'1.2em'}}>
+                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listMessageIncoming[value]}
+                                 </div>:
+                                 listMessageIncoming[value]}
                           <span class="time_date ml-3"> {hour}    |    Today</span>
                         </div>
                       </div>
-                    </div>
-
-                    {isTextMessage?
-                    
-                      <div class="outgoing_msg">
-                        <div class="sent_msg mr-5">
-                            {outgoingMessage}
-                            <span class="time_out"> {hour}    |    Today</span> 
-                        </div>
-                      </div>
-                  
-        
-                    :isFileUpload?
-                    
-                    <div class="outgoing_msg">
-                        <div class="sent_msg mr-5">
-                            {isImage?<img src={previewDoc}/>: isPDF?
-                            <Document
-                              file={previewDoc}
-                              onLoadSuccess={onDocumentLoadSuccess}
-                            >
-                            <Page  pageNumber={pageNumber} />
-                            </Document>
-                            :<div style={{backgroundColor:'#F8F9FC',fontSize:'1.5em'}}><i className="fas fa-file-word  mr-2 text-primary"></i>{fileDoc.name}</div>}
-                            <span class="time_out"> {hour}    |    Today</span> 
-                        </div>
-                    </div>:
-                    ''}
-
+                    </div>)}})}
 
                   </div>
-                  <div class="type_msg">
+                  <div class="type_msg" style={{marginTop:'10%'}}>
                     <div class="input_msg_write">
                     <form onSubmit={onSubmit}>
                       <div className="row">
@@ -327,11 +291,13 @@ const Chat = ({
                         <div className="col">
                          
                             {!disableButton?
-                            <Button 
+                            
+                              <Button 
                                 rounded ={true}
                                 type="submit">
                                 <i className="fa fa-paper-plane mr-3 fa-1x"></i>
-                            </Button> : ''}
+                            </Button>
+                             : ''}
                         </div>
                       </div>
                       <input 

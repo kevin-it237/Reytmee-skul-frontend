@@ -114,6 +114,11 @@ const DashboardStudent = () => {
             setDisplayChatSide('none');
         }
     }
+    const months = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"];
+    const today = new Date(),
+    hour = today.getHours()+':'+today.getMinutes()+':'+today.getSeconds(),
+    
+    date = today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear();
 
         return(
             <div id="wrapper" onClick={handleSideNavBody}>
@@ -401,7 +406,13 @@ const DashboardStudent = () => {
                         
                         showCourseOverview? <CourseOverview onChildClick={outPutShowEvent}/>: 
                         
-                        showGroupChat? <Chat courseName={courseName}/>: ''}  
+                        showGroupChat? <Chat 
+                                         courseName={courseName}
+                                         userProfile={profileImg}
+                                         userPseudo={"Paul Aris"}
+                                         isConnected={true}
+                                         chatHour={hour}
+                                         chatDate={date}/>: ''}  
                       
                       
     
