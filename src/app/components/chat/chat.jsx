@@ -54,8 +54,14 @@ const Chat = ({
         const [disableButton,setDesableButton] = useState(true);
        
         const [todoList,setTodoList] = useState(['']);
+        const [isSend,setIsSend] = useState(false);
+        const [isReceive,setIsReceive] = useState(false);
 
-       
+        const messageRef = useRef(null);
+
+        const scrollToBottom = () =>{
+          messageRef.current.scrollIntoView({behavior: "smooth"})
+        }
 
         pdfjs.GlobalWorkerOptions.workerSrc = 
          `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -67,6 +73,8 @@ const Chat = ({
           setNumPages(numPages);
           setPageNumber(1);
         }
+
+        useEffect(()=>scrollToBottom,[todoList]);
       
         useEffect(()=>{
           if(fileDoc){
@@ -204,8 +212,8 @@ const Chat = ({
                           let docFile = JSON.stringify(todoList[value]).substr(6,30);
                           return(
                      <div key={index}>
-                          <div  class="outgoing_msg">
-                            <div class="sent_msg mr-5">
+                          <div  class="outgoing_msg" ref={messageRef}>
+                            <div class="sent_msg mr-5" ref={messageRef}>
                                 {
                                  imageFile==='image'?<img  src={todoList[value]}/>:
                                  pdfFile==='application/pdf'?
@@ -226,15 +234,16 @@ const Chat = ({
                             </div>
                           </div>
                     
-                      <div class="incoming_msg">
-                      <div class="incoming_msg_img"> <Avatar 
+                      <div class="incoming_msg" ref={messageRef}>
+                      <div class="incoming_msg_img" ref={messageRef}> 
+                                     <Avatar 
                                         size="50"
                                         round={true}
                                         src={userProfile}             
-                                    /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
+                                     /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
                       
-                      <div class="received_msg">
-                        <div class="received_withd_msg ml-4">
+                      <div class="received_msg" ref={messageRef}>
+                        <div class="received_withd_msg ml-4" ref={messageRef}>
                           { imageFile==='image'?<img  src={listMessageIncoming[value]}/>:
                                  pdfFile==='application/pdf'?
                                   <Document
@@ -255,7 +264,7 @@ const Chat = ({
                       </div>
                     </div>
 
-                    
+
                   </div>)}})}
                   </div>
                  
