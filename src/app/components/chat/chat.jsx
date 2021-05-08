@@ -196,15 +196,15 @@ const Chat = ({
 
                 <div class="mesgs">
                   <div class="msg_history">
-
                   {Object.keys(todoList).map((value,index)=>{
-                        if(value != 0){
+                     if(value != 0){
                           console.log("MY TODO LIST VALUE");
                           let pdfFile = JSON.stringify(todoList[value]).substr(6,15);
                           let imageFile = JSON.stringify(todoList[value]).substr(6,5);
                           let docFile = JSON.stringify(todoList[value]).substr(6,30);
                           return(
-                          <div key={index} class="outgoing_msg">
+                     <div key={index}>
+                          <div  class="outgoing_msg">
                             <div class="sent_msg mr-5">
                                 {
                                  imageFile==='image'?<img  src={todoList[value]}/>:
@@ -225,15 +225,8 @@ const Chat = ({
                                 <span class="time_out"> {hour}    |    Today</span> 
                             </div>
                           </div>
-                      )}})}
-
-                    {Object.keys(listMessageIncoming).map((value,index)=>{
-                       let pdfFile = JSON.stringify(todoList[value]).substr(6,15);
-                       let imageFile = JSON.stringify(todoList[value]).substr(6,5);
-                       let docFile = JSON.stringify(todoList[value]).substr(6,30);
-                       if(value != 0){
-                      return(
-                      <div key={index} class="incoming_msg mb-5">
+                    
+                      <div class="incoming_msg">
                       <div class="incoming_msg_img"> <Avatar 
                                         size="50"
                                         round={true}
@@ -260,9 +253,10 @@ const Chat = ({
                           <span class="time_date ml-3"> {hour}    |    Today</span>
                         </div>
                       </div>
-                    </div>)}})}
-
+                    </div>
+                  </div>)}})}
                   </div>
+                 
                   <div class="type_msg" style={{marginTop:'10%'}}>
                     <div class="input_msg_write">
                     <form onSubmit={onSubmit}>
