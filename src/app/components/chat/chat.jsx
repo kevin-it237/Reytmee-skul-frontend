@@ -54,10 +54,12 @@ const Chat = ({
         const [disableButton,setDesableButton] = useState(true);
        
         const [todoList,setTodoList] = useState(['']);
+        const [isTextSend,setIsTextSend] = useState('');
+        const [isTextReceive,setIsTextReceive] = useState('');
         const [isSend,setIsSend] = useState(false);
         const [isReceive,setIsReceive] = useState(false);
 
-        const messageRef = useRef(null);
+        const messageRef = useRef('');
 
         const scrollToBottom = () =>{
           messageRef.current.scrollIntoView({behavior: "smooth"})
@@ -74,7 +76,7 @@ const Chat = ({
           setPageNumber(1);
         }
 
-        useEffect(()=>scrollToBottom,[todoList]);
+        useEffect(()=>scrollToBottom,[todoList,listMessageIncoming]);
       
         useEffect(()=>{
           if(fileDoc){
@@ -126,6 +128,8 @@ const Chat = ({
         
         const onSubmit = (e) => {
             e.preventDefault();   
+            setIsTextSend('textsend');
+            setIsTextReceive('textreceive');
             setIsImage(false,setIsDoc(false),setIsPDF(false),setIsText(true));
             const newListText = todoList.concat(sendMessageForm.messageContent);
             setTodoList(newListText);
@@ -210,6 +214,9 @@ const Chat = ({
                           let pdfFile = JSON.stringify(todoList[value]).substr(6,15);
                           let imageFile = JSON.stringify(todoList[value]).substr(6,5);
                           let docFile = JSON.stringify(todoList[value]).substr(6,30);
+                          console.log("my Doc File");
+                          console.log(docFile);
+                          console.log(todoList[value]);
                           return(
                      <div key={index}>
                           <div  class="outgoing_msg" ref={messageRef}>
@@ -217,20 +224,23 @@ const Chat = ({
                                 {
                                  imageFile==='image'?<img  src={todoList[value]}/>:
                                  pdfFile==='application/pdf'?
-                                  <Document
+                                 <div style={{height:'100px'}}>
+                                   <Document ref={messageRef}
                                   style={{cursor:'grab'}}
                                     file={todoList[value]}
                                     onLoadSuccess={onDocumentLoadSuccess}
                                   >
                                   <Page  pageNumber={pageNumber} />
-                                  </Document>:
-                                  docFile==='application/msword'|| docFile==='application/vnd.openxmlformats'?
-                                 <div onClick={()=>console.log("Download")} 
+                                  </Document></div>
+                                  :
+                                 isTextSend==='textsend'?
+                                 todoList[value]:
+                                 <div ref={messageRef} onClick={()=>console.log("Download")} 
                                    style={{backgroundColor:'#F8F9FC',fontSize:'1.2em'}}>
                                    <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{todoList[value]}
-                                 </div>:
-                                 todoList[value]}
-                                <span class="time_out"> {hour}    |    Today</span> 
+                                 </div>
+                                 }
+                                <span ref={messageRef} class="time_out"> {hour}    |    Today</span> 
                             </div>
                           </div>
                     
@@ -246,20 +256,22 @@ const Chat = ({
                         <div class="received_withd_msg ml-4" ref={messageRef}>
                           { imageFile==='image'?<img  src={listMessageIncoming[value]}/>:
                                  pdfFile==='application/pdf'?
-                                  <Document
+                                 <div style={{height:'100px'}}>
+                                  <Document ref={messageRef}
                                   style={{cursor:'grab'}}
                                     file={listMessageIncoming[value]}
                                     onLoadSuccess={onDocumentLoadSuccess}
                                   >
                                   <Page  pageNumber={pageNumber} />
-                                  </Document>:
-                                  docFile==='application/msword'|| docFile==='application/vnd.openxmlformats'?
-                                 <div onClick={()=>console.log("Download")} 
-                                   style={{backgroundColor:'#F8F9FC',fontSize:'1.2em'}}>
+                                  </Document></div>:
+                                  isTextReceive==='textreceive'?
+                                  listMessageIncoming[value]:
+                                 <div ref={messageRef} onClick={()=>console.log("Download")} 
+                                   style={{backgroundColor:'#F8F9FC',fontSize:'1.2em',color:'black'}}>
                                    <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listMessageIncoming[value]}
-                                 </div>:
-                                 listMessageIncoming[value]}
-                          <span class="time_date ml-3"> {hour}    |    Today</span>
+                                 </div>
+                                 }
+                          <span ref={messageRef} class="time_date ml-3"> {hour}    |    Today</span>
                         </div>
                       </div>
                     </div>
