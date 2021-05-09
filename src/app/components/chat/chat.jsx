@@ -62,7 +62,7 @@ const Chat = ({
         const messageRef = useRef('');
 
         const scrollToBottom = () =>{
-          messageRef.current.scrollIntoView({behavior: "smooth"})
+          messageRef.current.scrollIntoView({behavior: "smooth"});
         }
 
         pdfjs.GlobalWorkerOptions.workerSrc = 
@@ -80,7 +80,7 @@ const Chat = ({
 
           useEffect(() => {
             if(todoList) {
-                scrollToBottom();
+               return(scrollToBottom); 
             }
         }, [todoList])
       
