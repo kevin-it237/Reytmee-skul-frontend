@@ -115,7 +115,7 @@ img{ max-width:100%;}
   font-size: 12px;
   margin: 8px 0 0;
 }
-.received_withd_msg {font-size: 1.5em; padding: 15px;  color: #fff ;width: 57%; background: #17879C none repeat scroll 0 0; overflow-wrap: break-word;}
+.received_withd_msg { cursor:pointer;font-size: 1.5em; padding: 15px;  color: #fff ;width: 57%; background: #17879C none repeat scroll 0 0; overflow-wrap: break-word;}
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
@@ -142,6 +142,7 @@ img{ max-width:100%;}
   overflow-wrap: break-word;
   overflow: scroll;
   background-size: cover;
+  cursor: pointer;
   
 }
 .input_msg_write input {

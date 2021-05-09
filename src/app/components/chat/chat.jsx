@@ -40,7 +40,7 @@ const Chat = ({
         const [outgoingMessage,setOutgoingMessage] = useState('');
         const [isTextMessage,setIstextMessage] = useState(false);
         const [isFileUpload,setIsFileUpload] = useState(false);
-        const [listMessageIncoming,setListMessageIncoming] = useState(['']);
+        const [listMessageIncoming,setListMessageIncoming] = useState([{name: '', contentRaw: '' }]);
 
         const [isPDF,setIsPDF] = useState(false);
         const [isDoc,setIsDoc] = useState(false);
@@ -53,7 +53,7 @@ const Chat = ({
 
         const [disableButton,setDesableButton] = useState(true);
        
-        const [todoList,setTodoList] = useState(['']);
+        const [todoList,setTodoList] = useState([{name: '', contentRaw: '' }]);
         const [isTextSend,setIsTextSend] = useState('');
         const [isTextReceive,setIsTextReceive] = useState('');
         const [isSend,setIsSend] = useState(false);
@@ -76,22 +76,28 @@ const Chat = ({
           setPageNumber(1);
         }
 
-        useEffect(()=>scrollToBottom,[todoList,listMessageIncoming]);
+       
+
+          useEffect(() => {
+            if(todoList) {
+                scrollToBottom();
+            }
+        }, [todoList])
       
         useEffect(()=>{
           if(fileDoc){
             const reader = new FileReader();
             reader.onloadend = () =>{
               if(fileDoc.type.substr(0,5) ==='image'){
-                setTodoList(todoList.concat(reader.result));
-                setListMessageIncoming(listMessageIncoming.concat(reader.result));
+                setTodoList(todoList.concat({name: fileDoc.name,contentRaw: reader.result}));
+                setListMessageIncoming(listMessageIncoming.concat({name: fileDoc.name,contentRaw: reader.result}));
               }else if(fileDoc.type==='application/pdf'){              
-                setTodoList(todoList.concat(reader.result));
-                setListMessageIncoming(listMessageIncoming.concat(reader.result));
+                setTodoList(todoList.concat({name: fileDoc.name,contentRaw: reader.result}));
+                setListMessageIncoming(listMessageIncoming.concat({name: fileDoc.name,contentRaw: reader.result}));
               }else if(fileDoc.type === "application/msword" || 
               fileDoc.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
-                setTodoList(todoList.concat(fileDoc.name));
-                setListMessageIncoming(listMessageIncoming.concat(fileDoc.name));
+                setTodoList(todoList.concat({name: fileDoc.name,contentRaw: reader.result}));
+                setListMessageIncoming(listMessageIncoming.concat({name: fileDoc.name,contentRaw: reader.result}));
               }
               else{setPreviewDoc(reader.result);}  
             }
@@ -112,10 +118,11 @@ const Chat = ({
                 setFileDoc(file); 
               
                
-              }else if(file.type === "application/msword" || 
-              file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
+              }else if( file && file.type === "application/msword" || 
+              file && file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
                 setFileDoc(file);
-          
+                setIsTextReceive('');
+                setIsTextSend('');
                           
               }else{setFileDoc(null);}      
          }
@@ -131,7 +138,7 @@ const Chat = ({
             setIsTextSend('textsend');
             setIsTextReceive('textreceive');
             setIsImage(false,setIsDoc(false),setIsPDF(false),setIsText(true));
-            const newListText = todoList.concat(sendMessageForm.messageContent);
+            const newListText = todoList.concat({name: '',contentRaw: sendMessageForm.messageContent});
             setTodoList(newListText);
             setListMessageIncoming(newListText);
             setOutgoingMessage(sendMessageForm.messageContent);
@@ -211,39 +218,52 @@ const Chat = ({
                   {Object.keys(todoList).map((value,index)=>{
                      if(value != 0){
                           console.log("MY TODO LIST VALUE");
-                          let pdfFile = JSON.stringify(todoList[value]).substr(6,15);
-                          let imageFile = JSON.stringify(todoList[value]).substr(6,5);
-                          let docFile = JSON.stringify(todoList[value]).substr(6,30);
+                          let listIncomming = todoList;
+                          console.log(listIncomming);
+                          let pdfFile = JSON.stringify(todoList[value].contentRaw).substr(6,15);
+                          let imageFile = JSON.stringify(todoList[value].contentRaw).substr(6,5);
+                          let docFile1 = JSON.stringify(todoList[value].contentRaw).substr(6,30);
+                          let docFile2 = JSON.stringify(todoList[value].contentRaw).substr(6,18);
+                          
                           console.log("my Doc File");
-                          console.log(docFile);
-                          console.log(todoList[value]);
+                          console.log(docFile1);
+                          console.log(docFile2);
+                          console.log(value.contentRaw);
                           return(
                      <div key={index}>
+
                           <div  class="outgoing_msg" ref={messageRef}>
                             <div class="sent_msg mr-5" ref={messageRef}>
                                 {
-                                 imageFile==='image'?<img  src={todoList[value]}/>:
+                                 imageFile==='image'?
+                                 <div onClick={()=>console.log("dawnload Image")}>
+                                 <img  src={todoList[value].contentRaw}/>
+                                 <span>{todoList[value].name}</span>
+                                 </div>:
                                  pdfFile==='application/pdf'?
-                                 <div style={{height:'100px'}}>
+                                 <div onClick={()=>console.log("dawnload PDF file")} style={{height:'100px'}}>
+                                   <span>{todoList[value].name}</span>
                                    <Document ref={messageRef}
                                   style={{cursor:'grab'}}
-                                    file={todoList[value]}
+                                    file={todoList[value].contentRaw}
                                     onLoadSuccess={onDocumentLoadSuccess}
                                   >
                                   <Page  pageNumber={pageNumber} />
-                                  </Document></div>
+                                  </Document>
+                                  
+                                  </div>
                                   :
-                                 isTextSend==='textsend'?
-                                 todoList[value]:
-                                 <div ref={messageRef} onClick={()=>console.log("Download")} 
+                                  docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
+                                 <div onClick={()=>console.log("dawnload Doc File")} ref={messageRef} onClick={()=>console.log("Download")} 
                                    style={{backgroundColor:'#F8F9FC',fontSize:'1.2em'}}>
-                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{todoList[value]}
-                                 </div>
+                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{todoList[value].name}
+                                 </div>:
+                                  todoList[value].contentRaw
                                  }
                                 <span ref={messageRef} class="time_out"> {hour}    |    Today</span> 
                             </div>
                           </div>
-                    
+                   
                       <div class="incoming_msg" ref={messageRef}>
                       <div class="incoming_msg_img" ref={messageRef}> 
                                      <Avatar 
@@ -254,22 +274,29 @@ const Chat = ({
                       
                       <div class="received_msg" ref={messageRef}>
                         <div class="received_withd_msg ml-4" ref={messageRef}>
-                          { imageFile==='image'?<img  src={listMessageIncoming[value]}/>:
+                          { imageFile==='image'?
+                          <div onClick={()=>console.log("download Image File")}>
+                            <img  src={listIncomming[value].contentRaw}/>
+                            <span>{listIncomming[value].name}</span>
+                          </div>:
                                  pdfFile==='application/pdf'?
-                                 <div style={{height:'100px'}}>
+                                 <div onClick={()=>console.log("download PDF file")} style={{height:'100px'}}>
+                                 <span>{listIncomming[value].name}</span>
                                   <Document ref={messageRef}
-                                  style={{cursor:'grab'}}
-                                    file={listMessageIncoming[value]}
+                                    style={{cursor:'grab'}}
+                                    file={listIncomming[value].contentRaw}
                                     onLoadSuccess={onDocumentLoadSuccess}
                                   >
                                   <Page  pageNumber={pageNumber} />
-                                  </Document></div>:
-                                  isTextReceive==='textreceive'?
-                                  listMessageIncoming[value]:
-                                 <div ref={messageRef} onClick={()=>console.log("Download")} 
+                                  </Document>
+                                  <span>{listIncomming[value].name}</span>
+                                  </div>:
+                                  docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
+                                 <div ref={messageRef} onClick={()=>console.log("Download Doc file")} 
                                    style={{backgroundColor:'#F8F9FC',fontSize:'1.2em',color:'black'}}>
-                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listMessageIncoming[value]}
-                                 </div>
+                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listIncomming[value].name}
+                                 </div>:
+                                 listIncomming[value].contentRaw
                                  }
                           <span ref={messageRef} class="time_date ml-3"> {hour}    |    Today</span>
                         </div>
