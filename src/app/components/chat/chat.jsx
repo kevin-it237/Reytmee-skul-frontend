@@ -50,7 +50,7 @@ const Chat = ({
         const [fileDoc,setFileDoc] = useState(null); 
         
         const [previewDoc,setPreviewDoc] = useState('');
-
+        let listIncomming;
         const [disableButton,setDesableButton] = useState(true);
        
         const [todoList,setTodoList] = useState([{name: '', contentRaw: '' }]);
@@ -59,10 +59,11 @@ const Chat = ({
         const [isSend,setIsSend] = useState(false);
         const [isReceive,setIsReceive] = useState(false);
 
-        const messageRef = useRef('');
+        const messageRef = useRef(null);
 
         const scrollToBottom = () =>{
-          messageRef.current.scrollIntoView({behavior: "smooth"});
+          if(messageRef && messageRef.current){
+          messageRef.current.scrollIntoView({behavior: "smooth"});}
         }
 
         pdfjs.GlobalWorkerOptions.workerSrc = 
@@ -79,10 +80,10 @@ const Chat = ({
        
 
           useEffect(() => {
-            if(todoList) {
+            if(todoList || listIncomming) {
                return(scrollToBottom); 
             }
-        }, [todoList])
+        }, [todoList,listIncomming]);
       
         useEffect(()=>{
           if(fileDoc){
@@ -218,7 +219,7 @@ const Chat = ({
                   {Object.keys(todoList).map((value,index)=>{
                      if(value != 0){
                           console.log("MY TODO LIST VALUE");
-                          let listIncomming = todoList;
+                          listIncomming = todoList;
                           console.log(listIncomming);
                           let pdfFile = JSON.stringify(todoList[value].contentRaw).substr(6,15);
                           let imageFile = JSON.stringify(todoList[value].contentRaw).substr(6,5);
@@ -230,10 +231,10 @@ const Chat = ({
                           console.log(docFile2);
                           console.log(value.contentRaw);
                           return(
-                     <div key={index}>
+                     <div key={index} ref={messageRef}>
 
-                          <div  class="outgoing_msg" ref={messageRef}>
-                            <div class="sent_msg mr-5" ref={messageRef}>
+                          <div  class="outgoing_msg">
+                            <div class="sent_msg mr-5">
                                 {
                                  imageFile==='image'?
                                  <div onClick={()=>console.log("dawnload Image")}>
@@ -243,14 +244,13 @@ const Chat = ({
                                  pdfFile==='application/pdf'?
                                  <div onClick={()=>console.log("dawnload PDF file")} style={{height:'100px'}}>
                                    <span>{todoList[value].name}</span>
-                                   <Document ref={messageRef}
+                                   <Document
                                   style={{cursor:'grab'}}
                                     file={todoList[value].contentRaw}
                                     onLoadSuccess={onDocumentLoadSuccess}
                                   >
                                   <Page  pageNumber={pageNumber} />
                                   </Document>
-                                  
                                   </div>
                                   :
                                   docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
@@ -260,20 +260,20 @@ const Chat = ({
                                  </div>:
                                   todoList[value].contentRaw
                                  }
-                                <span ref={messageRef} class="time_out"> {hour}    |    Today</span> 
+                                <span class="time_out"> {hour}    |    Today</span> 
                             </div>
                           </div>
                    
-                      <div class="incoming_msg" ref={messageRef}>
-                      <div class="incoming_msg_img" ref={messageRef}> 
+                      <div class="incoming_msg">
+                      <div class="incoming_msg_img"> 
                                      <Avatar 
                                         size="50"
                                         round={true}
                                         src={userProfile}             
                                      /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
                       
-                      <div class="received_msg" ref={messageRef}>
-                        <div class="received_withd_msg ml-4" ref={messageRef}>
+                      <div class="received_msg">
+                        <div class="received_withd_msg ml-4">
                           { imageFile==='image'?
                           <div onClick={()=>console.log("download Image File")}>
                             <img  src={listIncomming[value].contentRaw}/>
@@ -282,7 +282,7 @@ const Chat = ({
                                  pdfFile==='application/pdf'?
                                  <div onClick={()=>console.log("download PDF file")} style={{height:'100px'}}>
                                  <span>{listIncomming[value].name}</span>
-                                  <Document ref={messageRef}
+                                  <Document
                                     style={{cursor:'grab'}}
                                     file={listIncomming[value].contentRaw}
                                     onLoadSuccess={onDocumentLoadSuccess}
@@ -292,13 +292,13 @@ const Chat = ({
                                   <span>{listIncomming[value].name}</span>
                                   </div>:
                                   docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
-                                 <div ref={messageRef} onClick={()=>console.log("Download Doc file")} 
+                                 <div onClick={()=>console.log("Download Doc file")} 
                                    style={{backgroundColor:'#F8F9FC',fontSize:'1.2em',color:'black'}}>
                                    <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listIncomming[value].name}
                                  </div>:
                                  listIncomming[value].contentRaw
                                  }
-                          <span ref={messageRef} class="time_date ml-3"> {hour}    |    Today</span>
+                          <span class="time_date ml-3"> {hour}    |    Today</span>
                         </div>
                       </div>
                     </div>
@@ -326,7 +326,8 @@ const Chat = ({
                                         placeholder={"Type a message"}
                                         onChange={onChangeSendMessage} 
                                         name={input} 
-                                        value={sendMessageForm[input]}        
+                                        value={sendMessageForm[input]} 
+                                        autoFocus={true}       
                                     />
                                 </div>)
                             }))}
