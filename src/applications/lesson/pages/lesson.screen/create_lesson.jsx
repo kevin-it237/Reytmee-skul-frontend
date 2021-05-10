@@ -37,7 +37,7 @@ const  CreateLesson = ({onChildClickBackAll}) => {
     const [convertedHomeworkContent, setConvertedHomeworkContent] = useState(null);
     const [convertedEvaluationContent, setConvertedEvaluationContent] = useState(null);
 
-    const [selectedFile, setSelectedFile] = useState();
+    const [selectedFile, setSelectedFile] = useState([{nameFile: '', sizeFile: '' }]);
     const [isFilePicked, setIsFilePicked] = useState(false);
     const [showModal,setShowModal] = useState(false);
     const [createLessonForm,setCreateLessonForm] = useState({name: "", description: ""});
@@ -155,22 +155,9 @@ const  CreateLesson = ({onChildClickBackAll}) => {
 
     
     const changeHandler = (e) => {
-        setSelectedFile(e.target.files[0]);
-        setIsFilePicked(true);
-        
-        
+        setSelectedFile(selectedFile.concat({nameFile:e.target.files[0].name,sizeFile:e.target.files[0].size}));
     }
-    const fileData = [
-        {"name": 'programmation_web.docx', "size" : '31'
-        },
-
-        {"name": 'Algorithmique.pdf', "size" : '50' 
-        },
-    ];
-    
-
-
-
+  
     const modalcont = {
           title: "Invite Student to course",
           bodycontent: 
@@ -352,29 +339,24 @@ const  CreateLesson = ({onChildClickBackAll}) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Object.keys(fileData).map((value,index)=>{ 
-                                        <tr>
-                                            <td>{fileData[value].name}</td>
-                                            <td>{fileData[value].size}</td>
-                                            <td><i className="far fa-window-close" style={{ fontSize:25+'px',color:'#17879C',cursor:'pointer' }}/></td>
-                                        </tr>
-                                       
-                                    })}
-                                       {isFilePicked?
-                                       <tr>
-                                                <td>
-                                                    {selectedFile.name.split('.').pop() === 'pdf'? 
-                                                    <i className="far fa-file-pdf mr-2 text-warning" style={{ fontSize:35+'px'}}/>
-                                                    : selectedFile.name.split('.').pop() === 'docx' ||  selectedFile.name.split('.').pop() === 'doc'?
-                                                    <i className="fas fa-file-word mr-2 text-warning" style={{ fontSize:35+'px'}}/> : '' }
-                                                    {selectedFile.name}
-                                                 </td>
-                                                <td>{selectedFile.size/1000} kB</td>
-                                                <td><i className="far fa-window-close" style={{ fontSize:25+'px',color:'#17879C',cursor:'pointer' }}/></td>
-                                      </tr> 
-
-                                      : ''} 
-                                    
+                                       {Object.keys(selectedFile).map((value,index)=>{
+                                           if(value != 0){
+                                               return(
+                                                <tr key={index}>
+                                                    <td>
+                                                        {selectedFile[value].nameFile.split('.').pop() === 'pdf'? 
+                                                        <i className="far fa-file-pdf mr-2 text-warning" style={{ fontSize:35+'px'}}/>
+                                                        : selectedFile[value].nameFile.split('.').pop() === 'docx' ||  selectedFile[value].nameFile.split('.').pop() === 'doc'?
+                                                        <i className="fas fa-file-word mr-2 text-primary" style={{ fontSize:35+'px'}}/> 
+                                                        : '' }
+                                                        {selectedFile[value].nameFile}
+                                                    </td>
+                                                    <td>{selectedFile[value].sizeFile/1000} kB</td>
+                                                    <td><i className="far fa-window-close" style={{ fontSize:25+'px',color:'#17879C',cursor:'pointer' }}/></td>
+                                                </tr> 
+                                               )
+                                           }
+                                       })}
                                 </tbody>
                             </table>
                         
