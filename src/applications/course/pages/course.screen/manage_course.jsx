@@ -38,6 +38,26 @@ const ManageCourse = ({
     const [showManageLesson,setShowManageLesson] = useState(true);
     const [showLessonOverview,setShowLessonOverview] = useState(false);
 
+    const [fileImage,setFileImage] = useState(null);
+    const [isImage,setIsImage] = useState(false);
+    const [ImageContent,setImageContent] = useState(''); 
+
+
+    useEffect(()=>{
+        if(fileImage){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setImageContent(reader.result);
+                console.log("my FILE IMAGE CONTENT");
+                console.log(ImageContent);
+            }
+            reader.readAsDataURL(fileImage);
+        }else{
+            setImageContent(null);
+        }
+    },[fileImage]);
+
+
     const handleLogout=()=>{
         history.push('/');
     }
@@ -49,6 +69,16 @@ const ManageCourse = ({
             setDisplaySide('none');
         }
 
+    }
+
+    const onChangeFileImage = (e) => {
+        const file = e.target.files[0];
+        if(file){
+            setIsImage(true);
+            setFileImage(file);
+            console.log("my FILE IMAGE");
+            console.log(fileImage);
+        }else{setFileImage(null);}
     }
 
     const selectLessonRow = {
@@ -88,9 +118,6 @@ const ManageCourse = ({
         onChildClickHandlerCourseSettings(e.target.name);
     }
 
-
-     
-
     const handleLessonClose = () =>{setShowLessonModal(false)}
     const handleInviteClose = () =>setShowInviteModal(false)
   
@@ -117,7 +144,10 @@ const ManageCourse = ({
     
 
     const hiddenFileInput = React.useRef(null);
-    const handleClickFileInput = (event) => {hiddenFileInput.current.click()};
+    const handleClickFileInput = (event) => { 
+       
+        hiddenFileInput.current.click()
+    };
 
     const lessonmodal = {
           title: "Your Lesson",
@@ -320,17 +350,20 @@ const ManageCourse = ({
                
 
                </div>
-
+                   
                     <div class="row" style={{backgroundColor: '#EFEFEF'}}>
-
-                       {/*<!-- Area Chart --> */} 
-                        <div 
-                           className="col-xl-12 col-lg-12 text-center" 
-                           style={{height:45+'vh',border:'2px dashed black',cursor:'pointer'}} onClick={handleClickFileInput}>
-                          <i class="fas fa-image text-white" style={{fontSize:7+'em'}}></i><p>Cliquez pour Ajouter une Image de couverture</p>
-                          <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
-                        </div>
-                       
+                       {isImage? <img className='img'  src={ImageContent}/> : 
+                         <div 
+                            className="col-xl-12 col-lg-12 text-center" 
+                            style={{height:45+'vh',border:'2px dashed black',cursor:'pointer'}} onClick={handleClickFileInput}>
+                                <i class="fas fa-image text-white" style={{fontSize:7+'em'}}></i><p>Cliquez pour Ajouter une Image de couverture</p>
+                                <input 
+                                    type="file" 
+                                    accept="image/*"
+                                    ref={hiddenFileInput} 
+                                    style={{display:'none'}}
+                                    onChange={onChangeFileImage} />
+                        </div>}   
                     </div>
 
  

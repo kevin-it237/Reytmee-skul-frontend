@@ -154,7 +154,7 @@ const Chat = ({
         };
     return(
         <div class="container">
-          <h3 class="text-center coursen">Course Name: {courseName}</h3>
+          <h3 class="text-center coursen">{courseName}</h3>
             <div class="messaging">
               <div class="inbox_msg">
                 <div class="inbox_people">
@@ -233,7 +233,7 @@ const Chat = ({
                           return(
                      <div key={index} ref={messageRef}>
 
-                          <div  class="outgoing_msg">
+                        {todoList? <div  class="outgoing_msg">
                             <div class="sent_msg mr-5">
                                 {
                                  imageFile==='image'?
@@ -242,7 +242,7 @@ const Chat = ({
                                  <span>{todoList[value].name}</span>
                                  </div>:
                                  pdfFile==='application/pdf'?
-                                 <div onClick={()=>console.log("dawnload PDF file")} style={{height:'100px'}}>
+                                 <div onClick={()=>console.log("download PDF file")} style={{height:'100px'}}>
                                    <span>{todoList[value].name}</span>
                                    <Document
                                   style={{cursor:'grab'}}
@@ -254,7 +254,7 @@ const Chat = ({
                                   </div>
                                   :
                                   docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
-                                 <div onClick={()=>console.log("dawnload Doc File")} ref={messageRef} onClick={()=>console.log("Download")} 
+                                 <div onClick={()=>console.log("download Doc File")} ref={messageRef} onClick={()=>console.log("Download")} 
                                    style={{backgroundColor:'#F8F9FC',fontSize:'1.2em'}}>
                                    <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{todoList[value].name}
                                  </div>:
@@ -262,48 +262,47 @@ const Chat = ({
                                  }
                                 <span class="time_out"> {hour}    |    Today</span> 
                             </div>
-                          </div>
+                          </div>: ''}  
                    
-                      <div class="incoming_msg">
-                      <div class="incoming_msg_img"> 
-                                     <Avatar 
-                                        size="50"
-                                        round={true}
-                                        src={userProfile}             
-                                     /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
-                      
-                      <div class="received_msg">
-                        <div class="received_withd_msg ml-4">
-                          { imageFile==='image'?
-                          <div onClick={()=>console.log("download Image File")}>
-                            <img  src={listIncomming[value].contentRaw}/>
-                            <span>{listIncomming[value].name}</span>
-                          </div>:
-                                 pdfFile==='application/pdf'?
-                                 <div onClick={()=>console.log("download PDF file")} style={{height:'100px'}}>
-                                 <span>{listIncomming[value].name}</span>
-                                  <Document
-                                    style={{cursor:'grab'}}
-                                    file={listIncomming[value].contentRaw}
-                                    onLoadSuccess={onDocumentLoadSuccess}
-                                  >
-                                  <Page  pageNumber={pageNumber} />
-                                  </Document>
-                                  <span>{listIncomming[value].name}</span>
-                                  </div>:
-                                  docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
-                                 <div onClick={()=>console.log("Download Doc file")} 
-                                   style={{backgroundColor:'#F8F9FC',fontSize:'1.2em',color:'black'}}>
-                                   <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listIncomming[value].name}
-                                 </div>:
-                                 listIncomming[value].contentRaw
-                                 }
-                          <span class="time_date ml-3"> {hour}    |    Today</span>
-                        </div>
-                      </div>
-                    </div>
-
-
+                        {listIncomming? 
+                        <div class="incoming_msg">
+                          <div class="incoming_msg_img"> 
+                                        <Avatar 
+                                            size="50"
+                                            round={true}
+                                            src={userProfile}             
+                                        /> <h5 style={{textAlign:'center'}}>{userPseudo}</h5> </div>
+                          
+                          <div class="received_msg">
+                            <div class="received_withd_msg ml-4">
+                              { imageFile==='image'?
+                              <div onClick={()=>console.log("download Image File")}>
+                                <img  src={listIncomming[value].contentRaw}/>
+                                <span>{listIncomming[value].name}</span>
+                              </div>:
+                                    pdfFile==='application/pdf'?
+                                    <div onClick={()=>console.log("download PDF file")} style={{height:'100px'}}>
+                                    <span>{listIncomming[value].name}</span>
+                                      <Document
+                                        style={{cursor:'grab'}}
+                                        file={listIncomming[value].contentRaw}
+                                        onLoadSuccess={onDocumentLoadSuccess}
+                                      >
+                                      <Page  pageNumber={pageNumber} />
+                                      </Document>
+                                      <span>{listIncomming[value].name}</span>
+                                      </div>:
+                                      docFile1==='application/vnd.openxmlformats'||docFile2==='application/msword'?
+                                    <div onClick={()=>console.log("Download Doc file")} 
+                                      style={{backgroundColor:'#F8F9FC',fontSize:'1.2em',color:'black'}}>
+                                      <i style={{fontSize:'2em'}} className="fas fa-file-word  mr-2 text-primary"></i>{listIncomming[value].name}
+                                    </div>:
+                                    listIncomming[value].contentRaw
+                                    }
+                              <span class="time_date ml-3"> {hour}    |    Today</span>
+                            </div>
+                          </div>
+                        </div> :''}  
                   </div>)}})}
                   </div>
                  
@@ -336,7 +335,6 @@ const Chat = ({
                         <div className="col">
                          
                             {!disableButton?
-                            
                               <Button 
                                 rounded ={true}
                                 type="submit">
@@ -345,12 +343,14 @@ const Chat = ({
                              : ''}
                         </div>
                       </div>
+                      
                       <input 
                           type="file" 
                           accept="image/*, application/pdf, .doc, .docx, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, audio/*"
                           ref={hiddenFileInput} 
                           style={{display:'none'}}
                           onChange={onChangeUploadFile}/>
+
                       <span class="msg_send_btn">
                         <i  onClick={handleClickFileInput}
                             class="msg_send_btn"

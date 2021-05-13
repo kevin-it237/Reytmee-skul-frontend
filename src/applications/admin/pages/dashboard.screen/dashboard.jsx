@@ -352,6 +352,9 @@ const DashboardAdmin = ({props})  => {
                         }
                 
                     }
+                    const outPutShowGroupChat = (e) => {
+                        console.log(e);
+                    }
 
                     
     
@@ -394,6 +397,7 @@ const DashboardAdmin = ({props})  => {
                     isDisplaySide={displaySide} 
                     onChildClick={outPutEvent}  
                     onChildClickSettings={outPutShowSettings}
+                    onChildClickGroupChat={outPutShowGroupChat}
                />
 
                {/* <!-- End of Topbar -->*/} 

@@ -296,9 +296,10 @@ const CourseSettings = ({onChildClickBackAll}) => {
                     <div class="shadow mb-4 border-none" >
                            <div class="" align="center" style={{cursor:'pointer'}} onClick={handleClickFileInput}>
                                 <i style={{fontSize:'calc(20px + 2vmin)',margin:'2em'}} className='fas fa-graduation-cap'></i>
-                                <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
-                               
-                                
+                                <input 
+                                    type="file" 
+                                    ref={hiddenFileInput} 
+                                    style={{display:'none'}} />
                            </div>
                            
                    </div>  

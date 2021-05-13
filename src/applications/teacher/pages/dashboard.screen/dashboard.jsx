@@ -51,7 +51,7 @@ const DashboardTeacher = ({props})  => {
     const [showCreateEvaluation,setShowCreateEvaluation] = useState(false);
     const [showCourseSettings,setShowCourseSettings] = useState(false);
     const [showGroupChat,setShowGroupChat] = useState(false);
-    
+    const [selectedFile, setSelectedFile] = useState([{nameFile: '', sizeFile: '' }]);
     const [courseName,setCourseName] = useState("");
     const [courseAuthor,setCourseAuthor] = useState("");
 
@@ -59,6 +59,12 @@ const DashboardTeacher = ({props})  => {
     const [displayChatSide,setDisplayChatSide] = useState('none');
     
     const refchild = useRef();
+
+    const onChangeCourseSupport = (e) => {
+        setSelectedFile(selectedFile.concat({nameFile:e.target.files[0].name,sizeFile:e.target.files[0].size}));
+    }
+
+   
 
     
     const handleListStudentClose = () =>{setShowListStudentModal(false)}
@@ -374,7 +380,11 @@ const DashboardTeacher = ({props})  => {
                                                     <div class="col">
                                                             <div onClick={handleClickFileInput} class="text-xs font-weight-bold text-white text-center" style={{fontSize:'calc(2px + 2vmin)',cursor:'pointer'}}>
                                                             <i className="fa fa-upload"/>  Import Course
-                                                            <input type="file" ref={hiddenFileInput} style={{display:'none'}} />
+                                                            <input 
+                                                                type="file" 
+                                                                ref={hiddenFileInput} 
+                                                                onChange={onChangeCourseSupport}
+                                                                style={{display:'none'}} />
                                                             </div>
                                                         
                                                     </div>
@@ -586,6 +596,37 @@ const DashboardTeacher = ({props})  => {
                              </div>
                          </div> 
                      </div>
+                     <div style={{fontSize:'1.5em'}}>Support de cours</div>
+                     <table className='table'>
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>Course Name</th>
+                                        <th scope='col'>Size</th>
+                                        <th scope='col'></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                       {Object.keys(selectedFile).map((value,index)=>{
+                                           if(value != 0){
+                                               return(
+                                                <tr key={index}>
+                                                    <td>
+                                                        {selectedFile[value].nameFile.split('.').pop() === 'pdf'? 
+                                                        <i className="far fa-file-pdf mr-2 text-warning" style={{ fontSize:35+'px'}}/>
+                                                        : selectedFile[value].nameFile.split('.').pop() === 'docx' ||  selectedFile[value].nameFile.split('.').pop() === 'doc'?
+                                                        <i className="fas fa-file-word mr-2 text-primary" style={{ fontSize:35+'px'}}/> 
+                                                        : selectedFile[value].nameFile.split('.').pop() === 'mp4' || selectedFile[value].nameFile.split('.').pop() === 'webm'?
+                                                        <i class="fa fa-file-video-o mr-2 text-danger" style={{fontSize:'35px'}}/>: '' }
+                                                        {selectedFile[value].nameFile}
+                                                    </td>
+                                                    <td>{selectedFile[value].sizeFile/1000} kB</td>
+                                                    <td><i className="far fa-window-close" style={{ fontSize:25+'px',color:'#17879C',cursor:'pointer' }}/></td>
+                                                </tr> 
+                                               )
+                                           }
+                                       })}
+                                </tbody>
+                            </table>
 
                  </div>
                    : 
@@ -622,14 +663,10 @@ const DashboardTeacher = ({props})  => {
                                     userProfile={profileImg}
                                     userPseudo={"Pierre Mvogo"}
                                     isConnected={true}
+                                    courseName={"Programmation web"}
                                     chatHour={hour}
                                     chatDate={date}/>: ''}  
-                  
-                  
-
-
-
-
+                 
                 </div>
                {/* <!-- /.container-fluid -->*/} 
 
