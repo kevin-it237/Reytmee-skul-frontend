@@ -84,6 +84,14 @@ const Chat = ({
                return(scrollToBottom); 
             }
         }, [todoList,listIncomming]);
+
+        const keyPress = (e) => {
+          if(e.key ==='Enter' && !e.shiftKey){
+            e.preventDefault();
+            onSubmit(e);
+
+          }
+        }
       
         useEffect(()=>{
           if(fileDoc){
@@ -326,7 +334,8 @@ const Chat = ({
                                         onChange={onChangeSendMessage} 
                                         name={input} 
                                         value={sendMessageForm[input]} 
-                                        autoFocus={true}       
+                                        autoFocus={true} 
+                                        onKeyDown={keyPress}      
                                     />
                                 </div>)
                             }))}

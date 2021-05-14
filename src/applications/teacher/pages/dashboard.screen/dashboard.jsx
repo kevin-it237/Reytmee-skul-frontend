@@ -52,7 +52,7 @@ const DashboardTeacher = ({props})  => {
     const [showCourseSettings,setShowCourseSettings] = useState(false);
     const [showGroupChat,setShowGroupChat] = useState(false);
     const [selectedFile, setSelectedFile] = useState([{nameFile: '', sizeFile: '' }]);
-    const [courseName,setCourseName] = useState("");
+    const [courseName,setCourseName] = useState("Programmation web");
     const [courseAuthor,setCourseAuthor] = useState("");
 
     const [isDashboard,setIsDashboard] = useState(true);

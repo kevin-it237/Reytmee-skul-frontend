@@ -44,7 +44,7 @@ const DashboardStudent = () => {
     const [showCourseOverview,setShowCourseOverview] = useState(false);
     const [displayChatSide,setDisplayChatSide] = useState('none');
     const [showGroupChat,setShowGroupChat] = useState(false);
-    const [courseName,setCourseName] = useState('');
+    const [courseName,setCourseName] = useState('Arithmetique');
 
 
     const handleLogout=()=>{
